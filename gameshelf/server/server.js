@@ -32,6 +32,9 @@ app.get("/", async (req, res) => {
     const rawData = await fetch(url);
     const defaultGameData = await rawData.json();
     res.send(defaultGameData);
+    if (!defaultGameData) {
+        return res.status(404).send({ message: 'Game data from API not found'});
+    }
 });
 
 //request for user favorites game list
@@ -78,6 +81,23 @@ app.get('/game-reviews/:gameId', async (req, res) => {
         res.status(200).json(rows);
     } catch (error) {
         console.error('Error fetching game reviews', error);
+        res.status(500).send('Server error');
+    }
+});
+
+// request for fetching game details
+app.get('/game/:gameId', async (req, res) => {
+    const gameId = req.params.gameId;
+    try {
+        const url = `https://api.rawg.io/api/games/${gameId}?key=${api_key}`;
+        const rawData = await fetch(url);
+        const gameData = await rawData.json();
+        if (!gameData) {
+            return res.status(404).send({ message: 'Game not found' });
+        }
+        res.status(200).json(gameData);
+    } catch (error) {
+        console.error('Error fetching game details from API', error);
         res.status(500).send('Server error');
     }
 });
