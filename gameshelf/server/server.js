@@ -129,6 +129,18 @@ app.post('/favorites', async (req, res) => {
 });
 
 // request for user adding a game review
+app.post('/reviews', async (req, res) => {
+    const { user_id, game_id, rating, review_text } = req.body;
+    try {
+        const queryText = 'INSERT INTO reviews (user_id, game_id, rating, review_text) VALUES ($1, $2, $3, $4) RETURNING *';
+        const { rows } = await db.query(queryText, [user_id, game_id, rating, review_text]);
+        res.status(200).json(rows[0]);
+    } catch (error) {
+        console.error('Error adding game review', error);
+        res.status(500).send('Server error');
+    }
+});
+
 // request for user logging in
 // request to update user information
 // request to remove/delete a favorited game
