@@ -20,8 +20,32 @@ app.use(bodyParser.json());
 const api_key = process.env.api_key
 
 // test route
-app.get("/", (req, res) => {
-    res.json("Hello to your gameshelf server!");
+// app.get("/", (req, res) => {
+//     res.json("Hello to your gameshelf server!");
+// });
+
+app.get("/", async (req, res) => {
+    console.log('root path triggered');
+    const defaultGames = '&metacritic=80,100';
+    const url = `https://api.rawg.io/api/games?key=${api_key}${defaultGames}`;
+    const rawData = await fetch(url);
+    const defaultGameData = await rawData.json();
+    res.send(defaultGameData);
+});
+
+app.get('/favorites/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        const queryText = 'SELECT game_id FROM favorites WHERE user_id = $1';
+        const { rows } = await db.query(queryText, [userId]);
+        if (rows.length === 0) {
+            return res.status(404).send({ message: 'No favorite games found for this user' });
+        }
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Error fetching favorite games', error);
+        res.status(500).send('Server error');
+    }
 });
 
 app.listen(PORT, () => {

@@ -5,12 +5,10 @@ import { DeferredContent } from "primereact/deferredcontent";
 
 function App() {
   const [gameData, setGameData] = useState(null);
+
   // on component mount fetch data
-
-  // https://api.example.com/users?metacritic=80,100
-
   const gameList = async () => {
-    const url = `https://api.rawg.io/api/games?key=API_KEY&metacritic=80,100`;
+    const url = `http://localhost:8080/`;
     const res = await fetch(url);
     const data = await res.json();
     console.log("game data list", data);
