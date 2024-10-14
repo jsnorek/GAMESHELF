@@ -142,6 +142,31 @@ app.post('/reviews', async (req, res) => {
 });
 
 // request for user logging in
+app.post('/login/', async (req, res) => {
+    const { username, password } = req.body; // User sends username and password
+    try {
+        // Check the database for a user with the given username and password
+        const queryText = 'SELECT * FROM users WHERE username = $1 AND password = $2';
+        const { rows } = await db.query(queryText, [username, password]);
+        if (rows.length === 0) {
+            return res.status(400).json({ message: 'Invalid username or password' });
+        }
+        const user = rows[0];
+        // to return user's data except for password for added security
+        res.status(200).json({
+            user_id: user.user_id,
+            username: user.username,
+            email: user.email,
+            name: user.name,
+            city: user.city
+        });
+        // res.status(200).json(rows[0]); // to return all of user's data including password
+    } catch (error) {
+        console.error('Error logging in', error);
+        res.status(500).send('Server error');
+    }
+});
+
 // request to update user information
 // request to remove/delete a favorited game
 // request to delete a user review
