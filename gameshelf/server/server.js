@@ -168,7 +168,36 @@ app.post('/login/', async (req, res) => {
 });
 
 // request to update user information
+app.post('/users/:user_id', async (req, res) => {
+    const userId = req.params.user_id;
+    const { username, email, password, name, city } = req.body;
+    try {
+        const queryText = 'UPDATE users SET username = $1, email = $2, password = $3, name = $4, city = $5 WHERE user_id = $6 RETURNING *';
+        const { rows } = await db.query(queryText, [username, email, password, name, city, userId]);
+        res.status(200).json(rows[0]);
+    } catch (error) {
+        console.error('Error updating user information', error);
+        res.status(500).send('Server error');
+    }
+});
+
 // request to remove/delete a favorited game
+app.delete('/favorites/:user_id/:game_id', async (req, res) => {
+    const userId = req.params.user_id;
+    const gameId = req.params.game_id;
+    try {
+        const queryText = 'DELETE FROM favorites WHERE user_id = $1 AND game_id = $2 RETURNING *';
+        const { rows } = await db.query(queryText, [userId, gameId]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Favorite game not found' });
+        }
+        res.status(200).json({ message: 'Favorite game removed' });
+    } catch (error) {
+        console.error('Error deleting favorite game', error);
+        res.status(500).send('Server error');
+    }
+});
+
 // request to delete a user review
 
 
