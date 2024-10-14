@@ -116,6 +116,18 @@ app.post('/users', async (req, res) => {
 });
 
 // request for user adding a game to their favorites
+app.post('/favorites', async (req, res) => {
+    const { user_id, game_id } = req.body;
+    try {
+        const queryText = 'INSERT INTO favorites (user_id, game_id) VALUES ($1, $2) RETURNING *';
+        const { rows } = await db.query(queryText, [user_id, game_id]);
+        res.status(200).json(rows[0])
+    } catch (error) {
+        console.error('Error adding favorite game', error);
+        res.status(500).send('Server error');
+    }
+});
+
 // request for user adding a game review
 // request for user logging in
 // request to update user information
