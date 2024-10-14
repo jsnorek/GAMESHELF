@@ -102,6 +102,27 @@ app.get('/game/:gameId', async (req, res) => {
     }
 });
 
+// request for adding a new user to the database
+app.post('/users', async (req, res) => {
+    const { username, email, password, name, city } = req.body;
+    try {
+        const queryText = 'INSERT INTO users (username, email, password, name, city) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+        const { rows } = await db.query(queryText, [username, email, password, name, city]);
+        res.status(200).json(rows[0]); 
+    } catch (error) {
+        console.error('Error adding new user', error);
+        res.status(500).send('Server error');
+    }
+});
+
+// request for user adding a game to their favorites
+// request for user adding a game review
+// request for user logging in
+// request to update user information
+// request to remove/delete a favorited game
+// request to delete a user review
+
+
 app.listen(PORT, () => {
     console.log(`Hi, server listening on ${PORT}`);
 });
