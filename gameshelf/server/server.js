@@ -24,6 +24,7 @@ const api_key = process.env.api_key
 //     res.json("Hello to your gameshelf server!");
 // });
 
+//request for top games to list on homepage
 app.get("/", async (req, res) => {
     console.log('root path triggered');
     const defaultGames = '&metacritic=80,100';
@@ -33,6 +34,7 @@ app.get("/", async (req, res) => {
     res.send(defaultGameData);
 });
 
+//request for user favorites game list
 app.get('/favorites/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
@@ -44,6 +46,22 @@ app.get('/favorites/:userId', async (req, res) => {
         res.status(200).json(rows);
     } catch (error) {
         console.error('Error fetching favorite games', error);
+        res.status(500).send('Server error');
+    }
+});
+
+//request for user's game reviews 
+app.get('/reviews/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        const queryText = 'SELECT review_text, rating FROM reviews WHERE user_id = $1';
+        const { rows } = await db.query(queryText, [userId]);
+        if (rows.length === 0) {
+            return res.status(404).send({ message: 'No reviews found for this user' });
+        }
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Error fetching user reviews', error);
         res.status(500).send('Server error');
     }
 });
