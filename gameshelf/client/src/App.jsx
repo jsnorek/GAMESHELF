@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import { DeferredContent } from 'primereact/deferredcontent';
-import Game from './components/Game';        
+import NavBar from './components/NavBar';     
 import GameList from './components/GameList';
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
 
   return (
     <PrimeReactProvider>
+      <NavBar />
       <GameList gameData={gameData}/>
     </PrimeReactProvider>
   );
