@@ -168,13 +168,40 @@ app.post('/login/', async (req, res) => {
 });
 
 // request to update user information
-app.post('/users/:user_id', async (req, res) => {
+// app.post('/users/:user_id', async (req, res) => {
+//     const userId = req.params.user_id;
+//     const { username, email, password, name, city } = req.body;
+//     try {
+//         const queryText = 'UPDATE users SET username = $1, email = $2, password = $3, name = $4, city = $5 WHERE user_id = $6 RETURNING *';
+//         const { rows } = await db.query(queryText, [username, email, password, name, city, userId]);
+//         res.status(200).json(rows[0]);
+//     } catch (error) {
+//         console.error('Error updating user information', error);
+//         res.status(500).send('Server error');
+//     }
+// });
+
+app.patch('/users/:user_id', async (req, res) => {
     const userId = req.params.user_id;
     const { username, email, password, name, city } = req.body;
     try {
-        const queryText = 'UPDATE users SET username = $1, email = $2, password = $3, name = $4, city = $5 WHERE user_id = $6 RETURNING *';
-        const { rows } = await db.query(queryText, [username, email, password, name, city, userId]);
-        res.status(200).json(rows[0]);
+        if (username !== undefined) {
+            await db.query('UPDATE users SET username = $1 WHERE user_id = $2', [username, userId]);
+        }
+        if (email !== undefined) {
+            await db.query('UPDATE users SET email = $1 WHERE user_id = $2', [email, userId]);
+        }
+        if (password !== undefined) {
+            await db.query('UPDATE users SET password = $1 WHERE user_id = $2', [password, userId]);
+        }
+        if (name !== undefined) {
+            await db.query('UPDATE users SET name = $1 WHERE user_id = $2', [name, userId]);
+        }
+        if (city !== undefined) {
+            await db.query('UPDATE users SET city = $1 WHERE user_id = $2', [city, userId]);
+        }
+        const result = await db.query('SELECT * FROM users WHERE user_id = $1', [userId]);
+        res.json(result.rows[0]);
     } catch (error) {
         console.error('Error updating user information', error);
         res.status(500).send('Server error');
