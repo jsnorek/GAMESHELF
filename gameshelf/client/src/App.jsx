@@ -26,6 +26,8 @@ function App() {
   const handleSearch = async (searchInput) => {
     if (!searchInput) {
       setSearchResults(null); // Resets search results if search bar is empty
+      console.log('search input was reset', searchResults);
+      gameList();
       return;
     }
     try { 
