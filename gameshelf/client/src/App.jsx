@@ -5,6 +5,7 @@ import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import { DeferredContent } from 'primereact/deferredcontent';
 import NavBar from './components/NavBar';     
 import GameList from './components/GameList';
+import NewUserForm from './components/NewUserForm';
 
 function App() {
   const [gameData, setGameData] = useState(null);
@@ -34,7 +35,7 @@ function App() {
       const res = await fetch(`http://localhost:8080/search?query=${searchInput}`);
       const data = await res.json();
       console.log('this is the search data', data);
-      data.results === undefined ? alert('no games found') : setSearchResults(data.results);
+      data.results === undefined || null ? alert('no games found') : setSearchResults(data.results);
     } catch (error)  {
       console.error('Error searching games on client', error);
     }
@@ -58,6 +59,7 @@ if (gameData && gameData.results) {
         <GameList gameData={gameData?.results || []} />
       )}
       {/* <GameList gameData={gameData}/> */}
+      <NewUserForm />
     </PrimeReactProvider>
   );
 }
