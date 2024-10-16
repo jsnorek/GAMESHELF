@@ -37,6 +37,21 @@ app.get("/", async (req, res) => {
     }
 });
 
+//request for searching games
+app.get('/search', async (req, res) => {
+    const { query } = req.query;
+    const url = `https://api.rawg.io/api/games?key=${api_key}&search=${query}`;
+    try{
+        const rawgRes = await fetch(url);
+        const data = await rawgRes.json();
+        console.log('RAWG API Data:', data);
+        res.json(data);
+    } catch (error) {
+        console.error('Error fetching search results', error);
+        res.status(500).json({ message: 'Failed to fetch search results' });
+    }
+});
+
 //request for user favorites game list
 app.get('/favorites/:userId', async (req, res) => {
     const userId = req.params.userId;
