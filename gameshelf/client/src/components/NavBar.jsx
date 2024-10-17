@@ -4,8 +4,17 @@ import logo from '../assets/logo.png';
 import { Button } from "primereact/button";
 import { useState } from "react";
 
-function NavBar({ onSearch, handleLoginModalVisible }) {
+function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, loginInfo, setLoginInfo }) {
     const [searchInput, setSearchInput] = useState('');
+
+     const clearLogin = () => {
+        setLoginInfo({
+            username: "",
+            password: ""
+        });
+        setIsLoggedIn(false)
+        console.log('User has been logged out', loginInfo);
+    };
     
     const handleSearch = (e) => {
         const value = e.target.value;
@@ -28,7 +37,13 @@ function NavBar({ onSearch, handleLoginModalVisible }) {
                 value={searchInput}
                 onChange={handleSearch}
             />
-            <Button label="login" onClick={handleLoginModalVisible}/>
+            {isLoggedIn ? 
+            <div className="loggedIn-buttons">
+                <Button label="Profile"/>
+                <Button label="MyShelf"/>
+                <Button label="Log Out" onClick={clearLogin}/>
+            </div> : 
+            <Button label="login" onClick={handleLoginModalVisible}/>}
         </div>
     );
     return(

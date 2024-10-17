@@ -12,6 +12,11 @@ function App() {
   const [gameData, setGameData] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginInfo, setLoginInfo] = useState({
+    username: "",
+    password: ""
+});
 
   // on component mount fetch data
   const gameList = async () => {
@@ -59,7 +64,7 @@ const handleLoginModalVisible = () => {
 
   return (
     <PrimeReactProvider>
-      <NavBar onSearch={handleSearch} handleLoginModalVisible={handleLoginModalVisible}/>
+      <NavBar onSearch={handleSearch} handleLoginModalVisible={handleLoginModalVisible} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} loginInfo={loginInfo} setLoginInfo={setLoginInfo}/>
       {searchResults ? (
         <GameList gameData={searchResults} />
       ) : (
@@ -68,7 +73,7 @@ const handleLoginModalVisible = () => {
       {/* <GameList gameData={gameData}/> */}
       <NewUserForm />
       {loginModalVisible &&
-      <LoginModal setLoginModalVisible={setLoginModalVisible}/>}
+      <LoginModal setLoginModalVisible={setLoginModalVisible} loginInfo={loginInfo} setLoginInfo={setLoginInfo} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}
     </PrimeReactProvider>
   );
 }
