@@ -3,6 +3,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .logo {
@@ -18,25 +21,26 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-bar {
+  background-color: rgb(187, 206, 243);
+  width: 100%;
+  height: 100px;
+  /* box-sizing: border-box; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.logo-headers {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.card {
-  padding: 2em;
+.logo-text {
+  margin-right: 10px;
 }
 
-.read-the-docs {
-  color: #888;
+.search {
+  width: 50px;
 }

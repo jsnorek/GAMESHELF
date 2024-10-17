@@ -14,9 +14,14 @@ function NavBar({ onSearch }) {
         onSearch(value);
     }
 
-    const start = <img alt="logo" src={logo} height={"40"} className="logo"></img>;
+    const start = (
+        <div className="logo-headers">
+            <img alt="logo" src={logo} height={"40"} className="logo"></img>
+            <p className="logo-text">GAMESHELF</p>
+        </div>
+    );
     const end = (
-        <div className="test">
+        <div className="search">
             <InputText 
                 placeholder="Search games" 
                 type="text" 
@@ -25,11 +30,10 @@ function NavBar({ onSearch }) {
             />
             <Button label="login"/>
         </div>
-    )
+    );
     return(
-        <div>
+        <div className="nav-bar">
             <Menubar start={start} end={end} />
-            <p>Navbar</p>
         </div>
     )
 };
