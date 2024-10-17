@@ -6,10 +6,12 @@ import { DeferredContent } from 'primereact/deferredcontent';
 import NavBar from './components/NavBar';     
 import GameList from './components/GameList';
 import NewUserForm from './components/NewUserForm';
+import LoginModal from './components/LoginModal';
 
 function App() {
   const [gameData, setGameData] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
 
   // on component mount fetch data
   const gameList = async () => {
@@ -50,9 +52,14 @@ if (gameData && gameData.results) {
   console.log("First game:", gameData.results[0]);
 }
 
+const handleLoginModalVisible = () => {
+  setLoginModalVisible(true);
+  console.log('login modal is visible', loginModalVisible);
+}
+
   return (
     <PrimeReactProvider>
-      <NavBar onSearch={handleSearch} />
+      <NavBar onSearch={handleSearch} handleLoginModalVisible={handleLoginModalVisible}/>
       {searchResults ? (
         <GameList gameData={searchResults} />
       ) : (
@@ -60,6 +67,8 @@ if (gameData && gameData.results) {
       )}
       {/* <GameList gameData={gameData}/> */}
       <NewUserForm />
+      {loginModalVisible &&
+      <LoginModal setLoginModalVisible={setLoginModalVisible}/>}
     </PrimeReactProvider>
   );
 }

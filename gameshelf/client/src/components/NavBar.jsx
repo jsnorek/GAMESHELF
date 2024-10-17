@@ -4,7 +4,7 @@ import logo from '../assets/logo.png';
 import { Button } from "primereact/button";
 import { useState } from "react";
 
-function NavBar({ onSearch }) {
+function NavBar({ onSearch, handleLoginModalVisible }) {
     const [searchInput, setSearchInput] = useState('');
     
     const handleSearch = (e) => {
@@ -28,7 +28,7 @@ function NavBar({ onSearch }) {
                 value={searchInput}
                 onChange={handleSearch}
             />
-            <Button label="login"/>
+            <Button label="login" onClick={handleLoginModalVisible}/>
         </div>
     );
     return(

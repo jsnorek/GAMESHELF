@@ -44,3 +44,16 @@
 .search {
   width: 50px;
 }
+
+.login-modal {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: cadetblue;
+  color: black;
+  z-index: 10;
+  position:fixed;
+  top:calc(50% - 200px);
+  left:calc(79% - 250px);
+  width: 75%;
+  height: 300px;
+}
