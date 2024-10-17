@@ -3,9 +3,24 @@ import { Menubar } from "primereact/menubar";
 import logo from '../assets/logo.png';
 import { Button } from "primereact/button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, loginInfo, setLoginInfo }) {
     const [searchInput, setSearchInput] = useState('');
+
+    const navigate = useNavigate();
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    };
+
+    const handleHomeClick = () => {
+        navigate('/');
+    };
+
+    const handleMyShelfClick = () => {
+        navigate('/myshelf');
+    }
 
      const clearLogin = () => {
         setLoginInfo({
@@ -24,7 +39,7 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
     }
 
     const start = (
-        <div className="logo-headers">
+        <div className="logo-headers" onClick={handleHomeClick}>
             <img alt="logo" src={logo} height={"40"} className="logo"></img>
             <p className="logo-text">GAMESHELF</p>
         </div>
@@ -39,8 +54,8 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
             />
             {isLoggedIn ? 
             <div className="loggedIn-buttons">
-                <Button label="Profile"/>
-                <Button label="MyShelf"/>
+                <Button label="Profile" onClick={handleProfileClick}/>
+                <Button label="MyShelf" onClick={handleMyShelfClick}/>
                 <Button label="Log Out" onClick={clearLogin}/>
             </div> : 
             <Button label="login" onClick={handleLoginModalVisible}/>}

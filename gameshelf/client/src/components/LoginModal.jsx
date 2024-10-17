@@ -4,27 +4,19 @@ import axios from "axios";
 
 function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn }) {
 
-    // const [loginInfo, setLoginInfo] = useState({
-    //     username: "",
-    //     password: ""
-    // });
-
-    // const clearLogin = () => {
-    //     setLoginInfo({
-    //         username: "",
-    //         password: ""
-    //     });
-    // };
-
+    // Turn login modal off for cancel button
     const turnLoginModalOff = () => {
         setLoginModalVisible(false)
     }
 
+    // Handles input changes for username and password input for login
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLoginInfo((prevLogin) => ({...prevLogin, [name]: value}));
     };
 
+    // Handles submit button for login modal. On click, it compares user input to database and upon
+    // Confirming the match, the rest of user information will be pulled from database
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -46,6 +38,7 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
         }
     };
 
+    // To test/print a console log if user is logged in
     useEffect(() => {
         if (isLoggedIn) {
             console.log("User is now logged in", isLoggedIn);

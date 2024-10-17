@@ -7,6 +7,9 @@ import NavBar from './components/NavBar';
 import GameList from './components/GameList';
 import NewUserForm from './components/NewUserForm';
 import LoginModal from './components/LoginModal';
+import Profile from './components/Profile';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MyShelf from './components/MyShelf';
 
 function App() {
   const [gameData, setGameData] = useState(null);
@@ -64,16 +67,43 @@ const handleLoginModalVisible = () => {
 
   return (
     <PrimeReactProvider>
-      <NavBar onSearch={handleSearch} handleLoginModalVisible={handleLoginModalVisible} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} loginInfo={loginInfo} setLoginInfo={setLoginInfo}/>
-      {searchResults ? (
-        <GameList gameData={searchResults} />
-      ) : (
-        <GameList gameData={gameData?.results || []} />
-      )}
-      {/* <GameList gameData={gameData}/> */}
-      <NewUserForm />
-      {loginModalVisible &&
-      <LoginModal setLoginModalVisible={setLoginModalVisible} loginInfo={loginInfo} setLoginInfo={setLoginInfo} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}
+      <Router>
+        <NavBar 
+          onSearch={handleSearch} 
+          handleLoginModalVisible={handleLoginModalVisible} 
+          isLoggedIn={isLoggedIn} 
+          setIsLoggedIn={setIsLoggedIn} 
+          loginInfo={loginInfo} 
+          setLoginInfo={setLoginInfo}
+        />
+        <Routes>
+          <Route
+            path='/'
+            element={searchResults ? (
+          <GameList gameData={searchResults} />
+        ) : (
+          <GameList gameData={gameData?.results || []} />
+        )}
+          />
+          <Route
+            path='/profile'
+            element={<Profile />}
+          />
+          <Route 
+            path='/myshelf'
+            element={<MyShelf />}
+          />
+        </Routes>
+        <NewUserForm />
+        {loginModalVisible &&
+        <LoginModal 
+          setLoginModalVisible={setLoginModalVisible} 
+          loginInfo={loginInfo} 
+          setLoginInfo={setLoginInfo} 
+          isLoggedIn={isLoggedIn} 
+          setIsLoggedIn={setIsLoggedIn}
+        />}
+      </Router>
     </PrimeReactProvider>
   );
 }
