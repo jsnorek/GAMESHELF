@@ -5,21 +5,29 @@ import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import { DeferredContent } from 'primereact/deferredcontent';
 import NavBar from './components/NavBar';     
 import GameList from './components/GameList';
-import NewUserForm from './components/NewUserForm';
 import LoginModal from './components/LoginModal';
 import Profile from './components/Profile';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MyShelf from './components/MyShelf';
+import NewUserForm from './components/NewUserForm';
 
 function App() {
   const [gameData, setGameData] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
 });
+  const [newUserInfo, setNewUserInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+    name: "",
+    city: ""
+  });
 
   // on component mount fetch game data from API
   const gameList = async () => {
@@ -70,6 +78,12 @@ const handleLoginModalVisible = () => {
   console.log('login modal is visible', loginModalVisible);
 }
 
+const handleNewUserModalVisible = () => {
+  setNewUserModalVisible(true);
+  setLoginModalVisible(false);
+  console.log('New user modal is visible', newUserModalVisible);
+}
+
   return (
     <PrimeReactProvider>
       <Router>
@@ -99,7 +113,6 @@ const handleLoginModalVisible = () => {
             element={<MyShelf />}
           />
         </Routes>
-        <NewUserForm />
         {loginModalVisible &&
         <LoginModal 
           setLoginModalVisible={setLoginModalVisible} 
@@ -107,7 +120,15 @@ const handleLoginModalVisible = () => {
           setLoginInfo={setLoginInfo} 
           isLoggedIn={isLoggedIn} 
           setIsLoggedIn={setIsLoggedIn}
+          handleNewUserModalVisible={handleNewUserModalVisible}
         />}
+        {newUserModalVisible &&
+            <NewUserForm 
+              setLoginModalVisible={setLoginModalVisible} 
+              setNewUserModalVisible={setNewUserModalVisible} 
+              newUserInfo={newUserInfo} 
+              setNewUserInfo={setNewUserInfo}
+            />}
       </Router>
     </PrimeReactProvider>
   );

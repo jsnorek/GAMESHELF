@@ -2,8 +2,11 @@
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NewUserForm from "./NewUserForm";
 
-function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn }) {
+function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible }) {
+
+    // const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
 
     // Function to turn login modal off for cancel button
     const turnLoginModalOff = () => {
@@ -15,6 +18,12 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
         const { name, value } = e.target;
         setLoginInfo((prevLogin) => ({...prevLogin, [name]: value}));
     };
+
+    // const handleNewUserModalVisible = () => {
+    //     setNewUserModalVisible(true);
+    //     setLoginModalVisible(false);
+    //     console.log('New user modal is visible', newUserModalVisible);
+    // }
 
     // Handles submit button for login modal. On click, it compares user input to database and upon
     // Confirming the match, the rest of user information will be pulled from database
@@ -71,7 +80,7 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
             <Button label="Login" onClick={handleLoginSubmit}/>
             <Button label="Cancel" onClick={turnLoginModalOff}/>
             <p>New user?</p>
-            <Button label="Sign Up"/>
+            <Button label="Register" onClick={handleNewUserModalVisible}/>
         </div>
     )
 }
