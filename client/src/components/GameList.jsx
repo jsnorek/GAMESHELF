@@ -1,13 +1,12 @@
 import Game from "./Game";
 
 function GameList({ gameData }) {
-
+// If no data in gameData prop then render "Loading game...", otherwise render the game data via Game.jsx template
     if (!gameData ) {
         return <p>Loading games...</p>
     }
-    // const filteredGames = gameData.filter(game => !game.name.toLowerCase().includes('undefined' || 'u-ndefined'));
-
     console.log('game data from gamelist', gameData);
+    // Map through gameData and assign key value pair for each
     return (
         <div className="game-list">
             <h2>Highest Rated Games</h2>

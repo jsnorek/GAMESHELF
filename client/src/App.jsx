@@ -21,7 +21,7 @@ function App() {
     password: ""
 });
 
-  // on component mount fetch data
+  // on component mount fetch game data from API
   const gameList = async () => {
     const url = `http://localhost:8080/`;
     const res = await fetch(url);
@@ -34,6 +34,7 @@ function App() {
     gameList();
   }, []);
 
+  // Fetches searched game data from API based on user input in the search bar
   const handleSearch = async (searchInput) => {
     if (!searchInput) {
       setSearchResults(null); // Resets search results if search bar is empty
@@ -55,11 +56,13 @@ function App() {
   // setSearchResults(filteredGames);
   };
   
+// To check what the game data looks like when rendered
 console.log(gameData, "State");
 if (gameData && gameData.results) {
   console.log("First game:", gameData.results[0]);
 }
 
+// Function to make the login modal visible 
 const handleLoginModalVisible = () => {
   setLoginModalVisible(true);
   console.log('login modal is visible', loginModalVisible);

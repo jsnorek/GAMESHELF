@@ -4,7 +4,7 @@ import axios from "axios";
 
 function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn }) {
 
-    // Turn login modal off for cancel button
+    // Function to turn login modal off for cancel button
     const turnLoginModalOff = () => {
         setLoginModalVisible(false)
     }
