@@ -1,5 +1,7 @@
-import { Button } from "primereact/button";
 // Will eventually render the NewUserForm modal so users can create an account 
+
+import { Button } from "primereact/button";
+
 function NewUserForm() {
 
     return (

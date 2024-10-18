@@ -1,3 +1,5 @@
+// Appears at the top of the screen to hold homepage button, search bar, and login button.
+// It also renders MyShelf and Profile button after login
 import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
 import logo from '../assets/logo.png';

@@ -1,3 +1,4 @@
+// This component creates a template for each individual game rendering from API
 import { Button } from 'primereact/button';
 import 'primeicons/primeicons.css';
 

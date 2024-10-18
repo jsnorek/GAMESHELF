@@ -1,3 +1,5 @@
+// This component passes a list of game props to individual Game components. 
+// Takes the Game component and renders the list of games displayed on the homepage
 import Game from "./Game";
 
 function GameList({ gameData }) {

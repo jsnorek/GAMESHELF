@@ -50,6 +50,8 @@ function App() {
     } catch (error)  {
       console.error('Error searching games on client', error);
     }
+  // This is code I want to keep in case I need to use later - it searches only games that are currently
+  // Rendered on the screen. I may need it to search through favorites game list
   //   const filteredGames = gameData.results.filter((game) =>
   //   game.name.toLowerCase().includes(searchInput.toLowerCase())
   // );
