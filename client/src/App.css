@@ -70,3 +70,16 @@
   width: 75%;
   height: 300px;
 }
+
+.game-details-modal {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgb(95, 160, 105);
+  color: black;
+  z-index: 9;
+  position:fixed;
+  top:calc(50% - 200px);
+  left:calc(79% - 250px);
+  width: 75%;
+  height: 300px;
+}

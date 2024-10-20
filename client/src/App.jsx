@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MyShelf from './components/MyShelf';
 import NewUserForm from './components/NewUserForm';
 import GameDetailsModal from './components/GameDetailsModal';
+import axios from 'axios';
 
 function App() {
   const [gameData, setGameData] = useState(null);
@@ -19,6 +20,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [newUserModalVisible,setNewUserModalVisible,] = useState(false);
   const [gameDetailsModalVisible, setGameDetailsModalVisible] = useState(false);
+  const [selectedGameId, setSelectedGameId] = useState("");
+  const [gameDetails, setGameDetails] = useState("");
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
@@ -86,10 +89,31 @@ const handleNewUserModalVisible = () => {
   console.log('New user modal is visible', newUserModalVisible);
 };
 
-const handleGameDetailsModalVisible = () => {
+const handleGameDetailsModalVisible = (gameId) => {
+  setSelectedGameId(gameId);
   setGameDetailsModalVisible(true);
   console.log('Game details modal is visible', gameDetailsModalVisible);
+  console.log('game details id:', selectedGameId)
 };
+
+// Fetch game details based on game_id
+useEffect(() => {
+  const fetchGameDetails = async () => {
+    if(selectedGameId) {
+      console.log('Fetching details for game id:', selectedGameId);
+      try {
+        const response = await axios.get(`http://localhost:8080/game/${selectedGameId}`);
+        console.log('Game details fetched for:', response.data);
+        setGameDetails(response.data);
+      } catch (error) {
+        console.error('Error fetching game details:', error);
+      }
+    }
+  };
+  fetchGameDetails();
+}, [selectedGameId]);
+
+console.log('game details from the app', gameDetails);
 
   return (
     <PrimeReactProvider>
@@ -121,7 +145,7 @@ const handleGameDetailsModalVisible = () => {
           />
         </Routes>
         {gameDetailsModalVisible &&
-          <GameDetailsModal />}
+          <GameDetailsModal setGameDetailsModalVisible={setGameDetailsModalVisible} gameDetails={gameDetails}/>}
         {loginModalVisible &&
         <LoginModal 
           setLoginModalVisible={setLoginModalVisible} 

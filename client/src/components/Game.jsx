@@ -14,7 +14,7 @@ function Game({ game, handleGameDetailsModalVisible }) {
             <h3>{game.name}</h3>
             <p>Metacritic Rating: {game.metacritic}</p>
         </div>
-        <Button label='details' onClick={handleGameDetailsModalVisible}/>
+        <Button label='details' onClick={() => handleGameDetailsModalVisible(game.id)}/>
         <Button icon="pi pi-heart" rounded text severity="help" aria-label="Favorite" />
         </div>
     )
