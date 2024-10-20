@@ -10,13 +10,15 @@ import Profile from './components/Profile';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MyShelf from './components/MyShelf';
 import NewUserForm from './components/NewUserForm';
+import GameDetailsModal from './components/GameDetailsModal';
 
 function App() {
   const [gameData, setGameData] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
+  const [newUserModalVisible,setNewUserModalVisible,] = useState(false);
+  const [gameDetailsModalVisible, setGameDetailsModalVisible] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
@@ -76,13 +78,18 @@ if (gameData && gameData.results) {
 const handleLoginModalVisible = () => {
   setLoginModalVisible(true);
   console.log('login modal is visible', loginModalVisible);
-}
+};
 
 const handleNewUserModalVisible = () => {
   setNewUserModalVisible(true);
   setLoginModalVisible(false);
   console.log('New user modal is visible', newUserModalVisible);
-}
+};
+
+const handleGameDetailsModalVisible = () => {
+  setGameDetailsModalVisible(true);
+  console.log('Game details modal is visible', gameDetailsModalVisible);
+};
 
   return (
     <PrimeReactProvider>
@@ -99,9 +106,9 @@ const handleNewUserModalVisible = () => {
           <Route
             path='/'
             element={searchResults ? (
-          <GameList gameData={searchResults} />
+          <GameList gameData={searchResults} handleGameDetailsModalVisible={handleGameDetailsModalVisible}/>
         ) : (
-          <GameList gameData={gameData?.results || []} />
+          <GameList gameData={gameData?.results || []} handleGameDetailsModalVisible={handleGameDetailsModalVisible} />
         )}
           />
           <Route
@@ -113,6 +120,8 @@ const handleNewUserModalVisible = () => {
             element={<MyShelf />}
           />
         </Routes>
+        {gameDetailsModalVisible &&
+          <GameDetailsModal />}
         {loginModalVisible &&
         <LoginModal 
           setLoginModalVisible={setLoginModalVisible} 
