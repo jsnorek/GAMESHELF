@@ -22,6 +22,7 @@ function App() {
   const [gameDetailsModalVisible, setGameDetailsModalVisible] = useState(false);
   const [selectedGameId, setSelectedGameId] = useState("");
   const [gameDetails, setGameDetails] = useState("");
+  const [gameReviews, setGameReviews] = useState([]);
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
@@ -115,6 +116,24 @@ useEffect(() => {
 
 console.log('game details from the app', gameDetails);
 
+useEffect(() => {
+  const fetchGameReviews = async () => {
+    if(selectedGameId) {
+      console.log('Fetching game reviews for game id;', selectedGameId);
+      try {
+        const response = await axios.get(`http://localhost:8080/game-reviews/${selectedGameId}`);
+        console.log('Game reviews fetched for:', response.data);
+        setGameReviews(response.data);
+      } catch (error) {
+        console.error('Error fetching game reviews:', error);
+      }
+    }
+  };
+  fetchGameReviews();
+}, [selectedGameId]);
+
+console.log('game reviews from the app', gameReviews);
+
   return (
     <PrimeReactProvider>
       <Router>
@@ -145,7 +164,11 @@ console.log('game details from the app', gameDetails);
           />
         </Routes>
         {gameDetailsModalVisible &&
-          <GameDetailsModal setGameDetailsModalVisible={setGameDetailsModalVisible} gameDetails={gameDetails}/>}
+          <GameDetailsModal 
+            setGameDetailsModalVisible={setGameDetailsModalVisible} 
+            gameDetails={gameDetails}
+            gameReviews={gameReviews}
+          />}
         {loginModalVisible &&
         <LoginModal 
           setLoginModalVisible={setLoginModalVisible} 

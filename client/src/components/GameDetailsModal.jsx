@@ -1,8 +1,11 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 
-function GameDetailsModal({ setGameDetailsModalVisible, gameDetails }) {
+function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews }) {
 
+    if (!gameDetails) {
+        return <p>Loading game details...</p>
+    }
     const turnGameDetailsModalOff = () => {
         setGameDetailsModalVisible(false);
     }
@@ -31,6 +34,9 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails }) {
                         ))}</p>
                         <p>Publisher(s): {gameDetails.publishers.map((publisher, index) => (
                             <li key={index}>{publisher.name}</li>
+                        ))}</p>
+                        <p>Reviews: {gameReviews.map((reviews, index) => (
+                            <li key={index}>{reviews.review_text}</li>
                         ))}</p>
                         </>
                     ) : (
