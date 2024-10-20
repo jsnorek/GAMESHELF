@@ -82,4 +82,7 @@
   left:calc(79% - 250px);
   width: 75%;
   height: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
 }
