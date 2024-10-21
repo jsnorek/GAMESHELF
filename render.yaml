@@ -20,10 +20,12 @@ services:
     env: static
     repo: https://github.com/jsnorek/techtonica-projects.git
     staticPublishPath: client/build
-    buildCommand: cd client && npm install && npm run build
+    buildCommand: |
+      cd client && npm install && npm run build
     envVars: []
 
 databases:
   - name: db
     plan: free
     ipAllowList: []
+
