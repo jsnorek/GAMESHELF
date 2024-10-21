@@ -72,7 +72,7 @@ app.get('/favorites/:userId', async (req, res) => {
 app.get('/reviews/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
-        const queryText = 'SELECT review_text, rating FROM reviews WHERE user_id = $1';
+        const queryText = 'SELECT r.review_text, r.rating, u.username, r.created_at FROM reviews r JOIN users u ON r.user_id = u.user_id WHERE r.user_id = $1';
         const { rows } = await db.query(queryText, [userId]);
         if (rows.length === 0) {
             return res.status(404).send({ message: 'No reviews found for this user' });

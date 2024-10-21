@@ -134,6 +134,10 @@ useEffect(() => {
 
 console.log('game reviews from the app', gameReviews);
 
+useEffect(() => {
+  console.log('TESTER game reviews from the app:', gameReviews);
+}, [gameReviews]);
+
   return (
     <PrimeReactProvider>
       <Router>
