@@ -35,11 +35,25 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                         <p>Publisher(s): {gameDetails.publishers.map((publisher, index) => (
                             <li key={index}>{publisher.name}</li>
                         ))}</p>
-                        {gameReviews && gameReviews.length > 0 ? (
+                        {/* {gameReviews && gameReviews.length > 0 ? (
                                 <p>Reviews: {gameReviews.map((review, index) => (
                                     <li key={index}>{review.review_text}</li>
                                 ))}</p>
                             ) : (
+                                <p>No reviews available</p>
+                            )} */}
+                            {gameReviews && gameReviews.length > 0 ? (
+                                <ul>
+                                    {gameReviews.map((review, index) => (
+                                        <li key={index}>
+                                            <strong>Rating: </strong> {review.rating} <br />
+                                            <strong>Review: </strong> {review.review_text}
+                                            <p>- {review.username}</p>
+                                            <p>{new Date(review.created_at).toLocaleDateString()}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+                                ) : (
                                 <p>No reviews available</p>
                             )}
                         </>
