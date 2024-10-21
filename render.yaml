@@ -3,7 +3,7 @@ services:
     plan: free
     type: web
     env: node
-    repo: https://github.com/jsnorek/GAMESHELF
+    repo: https://github.com/jsnorek/GAMESHELF/tree/newUserForm
     buildCommand: cd client && npm install && npm run build && cd ../server && npm install
     startCommand: cd server && npm run migrate && node server.js && cd client && npm run build
     envVars:
