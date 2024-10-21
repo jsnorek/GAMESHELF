@@ -11,7 +11,7 @@ function Game({ game, handleGameDetailsModalVisible }) {
         <div>
         <div key={game.id} className='game'>
             <img src={game.background_image} alt={game.name} style={{ width: '200px' }}/>
-            <h3>{game.name}</h3>
+            <h3 className='game-title'>{game.name}</h3>
             <p>Metacritic Rating: {game.metacritic}</p>
         </div>
         <Button label='details' onClick={() => handleGameDetailsModalVisible(game.id)}/>

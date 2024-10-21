@@ -123,7 +123,7 @@ useEffect(() => {
       try {
         const response = await axios.get(`http://localhost:8080/game-reviews/${selectedGameId}`);
         console.log('Game reviews fetched for:', response.data);
-        setGameReviews(response.data);
+        setGameReviews(response.data || '');
       } catch (error) {
         console.error('Error fetching game reviews:', error);
       }

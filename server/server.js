@@ -91,7 +91,8 @@ app.get('/game-reviews/:gameId', async (req, res) => {
         const queryText = 'SELECT review_text, rating FROM reviews WHERE game_id = $1';
         const { rows } = await db.query(queryText, [gameId]);
         if(rows.length === 0) {
-            return res.status(404).send({ message: 'No reviews found for this game' });
+            return res.status(200).send('');
+            // return res.status(404).send({ message: 'No reviews found for this game' });
         }
         res.status(200).json(rows);
     } catch (error) {

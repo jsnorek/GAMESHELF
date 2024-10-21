@@ -35,9 +35,13 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                         <p>Publisher(s): {gameDetails.publishers.map((publisher, index) => (
                             <li key={index}>{publisher.name}</li>
                         ))}</p>
-                        <p>Reviews: {gameReviews.map((reviews, index) => (
-                            <li key={index}>{reviews.review_text}</li>
-                        ))}</p>
+                        {gameReviews && gameReviews.length > 0 ? (
+                                <p>Reviews: {gameReviews.map((review, index) => (
+                                    <li key={index}>{review.review_text}</li>
+                                ))}</p>
+                            ) : (
+                                <p>No reviews available</p>
+                            )}
                         </>
                     ) : (
                         <p>No game details available</p>
