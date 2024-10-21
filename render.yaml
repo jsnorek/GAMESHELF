@@ -5,7 +5,7 @@ services:
     env: node
     repo: https://github.com/jsnorek/techtonica-projects.git
     buildCommand: cd client && npm install && npm run build && cd ../server && npm install
-    startCommand: cd server && npm run migrate && node server.js
+    startCommand: cd server && npm run migrate && node server.js && cd client && npm run build
     envVars:
       - key: DATABASE_URL
         fromDatabase:
