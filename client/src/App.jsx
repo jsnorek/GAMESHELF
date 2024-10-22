@@ -191,7 +191,11 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           />
           <Route
             path='/profile'
-            element={<Profile fullLoggedInUserData={fullLoggedInUserData}/>}
+            element={<Profile 
+              fullLoggedInUserData={fullLoggedInUserData} 
+              setFullLoggedInUserData={setFullLoggedInUserData}
+              loggedInUser={loggedInUser}
+            />}
           />
           <Route 
             path='/myshelf'

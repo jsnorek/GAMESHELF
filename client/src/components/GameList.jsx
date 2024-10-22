@@ -3,6 +3,7 @@
 import Game from "./Game";
 
 function GameList({ gameData, handleGameDetailsModalVisible }) {
+    
 // If no data in gameData prop then render "Loading game...", otherwise render the game data via Game.jsx template
     if (!gameData ) {
         return <p>Loading games...</p>

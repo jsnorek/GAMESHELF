@@ -21,13 +21,14 @@ app.use(bodyParser.json());
 //api key
 const api_key = process.env.api_key
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+//FOR RENDER
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
-})
+// app.use(express.static(path.join(__dirname, '../client/dist')));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
+// })
 
 // test route
 // app.get("/", (req, res) => {
