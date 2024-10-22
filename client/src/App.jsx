@@ -23,6 +23,7 @@ function App() {
   const [selectedGameId, setSelectedGameId] = useState("");
   const [gameDetails, setGameDetails] = useState("");
   const [gameReviews, setGameReviews] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState();
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
@@ -138,6 +139,23 @@ useEffect(() => {
   console.log('TESTER game reviews from the app:', gameReviews);
 }, [gameReviews]);
 
+useEffect(() => {
+  const fetchAllUserData = async () => {
+    if(isLoggedIn && loggedInUser.user_id) {
+      console.log('Fetching all logged in user data', loggedInUser.user_id);
+      try {
+        const response = await axios.get(`http://localhost:8080/user-info/${loggedInUser.user_id}`);
+        console.log('User data fetched for:', response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+  };
+  fetchAllUserData();
+}, [isLoggedIn, loggedInUser.user_id]);
+
+console.log('THIS is the logged in user info', loggedInUser);
+
   return (
     <PrimeReactProvider>
       <Router>
@@ -181,6 +199,7 @@ useEffect(() => {
           isLoggedIn={isLoggedIn} 
           setIsLoggedIn={setIsLoggedIn}
           handleNewUserModalVisible={handleNewUserModalVisible}
+          setLoggedInUser={setLoggedInUser}
         />}
         {newUserModalVisible &&
             <NewUserForm 

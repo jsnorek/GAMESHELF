@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NewUserForm from "./NewUserForm";
 
-function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible }) {
+function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible, setLoggedInUser }) {
 
     // const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
 
@@ -38,6 +38,7 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
             if (response.status === 200) {
                 const user = response.data;
                 setIsLoggedIn(true);
+                setLoggedInUser(user);
                 setLoginModalVisible(false);
                 console.log("Login successful", user);
             } else {
