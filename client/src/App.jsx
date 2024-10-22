@@ -24,6 +24,7 @@ function App() {
   const [gameDetails, setGameDetails] = useState("");
   const [gameReviews, setGameReviews] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState();
+  const [fullLoggedInUserData, setFullLoggedInUserData] = useState();
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
@@ -141,20 +142,24 @@ useEffect(() => {
 
 useEffect(() => {
   const fetchAllUserData = async () => {
-    if(isLoggedIn && loggedInUser.user_id) {
+    // if(isLoggedIn && loggedInUser.user_id) {
+      if(isLoggedIn, loggedInUser) {
       console.log('Fetching all logged in user data', loggedInUser.user_id);
       try {
         const response = await axios.get(`http://localhost:8080/user-info/${loggedInUser.user_id}`);
         console.log('User data fetched for:', response.data);
+        setFullLoggedInUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     }
   };
   fetchAllUserData();
-}, [isLoggedIn, loggedInUser.user_id]);
+// }, [isLoggedIn, loggedInUser.user_id]);
+}, [isLoggedIn, loggedInUser]);
 
 console.log('THIS is the logged in user info', loggedInUser);
+console.log('This is the FULL logged in user data', fullLoggedInUserData);
 
   return (
     <PrimeReactProvider>
@@ -178,7 +183,7 @@ console.log('THIS is the logged in user info', loggedInUser);
           />
           <Route
             path='/profile'
-            element={<Profile />}
+            element={<Profile fullLoggedInUserData={fullLoggedInUserData}/>}
           />
           <Route 
             path='/myshelf'
