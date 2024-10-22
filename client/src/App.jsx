@@ -66,13 +66,21 @@ function App() {
     } catch (error)  {
       console.error('Error searching games on client', error);
     }
+  };
+
+  useEffect(() => {
+    if (searchResults === '') {
+      setSearchResults(null);
+      console.log('Search input was reset', searchResults);
+    }
+  }, [searchResults]);
+
   // This is code I want to keep in case I need to use later - it searches only games that are currently
   // Rendered on the screen. I may need it to search through favorites game list
   //   const filteredGames = gameData.results.filter((game) =>
   //   game.name.toLowerCase().includes(searchInput.toLowerCase())
   // );
   // setSearchResults(filteredGames);
-  };
   
 // To check what the game data looks like when rendered
 console.log(gameData, "State");
