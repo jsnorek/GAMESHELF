@@ -6,7 +6,7 @@ services:
     repo: https://github.com/jsnorek/GAMESHELF.git
     buildCommand: cd client && npm install && npm run build && cd ../server && npm install
     # startCommand: cd server && npm run migrate && node server.js && cd client && npm run build
-    startCommmand: cd server && node server.js
+    startCommmand: cd client && npm run build && cd ../server && node server.js
     envVars:
       - key: DATABASE_URL
         fromDatabase:
