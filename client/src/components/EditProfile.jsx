@@ -1,18 +1,33 @@
 import { Button } from "primereact/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserProfile, loggedInUser }) {
-
+    // Add a condition to check if the data exists
+    const userData = fullLoggedInUserData && fullLoggedInUserData.length > 0 ? fullLoggedInUserData[0] : null;
     const [updatedUserData, setUpdatedUserData] = useState({
-        name: fullLoggedInUserData[0].name,
-        username: fullLoggedInUserData[0].username,
-        email: fullLoggedInUserData[0].email,
-        city: fullLoggedInUserData[0].city
+        name: userData.name,
+        username: userData.username,
+        email: userData.email,
+        city: userData.city
     });
+
+    useEffect(() => {
+        if (userData) {
+            setUpdatedUserData({
+                name: userData.name || "",
+                username: userData.username || "",
+                email: userData.email || "",
+                city: userData.city || ""
+            });
+        }
+    }, [userData]);
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        setUpdatedUserData({...updatedUserData, [name]: value });
+        setUpdatedUserData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
 
     const handleSubmit = (e) => {

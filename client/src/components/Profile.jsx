@@ -8,8 +8,8 @@ import axios from "axios";
 function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }) {
     const [userReviewsListVisible, setUserReviewsListVisible] = useState(false);
     const [editProfileVisible, setEditProfileVisible] = useState(false);
-
-    const userData = fullLoggedInUserData[0];
+    // Add a condition to check if the data exists
+    const userData = fullLoggedInUserData && fullLoggedInUserData.length > 0 ? fullLoggedInUserData[0] : null;
 
     const handleUserReviewsVisible = () => {
         setUserReviewsListVisible(true)
@@ -64,6 +64,11 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
     //     ) : (
     //     <p>No reviews available</p>
     // )}
+
+    // Render only if userData exists
+    if (!userData) {
+        return <div>Loading user data...</div>;
+    }
 
     return (
         <div>
