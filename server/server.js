@@ -27,7 +27,7 @@ const api_key = process.env.api_key
 // });
 
 //request for top games to list on homepage
-app.get("/", async (req, res) => {
+app.get("/api", async (req, res) => {
     console.log('root path triggered');
     const defaultGames = '&metacritic=80,100';
     const url = `https://api.rawg.io/api/games?key=${api_key}${defaultGames}`;
