@@ -1,24 +1,31 @@
-// Will eventually render the NewUserForm modal so users can create an account 
+// NewUserForm component renders a form that allows a new user to create an account.
+// It includes inputs for username, email, password, name, and city, 
+// and sends the data to the server to create a new user in the database.
+// It also includes buttons to cancel registration or switch to the login modal.
 
 import { Button } from "primereact/button";
 import axios from "axios";
 
 function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo, setNewUserInfo }) {
 
+    // Switches the view to the login modal when the 'Sign In' button is clicked
     const handleLoginModalVisible = () => {
         setLoginModalVisible(true);
         setNewUserModalVisible(false);
     };
 
+    // Closes the new user modal when the 'Cancel' button is clicked
     const handleNewUserModalVisible = () => {
         setNewUserModalVisible(false);
     };
 
+    // Handles input change events and updates the newUserInfo state with the current input field value
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNewUserInfo((prevLogin) => ({...prevLogin, [name]: value}));
     };
 
+    // Submits the new user data to the server to create an account
     const handleNewUserSubmit = async (e) => {
         e.preventDefault();
         try {

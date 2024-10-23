@@ -1,4 +1,6 @@
-// Will eventually render the Profile page with list of user's information from the database
+// Profile component is responsible for rendering a user's profile page.
+// It displays user information, allows editing of the profile, 
+// shows the user's reviews, and provides a button to navigate to their 'MyShelf' page.
 
 import { Button } from "primereact/button";
 import { useState } from "react";
@@ -8,30 +10,38 @@ import GameReviewList from "./GameReviewList";
 import { useNavigate } from "react-router-dom";
 
 function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }) {
+
+    // State to control the visibility of the user's review list and the edit profile modal
     const [userReviewsListVisible, setUserReviewsListVisible] = useState(false);
     const [editProfileVisible, setEditProfileVisible] = useState(false);
-    // Add a condition to check if the data exists
+    
+    // Get the first user from the fullLoggedInUserData array (if available)
     const userData = fullLoggedInUserData && fullLoggedInUserData.length > 0 ? fullLoggedInUserData[0] : null;
 
+     // Toggles the visibility of the user's review list
     const handleUserReviewsVisible = () => {
         setUserReviewsListVisible(true)
         console.log('user review list is visible', userReviewsListVisible);
       };
 
+    // Closes the user review modal
     const closeUserReviewModal = () => {
         setUserReviewsListVisible(false)
     };
 
+    // Toggles the visibility of the edit profile modal
     const handleEditProfileVisible = () => {
         setEditProfileVisible(true)
     };
 
+     // Closes the edit profile modal
     const closeEditProfile = () => {
         setEditProfileVisible(false)
     };
 
      // To navigate to different pages
      const navigate = useNavigate();
+
     // Navigates to the MyShelf page for the MyShelf button
     const handleMyShelfClick = () => {
         navigate('/myshelf');
@@ -52,6 +62,7 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
     //     }  
     // };
 
+    // Updates the user profile in the database and updates the state after successful PATCH request
     async function updateUserProfile(userId, updatedUserData) {
         try {
             const response = await axios.patch(`http://localhost:8080/users/${userId}`, updatedUserData);

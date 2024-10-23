@@ -1,14 +1,17 @@
-// Pop up to prompt user login 
+// This component renders a login modal where users can enter their username and password to log in.
+// It also provides a button to switch to a registration form for new users.
+// On successful login, it updates the parent component's state and closes the modal.
+
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import NewUserForm from "./NewUserForm";
+// import NewUserForm from "./NewUserForm";
 
 function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible, setLoggedInUser }) {
 
     // const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
 
-    // Function to turn login modal off for cancel button
+    // Close the login modal by setting its visibility to false.
     const turnLoginModalOff = () => {
         setLoginModalVisible(false)
     }

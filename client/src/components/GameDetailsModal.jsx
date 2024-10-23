@@ -1,3 +1,7 @@
+// This component renders a modal that displays detailed information about a selected game.
+// It includes game descriptions, platforms, genres, publishers, and reviews.
+// If the user is logged in, they can also write a review.
+
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import GameReviewForm from "./GameReviewForm";
@@ -5,22 +9,23 @@ import { useState } from "react";
 import GameReviewList from "./GameReviewList";
 
 function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews, isLoggedIn, loggedInUser, setNewReviewSubmitted }) {
-
+    
+    // State to control the visibility of the GameReviewForm component.
     const [gameReviewFormVisible, setGameReviewFormVisible] = useState(false)
-
+    
+    // If no game details are provided, display a loading message until the data is available.
     if (!gameDetails) {
         return <p>Loading game details...</p>
     }
+
+    // Function to close the GameDetailsModal by setting its visibility to false.
     const turnGameDetailsModalOff = () => {
         setGameDetailsModalVisible(false);
     }
 
     console.log('these are the game details in the modal', gameDetails)
 
-    // const platformsList = gameDetails?.platforms?.map((platform, index) => (
-    //     <li key={index}>{platform.platform.name}</li>
-    // ));
-
+    // Function to make the review form visible when the user clicks "Write a Review".
     const handleGameReviewFormVisible = () => {
         setGameReviewFormVisible(true);
     }

@@ -1,9 +1,12 @@
-// This component creates a template for each individual game rendering from API
+// This component creates a template for each individual game rendering from API.
+// It displays the game's image, title, and rating, with buttons for viewing details and marking as favorite.
+
 import { Button } from 'primereact/button';
 import 'primeicons/primeicons.css';
 
 function Game({ game, handleGameDetailsModalVisible }) {
-    // If no data in game prop then render "Loading game...", otherwise render the game data
+   
+    // If no data in game prop then render "Loading game...", otherwise render the game data.
     if (!game) {
         return <p>Loading game...</p>
     }

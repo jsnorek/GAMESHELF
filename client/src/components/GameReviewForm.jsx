@@ -1,9 +1,14 @@
+// Allows logged in user to write a game review for a specific game.
+// It includes inputs for rating and review text, and submits the data to the server when submitted.
+
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { useState } from "react";
 import axios from "axios";
 
 function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, setNewReviewSubmitted }) {
+    
+    // Initialize the review state with user_id, game_id, rating, and review_text
     const [review, setReview] = useState({
         user_id: loggedInUser.user_id,
         game_id: gameDetails.id,
@@ -11,24 +16,32 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
         review_text: "",
     });
 
-    const clearForm = () => {
-        setReview({
-            user_id: "",
-            game_id: "",
-            rating: "",
-            review_text: "" ,
-        });
-    };
+    // Clears the form inputs
+    // const clearForm = () => {
+    //     setReview({
+    //         user_id: "",
+    //         game_id: "",
+    //         rating: "",
+    //         review_text: "" ,
+    //     });
+    // };
 
+    // Close the review form modal by setting visibility state to false.
     const turnOffGameReviewFormVisible= () => {
         setGameReviewFormVisible(false);
     }
 
+    // Update the review state when form input fields are changed.
     const handleChange = (e) => {
         const { name, value } = e.target;
         setReview((prevReview) => ({...prevReview, [name]: value}));
     };
 
+    // To handle form submit on submit button click.
+    // It prevents the default form behavior (page refresh).
+    // The review data is passed in the request body.
+    // On submit, it notifies the parent component about the submission.
+    // After submitting, it hides the form by calling turnOffGameReviewFormVisible.
     const handleNewUserSubmit = async (e) => {
         e.preventDefault();
         try {

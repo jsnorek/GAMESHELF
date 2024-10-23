@@ -15,18 +15,24 @@ import axios from 'axios';
 // import dotenv from 'dotenv';
 
 function App() {
+
+  // State for managing game data and search results
   const [gameData, setGameData] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
+  // State for managing game data and search results
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [newUserModalVisible,setNewUserModalVisible,] = useState(false);
   const [gameDetailsModalVisible, setGameDetailsModalVisible] = useState(false);
+  // State for selected game and its details
   const [selectedGameId, setSelectedGameId] = useState("");
   const [gameDetails, setGameDetails] = useState("");
   const [gameReviews, setGameReviews] = useState([]);
+  // State for managing logged-in user information
   const [loggedInUser, setLoggedInUser] = useState();
   const [fullLoggedInUserData, setFullLoggedInUserData] = useState();
   const [newReviewSubmitted, setNewReviewSubmitted] = useState(false);
+  // State for handling login and new user forms
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
@@ -53,7 +59,7 @@ function App() {
 //     setGameData(data);
 // };
 
-  // on component mount fetch game data from API
+  // on component mount to fetch initial game data from API
   const gameList = async () => {
     const url = `http://localhost:8080/api`;
     // const url = `https://server-g79j.onrender.com/api`;
@@ -63,6 +69,7 @@ function App() {
     setGameData(data);
   };
 
+  // useEffect to fetch game data on component mount
   useEffect(() => {
     gameList();
   }, []);
@@ -85,9 +92,11 @@ function App() {
     }
   };
 
+  //resets gameList back to initial rendering if search bar is cleared
   useEffect(() => {
-    if (searchResults === '') {
-      setSearchResults(null);
+    if (searchResults === null) {
+      // setSearchResults(null);
+      gameList();
       console.log('Search input was reset', searchResults);
     }
   }, [searchResults]);
@@ -111,12 +120,14 @@ const handleLoginModalVisible = () => {
   console.log('login modal is visible', loginModalVisible);
 };
 
+// Function to toggle on newUserModalVisible to make it visible while also turning off loginModalVisible 
 const handleNewUserModalVisible = () => {
   setNewUserModalVisible(true);
   setLoginModalVisible(false);
   console.log('New user modal is visible', newUserModalVisible);
 };
 
+// Function to handle game details modal visibility based on selected game id
 const handleGameDetailsModalVisible = (gameId) => {
   setSelectedGameId(gameId);
   setGameDetailsModalVisible(true);
@@ -143,6 +154,7 @@ useEffect(() => {
 
 console.log('game details from the app', gameDetails);
 
+// Fetch game reviews based on selected game id
 useEffect(() => {
   const fetchGameReviews = async () => {
     if(selectedGameId) {
@@ -165,6 +177,7 @@ useEffect(() => {
   console.log('TESTER game reviews from the app:', gameReviews);
 }, [gameReviews]);
 
+// Fetch all user data based on logged-in user id
 useEffect(() => {
   const fetchAllUserData = async () => {
     // if(isLoggedIn && loggedInUser.user_id) {
