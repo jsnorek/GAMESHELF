@@ -21,15 +21,6 @@ app.use(bodyParser.json());
 //api key
 const api_key = process.env.api_key
 
-//FOR RENDER
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
-})
-
 // test route
 // app.get("/", (req, res) => {
 //     res.json("Hello to your gameshelf server!");
@@ -319,6 +310,15 @@ app.delete('/reviews/:user_id/:game_id', async (req, res) => {
         console.error('Error deleting review', error);
         res.status(500).send('Server error');
     }
+});
+
+//FOR RENDER
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
 });
 
 app.listen(PORT, () => {
