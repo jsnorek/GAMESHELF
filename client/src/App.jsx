@@ -26,6 +26,7 @@ function App() {
   const [gameReviews, setGameReviews] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState();
   const [fullLoggedInUserData, setFullLoggedInUserData] = useState();
+  const [newReviewSubmitted, setNewReviewSubmitted] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: ""
@@ -138,7 +139,7 @@ useEffect(() => {
     }
   };
   fetchGameDetails();
-}, [selectedGameId]);
+}, [selectedGameId, newReviewSubmitted]);
 
 console.log('game details from the app', gameDetails);
 
@@ -156,7 +157,7 @@ useEffect(() => {
     }
   };
   fetchGameReviews();
-}, [selectedGameId]);
+}, [selectedGameId, newReviewSubmitted]);
 
 console.log('game reviews from the app', gameReviews);
 
@@ -225,6 +226,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
             gameReviews={gameReviews}
             isLoggedIn={isLoggedIn}
             loggedInUser={loggedInUser}
+            setNewReviewSubmitted={setNewReviewSubmitted}
           />}
         {loginModalVisible &&
         <LoginModal 
