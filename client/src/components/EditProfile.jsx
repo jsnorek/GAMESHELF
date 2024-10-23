@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 
-function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserProfile, loggedInUser }) {
+function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserProfile, loggedInUser, closeEditProfile }) {
     // Add a condition to check if the data exists
     const userData = fullLoggedInUserData && fullLoggedInUserData.length > 0 ? fullLoggedInUserData[0] : null;
     const [updatedUserData, setUpdatedUserData] = useState({
@@ -75,6 +75,7 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                     />
                 </div>
                 <Button label="Submit"/>
+                <Button label="Cancel" onClick={closeEditProfile}/>
             </form>
         </div>
     )

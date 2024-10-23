@@ -21,7 +21,11 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
     };
 
     const handleEditProfileVisible = () => {
-        setEditProfileVisible(true);
+        setEditProfileVisible(true)
+    };
+
+    const closeEditProfile = () => {
+        setEditProfileVisible(false)
     };
 
     console.log('is user reviews list visible?', userReviewsListVisible);
@@ -79,7 +83,14 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
             <p>Email: {userData.email}</p>
             <p>City: {userData.city}</p>
             <Button label="Edit" onClick={handleEditProfileVisible}/>
-            {editProfileVisible && <EditProfile fullLoggedInUserData={fullLoggedInUserData} setEditProfileVisible={setEditProfileVisible} updateUserProfile={updateUserProfile} loggedInUser={loggedInUser}/>}
+            {editProfileVisible && 
+            <EditProfile 
+                fullLoggedInUserData={fullLoggedInUserData} 
+                setEditProfileVisible={setEditProfileVisible} 
+                updateUserProfile={updateUserProfile} 
+                loggedInUser={loggedInUser}
+                closeEditProfile={closeEditProfile}
+            />}
             {/* {editProfileVisible && <EditProfile fullLoggedInUserData={fullLoggedInUserData} setEditProfileVisible={setEditProfileVisible}/>} */}
             <Button label="My Reviews" onClick={handleUserReviewsVisible}/>
             {userReviewsListVisible && (userData.reviews && userData.reviews.length > 0 ? (
