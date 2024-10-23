@@ -39,7 +39,8 @@ function App() {
 
   // on component mount fetch game data from API
   const gameList = async () => {
-    const url = `http://localhost:8080/`;
+    // const url = `http://localhost:8080/`;
+    const url = `https://server-g79j.onrender.com//`;
     const res = await fetch(url);
     const data = await res.json();
     console.log("game data list", data);
