@@ -2,6 +2,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import GameReviewForm from "./GameReviewForm";
 import { useState } from "react";
+import GameReviewList from "./GameReviewList";
 
 function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews, isLoggedIn, loggedInUser, setNewReviewSubmitted }) {
 
@@ -53,7 +54,9 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                             )} */}
                             {isLoggedIn && <Button label="Write a Review" onClick={handleGameReviewFormVisible}/>}
                             {gameReviewFormVisible && <GameReviewForm setGameReviewFormVisible={setGameReviewFormVisible} gameDetails={gameDetails} loggedInUser={loggedInUser} setNewReviewSubmitted={setNewReviewSubmitted}/>}
-                            {gameReviews && gameReviews.length > 0 ? (
+                            {gameReviews && gameReviews.length > 0 &&
+                            <GameReviewList reviews={gameReviews}/>}
+                            {/* {gameReviews && gameReviews.length > 0 ? (
                                 <ul>
                                     {gameReviews.map((review, index) => (
                                         <li key={index}>
@@ -66,7 +69,7 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                                 </ul>
                                 ) : (
                                 <p>No reviews available</p>
-                            )}
+                            )} */}
                         </>
                     ) : (
                         <p>No game details available</p>

@@ -173,9 +173,11 @@ app.get('/user-info/:userId', async (req, res) => {
     }
 });
 
+// request to create a new user
 app.post('/users', async (req, res) => {
     const { username, email, password, name, city } = req.body;
     try {
+        // Check to see if email already exists in the database
         const checkEmailQuery = 'SELECT * FROM users WHERE email = $1';
         const emailCheck = await db.query(checkEmailQuery, [email]);
 

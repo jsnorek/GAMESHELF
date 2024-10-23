@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import { useState } from "react";
 import EditProfile from "./EditProfile";
 import axios from "axios";
+import GameReviewList from "./GameReviewList";
 
 function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }) {
     const [userReviewsListVisible, setUserReviewsListVisible] = useState(false);
@@ -93,7 +94,23 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
             />}
             {/* {editProfileVisible && <EditProfile fullLoggedInUserData={fullLoggedInUserData} setEditProfileVisible={setEditProfileVisible}/>} */}
             <Button label="My Reviews" onClick={handleUserReviewsVisible}/>
-            {userReviewsListVisible && (userData.reviews && userData.reviews.length > 0 ? (
+             {/* CORRECT ONE */}
+                {/* {userReviewsListVisible && userData.reviews && userData.reviews.length > 0 && 
+                <div className="user-reviews-list">
+                <GameReviewList reviews={userData.reviews}/>
+                <Button label="Back" onClick={closeUserReviewModal}/>
+                </div>} */}
+                 {userReviewsListVisible && (
+                <div className="user-reviews-list">
+                    {userData.reviews && userData.reviews.length > 0 ? (
+                        <GameReviewList reviews={userData.reviews}/>
+                    ) : (
+                        <p>No reviews available</p>
+                    )}
+                    <Button label="Back" onClick={closeUserReviewModal}/>
+                </div>
+            )}
+            {/* {userReviewsListVisible && (userData.reviews && userData.reviews.length > 0 ? (
                 <div className="user-reviews-list">
                     <ul>
                         {userData.reviews.map((review, index) => (
@@ -114,7 +131,7 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
                     <Button label="Back" onClick={closeUserReviewModal}/>
                 </div>
             )
-            )}
+            )} */}
         </div>
     )
 }
