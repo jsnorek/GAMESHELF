@@ -1,7 +1,11 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
+import GameReviewForm from "./GameReviewForm";
+import { useState } from "react";
 
-function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews }) {
+function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews, isLoggedIn }) {
+
+    const [gameReviewFormVisible, setGameReviewFormVisible] = useState(false)
 
     if (!gameDetails) {
         return <p>Loading game details...</p>
@@ -15,6 +19,11 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
     // const platformsList = gameDetails?.platforms?.map((platform, index) => (
     //     <li key={index}>{platform.platform.name}</li>
     // ));
+
+    const handleGameReviewFormVisible = () => {
+        setGameReviewFormVisible(true);
+    }
+
 
     return (
         <div className="game-details-modal">
@@ -42,6 +51,8 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                             ) : (
                                 <p>No reviews available</p>
                             )} */}
+                            {isLoggedIn && <Button label="Write a Review" onClick={handleGameReviewFormVisible}/>}
+                            {gameReviewFormVisible && <GameReviewForm setGameReviewFormVisible={setGameReviewFormVisible}/>}
                             {gameReviews && gameReviews.length > 0 ? (
                                 <ul>
                                     {gameReviews.map((review, index) => (

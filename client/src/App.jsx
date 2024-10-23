@@ -207,6 +207,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
             setGameDetailsModalVisible={setGameDetailsModalVisible} 
             gameDetails={gameDetails}
             gameReviews={gameReviews}
+            isLoggedIn={isLoggedIn}
           />}
         {loginModalVisible &&
         <LoginModal 

@@ -109,6 +109,22 @@
   padding: 20px;
 }
 
+.game-review-form {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgb(160, 95, 154);
+  color: black;
+  z-index: 7;
+  position:fixed;
+  top:calc(50% - 200px);
+  left:calc(79% - 250px);
+  width: 75%;
+  height: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
 ul {
   list-style-type: none;
 }
