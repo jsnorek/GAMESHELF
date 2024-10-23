@@ -5,6 +5,7 @@ import { useState } from "react";
 import EditProfile from "./EditProfile";
 import axios from "axios";
 import GameReviewList from "./GameReviewList";
+import { useNavigate } from "react-router-dom";
 
 function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }) {
     const [userReviewsListVisible, setUserReviewsListVisible] = useState(false);
@@ -28,6 +29,13 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
     const closeEditProfile = () => {
         setEditProfileVisible(false)
     };
+
+     // To navigate to different pages
+     const navigate = useNavigate();
+    // Navigates to the MyShelf page for the MyShelf button
+    const handleMyShelfClick = () => {
+        navigate('/myshelf');
+    }
 
     console.log('is user reviews list visible?', userReviewsListVisible);
 
@@ -94,6 +102,7 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
             />}
             {/* {editProfileVisible && <EditProfile fullLoggedInUserData={fullLoggedInUserData} setEditProfileVisible={setEditProfileVisible}/>} */}
             <Button label="My Reviews" onClick={handleUserReviewsVisible}/>
+            <Button label="MyShelf" onClick={handleMyShelfClick}/>
              {/* CORRECT ONE */}
                 {/* {userReviewsListVisible && userData.reviews && userData.reviews.length > 0 && 
                 <div className="user-reviews-list">

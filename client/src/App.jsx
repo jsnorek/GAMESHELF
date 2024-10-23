@@ -216,7 +216,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           />
           <Route 
             path='/myshelf'
-            element={<MyShelf />}
+            element={<MyShelf fullLoggedInUserData={fullLoggedInUserData}/>}
           />
         </Routes>
         {gameDetailsModalVisible &&
