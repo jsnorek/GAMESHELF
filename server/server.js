@@ -173,10 +173,16 @@ app.get('/user-info/:userId', async (req, res) => {
     }
 });
 
-// request for adding a new user to the database
 app.post('/users', async (req, res) => {
     const { username, email, password, name, city } = req.body;
     try {
+        const checkEmailQuery = 'SELECT * FROM users WHERE email = $1';
+        const emailCheck = await db.query(checkEmailQuery, [email]);
+
+        if(emailCheck.rows.length > 0) {
+            return res.status(400).json({ message: 'Email already exists in db' });
+        }
+
         const queryText = 'INSERT INTO users (username, email, password, name, city) VALUES ($1, $2, $3, $4, $5) RETURNING *';
         const { rows } = await db.query(queryText, [username, email, password, name, city]);
         res.status(200).json(rows[0]); 
