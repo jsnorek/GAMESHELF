@@ -313,13 +313,13 @@ app.delete('/reviews/:user_id/:game_id', async (req, res) => {
 });
 
 //FOR RENDER
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
-});
+// app.use(express.static(path.join(__dirname, '../client/dist')));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
+// });
 
 app.listen(PORT, () => {
     console.log(`Hi, server listening on ${PORT}`);

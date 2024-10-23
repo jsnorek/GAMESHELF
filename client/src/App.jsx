@@ -12,6 +12,7 @@ import MyShelf from './components/MyShelf';
 import NewUserForm from './components/NewUserForm';
 import GameDetailsModal from './components/GameDetailsModal';
 import axios from 'axios';
+// import dotenv from 'dotenv';
 
 function App() {
   const [gameData, setGameData] = useState(null);
@@ -37,10 +38,24 @@ function App() {
     city: ""
   });
 
+//   const gameList = async () => {
+//     // Determine the base URL
+//     const baseUrl = process.env.NODE_ENV === "development"
+//         ? "http://localhost:8080"
+//         : "https://server-g79j.onrender.com";
+    
+//     // Fetch the data from the backend
+//     const url = `${baseUrl}/api`;
+//     const res = await fetch(url);
+//     const data = await res.json();
+//     console.log("game data list", data);
+//     setGameData(data);
+// };
+
   // on component mount fetch game data from API
   const gameList = async () => {
-    // const url = `http://localhost:8080/`;
-    const url = `https://server-g79j.onrender.com/api`;
+    const url = `http://localhost:8080/api`;
+    // const url = `https://server-g79j.onrender.com/api`;
     const res = await fetch(url);
     const data = await res.json();
     console.log("game data list", data);
