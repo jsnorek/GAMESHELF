@@ -260,6 +260,7 @@ app.post('/login/', async (req, res) => {
 //     }
 // });
 
+// request to edit user information
 app.patch('/users/:user_id', async (req, res) => {
     const userId = req.params.user_id;
     const { username, email, password, name, city } = req.body;
@@ -321,13 +322,13 @@ app.delete('/reviews/:user_id/:game_id', async (req, res) => {
 });
 
 //FOR RENDER
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// app.use(express.static(path.join(__dirname, '../client/dist')));
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
-// });
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
+});
 
 app.listen(PORT, () => {
     console.log(`Hi, server listening on ${PORT}`);
