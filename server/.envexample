@@ -1,0 +1,8 @@
+api_key="your_api_key"
+DB_URL="postgresql://yourinfo"
+
+DB_USER="your_user"
+DB_NAME="gameshelf"
+DB_PORT="your_port"
+
+NODE_ENV="development"

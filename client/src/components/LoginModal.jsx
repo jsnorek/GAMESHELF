@@ -1,11 +1,17 @@
-// Pop up to prompt user login 
+// This component renders a login modal where users can enter their username and password to log in.
+// It also provides a button to switch to a registration form for new users.
+// On successful login, it updates the parent component's state and closes the modal.
+
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
+// import NewUserForm from "./NewUserForm";
 
-function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn }) {
+function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible, setLoggedInUser, baseURL }) {
 
-    // Function to turn login modal off for cancel button
+    // const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
+
+    // Close the login modal by setting its visibility to false.
     const turnLoginModalOff = () => {
         setLoginModalVisible(false)
     }
@@ -16,12 +22,19 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
         setLoginInfo((prevLogin) => ({...prevLogin, [name]: value}));
     };
 
+    // const handleNewUserModalVisible = () => {
+    //     setNewUserModalVisible(true);
+    //     setLoginModalVisible(false);
+    //     console.log('New user modal is visible', newUserModalVisible);
+    // }
+
     // Handles submit button for login modal. On click, it compares user input to database and upon
     // Confirming the match, the rest of user information will be pulled from database
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:8080/login/`, {
+            // const response = await axios.post(`http://localhost:8080/login/`, {
+                const response = await axios.post(`${baseURL}/login/`, {
                 username: loginInfo.username,
                 password: loginInfo.password
             });
@@ -29,6 +42,7 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
             if (response.status === 200) {
                 const user = response.data;
                 setIsLoggedIn(true);
+                setLoggedInUser(user);
                 setLoginModalVisible(false);
                 console.log("Login successful", user);
             } else {
@@ -71,7 +85,7 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
             <Button label="Login" onClick={handleLoginSubmit}/>
             <Button label="Cancel" onClick={turnLoginModalOff}/>
             <p>New user?</p>
-            <Button label="Sign Up"/>
+            <Button label="Register" onClick={handleNewUserModalVisible}/>
         </div>
     )
 }

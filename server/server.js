@@ -1,15 +1,17 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import db from './db/db-connection.js';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const { query } = db;
 
-dotenv.config();
-
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 
@@ -25,7 +27,7 @@ const api_key = process.env.api_key
 // });
 
 //request for top games to list on homepage
-app.get("/", async (req, res) => {
+app.get("/api", async (req, res) => {
     console.log('root path triggered');
     const defaultGames = '&metacritic=80,100';
     const url = `https://api.rawg.io/api/games?key=${api_key}${defaultGames}`;
@@ -88,10 +90,11 @@ app.get('/reviews/:userId', async (req, res) => {
 app.get('/game-reviews/:gameId', async (req, res) => {
     const gameId = req.params.gameId;
     try {
-        const queryText = 'SELECT review_text, rating FROM reviews WHERE game_id = $1';
+        const queryText = 'SELECT r.review_text, r.rating, u.username, r.created_at FROM reviews r JOIN users u ON r.user_id = u.user_id WHERE r.game_id = $1';
         const { rows } = await db.query(queryText, [gameId]);
         if(rows.length === 0) {
-            return res.status(404).send({ message: 'No reviews found for this game' });
+            return res.status(200).send('');
+            // return res.status(404).send({ message: 'No reviews found for this game' });
         }
         res.status(200).json(rows);
     } catch (error) {
@@ -117,10 +120,71 @@ app.get('/game/:gameId', async (req, res) => {
     }
 });
 
-// request for adding a new user to the database
+// request for fetching all user information including reviews and favorite games
+app.get('/user-info/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        // const queryText = '
+        // SELECT u.username, u.email, u.name, u.city, 
+        // r.game_id AS review_game_id, r.rating, r.review_text, r.created_at, 
+        // f.game_id AS favorite_game_id 
+        // FROM users u 
+        // LEFT JOIN reviews r ON u.user_id = r.user_id 
+        // LEFT JOIN favorites f ON u.user_id = f.user_id 
+        // WHERE u.user_id = $1';
+
+        // json_agg() function aggregates (collects multiple rows of data and turns them into an array) the result set into the array - each row of the result set will be an element
+        // json_build_object() function builds a JSON object for each review and then for each favorite
+        const queryText = `
+            SELECT 
+                u.username, u.email, u.name, u.city,
+                (
+                    SELECT json_agg( 
+                        json_build_object(
+                            'game_id', r.game_id,
+                            'rating', r.rating,
+                            'review_text', r.review_text,
+                            'created_at', r.created_at
+                        )
+                    )
+                    FROM reviews r
+                    WHERE r.user_id = u.user_id
+                ) AS reviews,
+                (
+                    SELECT json_agg(
+                        json_build_object(
+                            'game_id', f.game_id
+                        )
+                    )
+                    FROM favorites f
+                    WHERE f.user_id = u.user_id
+                ) AS favorites
+            FROM users u 
+            WHERE u.user_id = $1
+        `; 
+        const { rows } = await db.query(queryText, [userId]);
+        if (rows.length === 0) {
+            return res.status(200).send({ message: 'User not found' });
+        }
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Error fetching user information', error);
+        res.status(500).send('Server error');
+    }
+});
+
+// request to create a new user
 app.post('/users', async (req, res) => {
     const { username, email, password, name, city } = req.body;
     try {
+        // Check to see if email already exists in the database
+        const checkEmailQuery = 'SELECT * FROM users WHERE email = $1';
+        const emailCheck = await db.query(checkEmailQuery, [email]);
+
+        if(emailCheck.rows.length > 0) {
+            return res.status(400).json({ message: 'Email already exists in db' });
+        }
+
         const queryText = 'INSERT INTO users (username, email, password, name, city) VALUES ($1, $2, $3, $4, $5) RETURNING *';
         const { rows } = await db.query(queryText, [username, email, password, name, city]);
         res.status(200).json(rows[0]); 
@@ -196,6 +260,7 @@ app.post('/login/', async (req, res) => {
 //     }
 // });
 
+// request to edit user information
 app.patch('/users/:user_id', async (req, res) => {
     const userId = req.params.user_id;
     const { username, email, password, name, city } = req.body;
@@ -254,6 +319,15 @@ app.delete('/reviews/:user_id/:game_id', async (req, res) => {
         console.error('Error deleting review', error);
         res.status(500).send('Server error');
     }
+});
+
+//FOR RENDER
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
 });
 
 app.listen(PORT, () => {

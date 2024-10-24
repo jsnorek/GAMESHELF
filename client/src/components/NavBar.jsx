@@ -35,6 +35,7 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
             password: ""
         });
         setIsLoggedIn(false)
+        handleHomeClick();
         console.log('User has been logged out', loginInfo);
     };
     
