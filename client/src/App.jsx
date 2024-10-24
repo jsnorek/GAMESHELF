@@ -221,9 +221,9 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           <Route
             path='/'
             element={searchResults ? (
-          <GameList gameData={searchResults} handleGameDetailsModalVisible={handleGameDetailsModalVisible}/>
+          <GameList gameData={searchResults} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser}/>
         ) : (
-          <GameList gameData={gameData?.results || []} handleGameDetailsModalVisible={handleGameDetailsModalVisible} />
+          <GameList gameData={gameData?.results || []} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser}/>
         )}
           />
           <Route

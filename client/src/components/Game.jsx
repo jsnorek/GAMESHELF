@@ -4,12 +4,13 @@
 import { Button } from 'primereact/button';
 import 'primeicons/primeicons.css';
 
-function Game({ game, handleGameDetailsModalVisible }) {
+function Game({ game, handleGameDetailsModalVisible, userFavoritesGame }) {
    
     // If no data in game prop then render "Loading game...", otherwise render the game data.
     if (!game) {
         return <p>Loading game...</p>
     }
+
     return (
         <div>
         <div key={game.id} className='game'>
@@ -18,7 +19,7 @@ function Game({ game, handleGameDetailsModalVisible }) {
             <p>Metacritic Rating: {game.metacritic}</p>
         </div>
         <Button label='details' onClick={() => handleGameDetailsModalVisible(game.id)}/>
-        <Button icon="pi pi-heart" rounded text severity="help" aria-label="Favorite" />
+        <Button icon="pi pi-heart" rounded text severity="help" aria-label="Favorite" onClick={() => userFavoritesGame(game.id)}/> {/* Pass game.id here */}
         </div>
     )
 }
