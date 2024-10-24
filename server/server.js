@@ -1,14 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import db from './db/db-connection.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const { query } = db;
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
