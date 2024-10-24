@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 // import NewUserForm from "./NewUserForm";
 
-function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible, setLoggedInUser }) {
+function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible, setLoggedInUser, baseURL }) {
 
     // const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
 
@@ -33,7 +33,8 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:8080/login/`, {
+            // const response = await axios.post(`http://localhost:8080/login/`, {
+                const response = await axios.post(`${baseURL}/login/`, {
                 username: loginInfo.username,
                 password: loginInfo.password
             });

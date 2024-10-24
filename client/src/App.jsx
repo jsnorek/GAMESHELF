@@ -254,6 +254,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           setIsLoggedIn={setIsLoggedIn}
           handleNewUserModalVisible={handleNewUserModalVisible}
           setLoggedInUser={setLoggedInUser}
+          baseURL={baseURL}
         />}
         {newUserModalVisible &&
             <NewUserForm 
