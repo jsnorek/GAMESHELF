@@ -6,7 +6,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { useState } from "react";
 import axios from "axios";
 
-function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, setNewReviewSubmitted }) {
+function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, setNewReviewSubmitted, baseURL }) {
     
     // Initialize the review state with user_id, game_id, rating, and review_text
     const [review, setReview] = useState({
@@ -45,7 +45,8 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
     const handleNewUserSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:8080/reviews`, {
+            // const response = await axios.post(`http://localhost:8080/reviews`, {
+                const response = await axios.post(`${baseURL}/reviews`, {
                 user_id: review.user_id,
                 game_id: review.game_id,
                 rating: review.rating,

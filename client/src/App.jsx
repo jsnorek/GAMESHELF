@@ -145,7 +145,8 @@ useEffect(() => {
     if(selectedGameId) {
       console.log('Fetching details for game id:', selectedGameId);
       try {
-        const response = await axios.get(`http://localhost:8080/game/${selectedGameId}`);
+        // const response = await axios.get(`http://localhost:8080/game/${selectedGameId}`);
+        const response = await axios.get(`${baseURL}/game/${selectedGameId}`);
         console.log('Game details fetched for:', response.data);
         setGameDetails(response.data);
       } catch (error) {
@@ -164,7 +165,8 @@ useEffect(() => {
     if(selectedGameId) {
       console.log('Fetching game reviews for game id;', selectedGameId);
       try {
-        const response = await axios.get(`http://localhost:8080/game-reviews/${selectedGameId}`);
+        // const response = await axios.get(`http://localhost:8080/game-reviews/${selectedGameId}`);
+        const response = await axios.get(`${baseURL}/game-reviews/${selectedGameId}`);
         console.log('Game reviews fetched for:', response.data);
         setGameReviews(response.data || '');
       } catch (error) {
@@ -188,7 +190,8 @@ useEffect(() => {
       if(isLoggedIn, loggedInUser) {
       console.log('Fetching all logged in user data', loggedInUser.user_id);
       try {
-        const response = await axios.get(`http://localhost:8080/user-info/${loggedInUser.user_id}`);
+        // const response = await axios.get(`http://localhost:8080/user-info/${loggedInUser.user_id}`);
+        const response = await axios.get(`${baseURL}/user-info/${loggedInUser.user_id}`);
         console.log('User data fetched for:', response.data);
         setFullLoggedInUserData(response.data);
       } catch (error) {
@@ -229,11 +232,12 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
               fullLoggedInUserData={fullLoggedInUserData} 
               setFullLoggedInUserData={setFullLoggedInUserData}
               loggedInUser={loggedInUser}
+              baseURL={baseURL}
             />}
           />
           <Route 
             path='/myshelf'
-            element={<MyShelf fullLoggedInUserData={fullLoggedInUserData}/>}
+            element={<MyShelf fullLoggedInUserData={fullLoggedInUserData} baseURL={baseURL}/>}
           />
         </Routes>
         {gameDetailsModalVisible &&
@@ -244,6 +248,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
             isLoggedIn={isLoggedIn}
             loggedInUser={loggedInUser}
             setNewReviewSubmitted={setNewReviewSubmitted}
+            baseURL={baseURL}
           />}
         {loginModalVisible &&
         <LoginModal 
@@ -262,6 +267,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
               setNewUserModalVisible={setNewUserModalVisible} 
               newUserInfo={newUserInfo} 
               setNewUserInfo={setNewUserInfo}
+              baseURL={baseURL}
             />}
       </Router>
     </PrimeReactProvider>

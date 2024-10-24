@@ -8,7 +8,7 @@ import GameReviewForm from "./GameReviewForm";
 import { useState } from "react";
 import GameReviewList from "./GameReviewList";
 
-function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews, isLoggedIn, loggedInUser, setNewReviewSubmitted }) {
+function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews, isLoggedIn, loggedInUser, setNewReviewSubmitted, baseURL }) {
     
     // State to control the visibility of the GameReviewForm component.
     const [gameReviewFormVisible, setGameReviewFormVisible] = useState(false)
@@ -58,7 +58,7 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                                 <p>No reviews available</p>
                             )} */}
                             {isLoggedIn && <Button label="Write a Review" onClick={handleGameReviewFormVisible}/>}
-                            {gameReviewFormVisible && <GameReviewForm setGameReviewFormVisible={setGameReviewFormVisible} gameDetails={gameDetails} loggedInUser={loggedInUser} setNewReviewSubmitted={setNewReviewSubmitted}/>}
+                            {gameReviewFormVisible && <GameReviewForm setGameReviewFormVisible={setGameReviewFormVisible} gameDetails={gameDetails} loggedInUser={loggedInUser} setNewReviewSubmitted={setNewReviewSubmitted} baseURL={baseURL}/>}
                             {gameReviews && gameReviews.length > 0 &&
                             <GameReviewList reviews={gameReviews}/>}
                             {/* {gameReviews && gameReviews.length > 0 ? (

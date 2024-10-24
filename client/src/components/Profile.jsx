@@ -9,7 +9,7 @@ import axios from "axios";
 import GameReviewList from "./GameReviewList";
 import { useNavigate } from "react-router-dom";
 
-function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }) {
+function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, baseURL }) {
 
     // State to control the visibility of the user's review list and the edit profile modal
     const [userReviewsListVisible, setUserReviewsListVisible] = useState(false);
@@ -65,7 +65,8 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser }
     // Updates the user profile in the database and updates the state after successful PATCH request
     async function updateUserProfile(userId, updatedUserData) {
         try {
-            const response = await axios.patch(`http://localhost:8080/users/${userId}`, updatedUserData);
+            // const response = await axios.patch(`http://localhost:8080/users/${userId}`, updatedUserData);
+            const response = await axios.patch(`${baseURL}/users/${userId}`, updatedUserData);
             console.log('User profile updated', response.data);
             // Update the fullLoggedInUserData state immediately after successful patch
             setFullLoggedInUserData([{ ...userData, ...updatedUserData }]);

@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function MyShelf({ fullLoggedInUserData }) {
+function MyShelf({ fullLoggedInUserData, baseURL }) {
     // State to hold the details of the favorite games once they are fetched
     const [favoriteGamesWithDetails, setFavoriteGamesWithDetails] = useState([]);
 
@@ -21,7 +21,8 @@ function MyShelf({ fullLoggedInUserData }) {
                     // Fetch game details for each favorite game using axios
                     const favoriteDetails = await Promise.all(
                         userData.favorites.map(async (favorite) => {
-                            const response = await axios.get(`http://localhost:8080/game/${favorite.game_id}`);
+                            // const response = await axios.get(`http://localhost:8080/game/${favorite.game_id}`);
+                            const response = await axios.get(`${baseURL}/game/${favorite.game_id}`);
                             return response.data;
                         })
                     );

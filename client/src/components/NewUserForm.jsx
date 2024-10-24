@@ -6,7 +6,7 @@
 import { Button } from "primereact/button";
 import axios from "axios";
 
-function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo, setNewUserInfo }) {
+function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo, setNewUserInfo, baseURL }) {
 
     // Switches the view to the login modal when the 'Sign In' button is clicked
     const handleLoginModalVisible = () => {
@@ -29,7 +29,8 @@ function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo
     const handleNewUserSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:8080/users`, {
+            // const response = await axios.post(`http://localhost:8080/users`, {
+                const response = await axios.post(`${baseURL}/users`, {
                 username: newUserInfo.username,
                 email: newUserInfo.email,
                 password: newUserInfo.password,
