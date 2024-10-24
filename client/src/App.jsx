@@ -59,10 +59,13 @@ function App() {
 //     setGameData(data);
 // };
 
+const baseURL = import.meta.env.VITE_API_URL;
+
   // on component mount to fetch initial game data from API
   const gameList = async () => {
-    const url = `http://localhost:8080/api`;
+    // const url = `http://localhost:8080/api`;
     // const url = `https://server-g79j.onrender.com/api`;
+    const url = `${baseURL}/api`;
     const res = await fetch(url);
     const data = await res.json();
     console.log("game data list", data);
@@ -83,7 +86,8 @@ function App() {
       return;
     }
     try { 
-      const res = await fetch(`http://localhost:8080/search?query=${searchInput}`);
+      // const res = await fetch(`http://localhost:8080/search?query=${searchInput}`);
+      const res = await fetch(`${baseURL}/search?query=${searchInput}`);
       const data = await res.json();
       console.log('this is the search data', data);
       data.results === undefined || null ? alert('no games found') : setSearchResults(data.results);
