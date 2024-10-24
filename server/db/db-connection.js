@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const db = new Pool({
-    connectionString: process.env.DB_URL
-    // ssl: { rejectUnauthorized: false } 
+    connectionString: process.env.DB_URL,
+    ssl: { rejectUnauthorized: false } 
 });
 
 export default db;
