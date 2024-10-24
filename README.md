@@ -19,6 +19,8 @@ User will be able to browse games and upon login can search through games, addin
 - **Testing**: Vitest, React Testing Library (RTL), Jest
 
 #### Once you have successfully setup this template and initial database, the view will look like this:
+![Screenshot 2024-10-24 at 2 55 09 PM](https://github.com/user-attachments/assets/76f12c47-bb25-40b4-bf72-8b5bcfaf6e0b)
+
 
 ## API Usage
 GAMESHELF uses the RAWG to populate the video game data. You can sign up for free for an account to get an API key and view API documentation here: https://rawg.io/apidocs
@@ -61,9 +63,9 @@ The server should now be running on `http://localhost:8080`.
 
 ## Timeline
 
-[Trello Board] (https://trello.com/b/f2VPN0c5/final-project)
+[Trello Board](https://trello.com/b/f2VPN0c5/final-project)
 
-[Final Pitch] (https://docs.google.com/document/d/1xMmtRzRhjoH2pkkFkWiGTJZL1-cVEZhOD7-FdGdTioU/edit?tab=t.0)
+[Final Pitch](https://docs.google.com/document/d/1xMmtRzRhjoH2pkkFkWiGTJZL1-cVEZhOD7-FdGdTioU/edit?tab=t.0)
 
 ## Contributing
 If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcomed.
