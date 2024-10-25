@@ -32,6 +32,9 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState();
   const [fullLoggedInUserData, setFullLoggedInUserData] = useState();
   const [newReviewSubmitted, setNewReviewSubmitted] = useState(false);
+
+  const [favoritedGames, setFavoritedGames] = useState([]);
+
   // State for handling login and new user forms
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -201,7 +204,7 @@ useEffect(() => {
   };
   fetchAllUserData();
 // }, [isLoggedIn, loggedInUser.user_id]);
-}, [isLoggedIn, loggedInUser]);
+}, [isLoggedIn, loggedInUser, baseURL, favoritedGames]);
 
 console.log('THIS is the logged in user info', loggedInUser);
 console.log('This is the FULL logged in user data', fullLoggedInUserData);
@@ -221,9 +224,9 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           <Route
             path='/'
             element={searchResults ? (
-          <GameList gameData={searchResults} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser}/>
+          <GameList gameData={searchResults} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser} favoritedGames={favoritedGames} setFavoritedGames={setFavoritedGames}/>
         ) : (
-          <GameList gameData={gameData?.results || []} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser}/>
+          <GameList gameData={gameData?.results || []} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser} favoritedGames={favoritedGames} setFavoritedGames={setFavoritedGames}/>
         )}
           />
           <Route
@@ -237,7 +240,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           />
           <Route 
             path='/myshelf'
-            element={<MyShelf fullLoggedInUserData={fullLoggedInUserData} baseURL={baseURL}/>}
+            element={<MyShelf fullLoggedInUserData={fullLoggedInUserData} baseURL={baseURL} handleGameDetailsModalVisible={handleGameDetailsModalVisible} loggedInUser={loggedInUser} favoritedGames={favoritedGames}/>}
           />
         </Routes>
         {gameDetailsModalVisible &&

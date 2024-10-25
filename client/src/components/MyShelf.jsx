@@ -4,8 +4,9 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Game from "./Game";
 
-function MyShelf({ fullLoggedInUserData, baseURL }) {
+function MyShelf({ fullLoggedInUserData, baseURL, handleGameDetailsModalVisible, loggedInUser, favoritedGames }) {
     // State to hold the details of the favorite games once they are fetched
     const [favoriteGamesWithDetails, setFavoriteGamesWithDetails] = useState([]);
 
@@ -34,10 +35,10 @@ function MyShelf({ fullLoggedInUserData, baseURL }) {
             }
         };
         fetchFavoriteGameDetails();
-    }, [userData]); // Dependency array includes userData to refetch data when it changes
+    }, [userData, baseURL, favoritedGames]); // Dependency array includes userData to refetch data when it changes
 
     // Debugging log to view fetched game details in console
-    console.log('these are the favorite games with details',favoriteGamesWithDetails);
+    console.log('these are the favorite games with details',favoriteGamesWithDetails, favoritedGames);
 
     // return (
     //     <div>
@@ -62,20 +63,43 @@ function MyShelf({ fullLoggedInUserData, baseURL }) {
     //         }
     //     </div>
     // )
+    // return (
+    //     <div>
+    //         <p>This is your MyShelf page</p>
+    //         {favoriteGamesWithDetails.length > 0 ? (
+    //             <div className="user-favorites-list">
+    //                 <ul>
+    //                     {favoriteGamesWithDetails.map((favorite, index) => (
+    //                         <li key={index}>
+    //                             <img src={favorite.background_image} alt={favorite.name} style={{ width: '200px' }}/>
+    //                             <p>Game: {favorite.name || 'Unknown Game'}</p>
+    //                             <p>Metacritic Rating: {favorite.metacritic}</p>
+    //                         </li>
+    //                     ))}
+    //                 </ul>
+    //             </div>
+    //         ) : (
+    //             <div className="user-favorites-list">
+    //                 <p>No favorites available</p>
+    //             </div>
+    //         )}
+    //     </div>
+    // );
+
     return (
         <div>
             <p>This is your MyShelf page</p>
             {favoriteGamesWithDetails.length > 0 ? (
                 <div className="user-favorites-list">
-                    <ul>
-                        {favoriteGamesWithDetails.map((favorite, index) => (
-                            <li key={index}>
-                                <img src={favorite.background_image} alt={favorite.name} style={{ width: '200px' }}/>
-                                <p>Game: {favorite.name || 'Unknown Game'}</p>
-                                <p>Metacritic Rating: {favorite.metacritic}</p>
-                            </li>
-                        ))}
-                    </ul>
+                    {favoriteGamesWithDetails.map((favorite) => (
+                        <Game 
+                            key={favorite.id} 
+                            game={favorite} 
+                            handleGameDetailsModalVisible={handleGameDetailsModalVisible} 
+                            loggedInUser={loggedInUser}
+                            favoritedGames={favoriteGamesWithDetails.map(fav => fav.id)} // Pass all favorite IDs
+                        />
+                    ))}
                 </div>
             ) : (
                 <div className="user-favorites-list">

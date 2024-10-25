@@ -4,7 +4,7 @@
 import { Button } from 'primereact/button';
 import 'primeicons/primeicons.css';
 
-function Game({ game, handleGameDetailsModalVisible, userFavoritesGame, loggedInUser, favoritedGames }) {
+function Game({ game, handleGameDetailsModalVisible, userFavoritesGame, loggedInUser, favoritedGames}) {
 
     // Determine if the game is currently favorited
     const isFavorited = favoritedGames.includes(game.id);

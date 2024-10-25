@@ -5,8 +5,9 @@ import Game from "./Game";
 import axios from "axios";
 import { useEffect } from "react";
 
-function GameList({ gameData, handleGameDetailsModalVisible, baseURL, loggedInUser }) {
-    const [favoritedGames, setFavoritedGames] = useState([]);
+function GameList({ gameData, handleGameDetailsModalVisible, baseURL, loggedInUser, favoritedGames, setFavoritedGames }) {
+    // const [favoritedGames, setFavoritedGames] = useState([]);
+    const [newFavoriteAdded, setNewFavoriteAdded] = useState(false);
 
     useEffect(() => {
         // Fetch user's favorited games from the database on component mount
@@ -21,8 +22,10 @@ function GameList({ gameData, handleGameDetailsModalVisible, baseURL, loggedInUs
             }
         };
 
+        if (loggedInUser) {
         fetchFavoritedGames();
-    }, [loggedInUser, baseURL]);
+        }
+    }, [loggedInUser, baseURL, newFavoriteAdded, setFavoritedGames]);
 
     console.log("this twis the favoritedgames list", favoritedGames);
 
@@ -37,7 +40,8 @@ function GameList({ gameData, handleGameDetailsModalVisible, baseURL, loggedInUs
             
             if (response.status === 200) {
                 // setFavoritedGames([...favoritedGames, game_id]); // Add game_id to favoritedGames
-                setFavoritedGames(prev => [...prev, game_id]);
+                // setFavoritedGames(prev => [...prev, game_id]);
+                setNewFavoriteAdded(prev => !prev);
                 console.log("New favorited game successful", response.data);
             } else {
                 console.error("Favorited game fail", response.data.message);
