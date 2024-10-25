@@ -195,12 +195,34 @@ app.post('/users', async (req, res) => {
 });
 
 // request for user adding a game to their favorites
+// app.post('/favorites', async (req, res) => {
+//     const { user_id, game_id } = req.body;
+//     try {
+//         const queryText = 'INSERT INTO favorites (user_id, game_id) VALUES ($1, $2) RETURNING *';
+//         const { rows } = await db.query(queryText, [user_id, game_id]);
+//         res.status(200).json(rows[0])
+//     } catch (error) {
+//         console.error('Error adding favorite game', error);
+//         res.status(500).send('Server error');
+//     }
+// });
+
 app.post('/favorites', async (req, res) => {
     const { user_id, game_id } = req.body;
     try {
-        const queryText = 'INSERT INTO favorites (user_id, game_id) VALUES ($1, $2) RETURNING *';
-        const { rows } = await db.query(queryText, [user_id, game_id]);
-        res.status(200).json(rows[0])
+        // Check if the game is already favorited by the user
+        const checkQuery = 'SELECT * FROM favorites WHERE user_id = $1 AND game_id = $2';
+        const checkResult = await db.query(checkQuery, [user_id, game_id]);
+
+        if (checkResult.rows.length > 0) {
+            return res.status(400).json({ message: 'Game already favorited' });
+        }
+
+        // Insert the new favorite if it doesn't exist
+        const insertQuery = 'INSERT INTO favorites (user_id, game_id) VALUES ($1, $2) RETURNING *';
+        const { rows } = await db.query(insertQuery, [user_id, game_id]);
+        res.status(200).json(rows[0]);
+
     } catch (error) {
         console.error('Error adding favorite game', error);
         res.status(500).send('Server error');

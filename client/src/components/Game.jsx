@@ -4,12 +4,18 @@
 import { Button } from 'primereact/button';
 import 'primeicons/primeicons.css';
 
-function Game({ game, handleGameDetailsModalVisible, userFavoritesGame }) {
-   
-    // If no data in game prop then render "Loading game...", otherwise render the game data.
-    if (!game) {
-        return <p>Loading game...</p>
-    }
+function Game({ game, handleGameDetailsModalVisible, userFavoritesGame, loggedInUser, favoritedGames }) {
+
+    // Determine if the game is currently favorited
+    const isFavorited = favoritedGames.includes(game.id);
+
+    // On button click, if the game_id is not already on the favorited list pulled from the endpoint in GameList,
+    // Then run endpoint to add to user's favorites list
+    const handleFavoriteClick = () => {
+        if (!isFavorited) {
+            userFavoritesGame(game.id);
+        }
+    };
 
     return (
         <div>
@@ -19,7 +25,19 @@ function Game({ game, handleGameDetailsModalVisible, userFavoritesGame }) {
             <p>Metacritic Rating: {game.metacritic}</p>
         </div>
         <Button label='details' onClick={() => handleGameDetailsModalVisible(game.id)}/>
-        <Button icon="pi pi-heart" rounded text severity="help" aria-label="Favorite" onClick={() => userFavoritesGame(game.id)}/> {/* Pass game.id here */}
+        {loggedInUser &&
+        <Button 
+            icon="pi pi-heart" 
+            rounded 
+            text 
+            // severity={isFavorited ? "danger" : "help"}
+            aria-label="Favorite" 
+            onClick={handleFavoriteClick}
+            style={{
+                backgroundColor: isFavorited ? '#f744c4' : 'lightgray', 
+                color: isFavorited ? 'white' : 'black' 
+            }}
+        />} 
         </div>
     )
 }
