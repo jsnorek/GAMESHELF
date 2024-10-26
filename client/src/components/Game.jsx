@@ -4,16 +4,24 @@
 import { Button } from 'primereact/button';
 import 'primeicons/primeicons.css';
 
-function Game({ game, handleGameDetailsModalVisible, userFavoritesGame, loggedInUser, favoritedGames}) {
+function Game({ game, handleGameDetailsModalVisible, userFavoritesGame, loggedInUser, favoritedGames, userUnfavoritesGame }) {
 
     // Determine if the game is currently favorited
     const isFavorited = favoritedGames.includes(game.id);
 
     // On button click, if the game_id is not already on the favorited list pulled from the endpoint in GameList,
     // Then run endpoint to add to user's favorites list
+    // const handleFavoriteClick = () => {
+    //     if (!isFavorited) {
+    //         userFavoritesGame(game.id);
+    //     }
+    // };
+
     const handleFavoriteClick = () => {
-        if (!isFavorited) {
-            userFavoritesGame(game.id);
+        if (isFavorited) {
+            userUnfavoritesGame(game.id); // Call unfavorite function
+        } else {
+            userFavoritesGame(game.id); // Call favorite function
         }
     };
 

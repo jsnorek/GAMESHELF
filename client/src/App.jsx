@@ -34,6 +34,7 @@ function App() {
   const [newReviewSubmitted, setNewReviewSubmitted] = useState(false);
 
   const [favoritedGames, setFavoritedGames] = useState([]);
+  const [newFavoriteAdded, setNewFavoriteAdded] = useState(false);
 
   // State for handling login and new user forms
   const [loginInfo, setLoginInfo] = useState({
@@ -209,6 +210,42 @@ useEffect(() => {
 console.log('THIS is the logged in user info', loggedInUser);
 console.log('This is the FULL logged in user data', fullLoggedInUserData);
 
+// Post user's newly favorited game
+const userFavoritesGame = async (game_id) => {
+  try {
+          const response = await axios.post(`${baseURL}/favorites`, {
+          user_id: loggedInUser.user_id,
+          game_id: game_id
+      });
+      
+      if (response.status === 200) {
+          // setFavoritedGames([...favoritedGames, game_id]); // Add game_id to favoritedGames
+          // setFavoritedGames(prev => [...prev, game_id]);
+          setNewFavoriteAdded(prev => !prev);
+          console.log("New favorited game successful", response.data);
+      } else {
+          console.error("Favorited game fail", response.data.message);
+      }
+  } catch (error) {
+      console.error("error adding new favorite game:", error);
+  }
+};
+
+// Delete a user's favorited game from the database
+const userUnfavoritesGame = async (game_id) => {
+  try {
+      const response = await axios.delete(`${baseURL}/favorites/${loggedInUser.user_id}/${game_id}`);
+      if (response.status === 200) {
+          setNewFavoriteAdded(prev => !prev);
+          console.log('New unfavorited game successful', response.data);
+      } else {
+          console.error("Unfavoriting game fail", response.data.message);
+      }
+  } catch (error) {
+      console.error("Error unfavoriting game", error);
+  }
+};
+
   return (
     <PrimeReactProvider>
       <Router>
@@ -224,9 +261,29 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           <Route
             path='/'
             element={searchResults ? (
-          <GameList gameData={searchResults} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser} favoritedGames={favoritedGames} setFavoritedGames={setFavoritedGames}/>
+          <GameList 
+            gameData={searchResults} 
+            handleGameDetailsModalVisible={handleGameDetailsModalVisible} 
+            baseURL={baseURL} 
+            loggedInUser={loggedInUser} 
+            favoritedGames={favoritedGames} 
+            setFavoritedGames={setFavoritedGames}
+            newFavoriteAdded={newFavoriteAdded}
+            userFavoritesGame={userFavoritesGame}
+            userUnfavoritesGame={userUnfavoritesGame}
+          />
         ) : (
-          <GameList gameData={gameData?.results || []} handleGameDetailsModalVisible={handleGameDetailsModalVisible} baseURL={baseURL} loggedInUser={loggedInUser} favoritedGames={favoritedGames} setFavoritedGames={setFavoritedGames}/>
+          <GameList 
+            gameData={gameData?.results || []} 
+            handleGameDetailsModalVisible={handleGameDetailsModalVisible} 
+            baseURL={baseURL} 
+            loggedInUser={loggedInUser} 
+            favoritedGames={favoritedGames} 
+            setFavoritedGames={setFavoritedGames}
+            newFavoriteAdded={newFavoriteAdded}
+            userFavoritesGame={userFavoritesGame}
+            userUnfavoritesGame={userUnfavoritesGame}
+          />
         )}
           />
           <Route
@@ -240,7 +297,7 @@ console.log('This is the FULL logged in user data', fullLoggedInUserData);
           />
           <Route 
             path='/myshelf'
-            element={<MyShelf fullLoggedInUserData={fullLoggedInUserData} baseURL={baseURL} handleGameDetailsModalVisible={handleGameDetailsModalVisible} loggedInUser={loggedInUser} favoritedGames={favoritedGames}/>}
+            element={<MyShelf fullLoggedInUserData={fullLoggedInUserData} baseURL={baseURL} handleGameDetailsModalVisible={handleGameDetailsModalVisible} loggedInUser={loggedInUser} favoritedGames={favoritedGames} userUnfavoritesGame={userUnfavoritesGame} newFavoriteAdded={newFavoriteAdded}/>}
           />
         </Routes>
         {gameDetailsModalVisible &&

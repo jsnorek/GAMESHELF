@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Game from "./Game";
 
-function MyShelf({ fullLoggedInUserData, baseURL, handleGameDetailsModalVisible, loggedInUser, favoritedGames }) {
+function MyShelf({ fullLoggedInUserData, baseURL, handleGameDetailsModalVisible, loggedInUser, favoritedGames, userUnfavoritesGame, newFavoriteAdded }) {
     // State to hold the details of the favorite games once they are fetched
     const [favoriteGamesWithDetails, setFavoriteGamesWithDetails] = useState([]);
 
@@ -35,7 +35,7 @@ function MyShelf({ fullLoggedInUserData, baseURL, handleGameDetailsModalVisible,
             }
         };
         fetchFavoriteGameDetails();
-    }, [userData, baseURL, favoritedGames]); // Dependency array includes userData to refetch data when it changes
+    }, [userData, baseURL, favoritedGames, newFavoriteAdded]); // Dependency array includes userData to refetch data when it changes
 
     // Debugging log to view fetched game details in console
     console.log('these are the favorite games with details',favoriteGamesWithDetails, favoritedGames);
@@ -97,7 +97,9 @@ function MyShelf({ fullLoggedInUserData, baseURL, handleGameDetailsModalVisible,
                             game={favorite} 
                             handleGameDetailsModalVisible={handleGameDetailsModalVisible} 
                             loggedInUser={loggedInUser}
-                            favoritedGames={favoriteGamesWithDetails.map(fav => fav.id)} // Pass all favorite IDs
+                            // favoritedGames={favoriteGamesWithDetails.map(fav => fav.id)} // Pass all favorite IDs
+                            favoritedGames={favoritedGames}
+                            userUnfavoritesGame={userUnfavoritesGame}
                         />
                     ))}
                 </div>
