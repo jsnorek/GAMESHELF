@@ -10,7 +10,7 @@ function Game({
   userFavoritesGame,
   loggedInUser,
   isFavorited,
-  userUnfavoritesGame,
+  userUnfavoritesGame
 }) {
   const handleFavoriteClick = async () => {
     if (isFavorited) {
@@ -19,9 +19,8 @@ function Game({
       await userFavoritesGame(game.id); // Call favorite function
     }
   };
-
   return (
-    <div>
+    <div data-testid="game">
       <div key={game.id} className="game">
         <img
           src={game.background_image}
