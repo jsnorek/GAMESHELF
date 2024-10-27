@@ -68,7 +68,6 @@ const init = (props) => {
     init(props);
     const favoritesButton = screen.getByLabelText(/favorite/i);
     expect(favoritesButton).toBeDefined();
-    // expect(butn).toHaveClass("")
   });
 
   it("should call userFavoritesGame when favorite button is clicked and game is not favorited", async () => {
@@ -77,6 +76,7 @@ const init = (props) => {
     init(props);
     
     const favoritesButton = screen.getByLabelText(/favorite/i);
+    expect(favoritesButton.getAttribute("style")).toContain("background-color: lightgray; color: black;");
     await user.click(favoritesButton);
 
     expect(mockUserFavoritesGame).toBeCalledWith(initialProps.game.id);
@@ -88,10 +88,10 @@ const init = (props) => {
     init(props);
     
     const favoritesButton = screen.getByLabelText(/favorite/i);
+    expect(favoritesButton.getAttribute("style")).toContain("background-color: rgb(247, 68, 196); color: white;");
     await user.click(favoritesButton);
 
     expect(mockUserUnfavoritesGame).toBeCalledWith(initialProps.game.id);
   });
-
   
 });
