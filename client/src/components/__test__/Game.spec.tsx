@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
+import { describe, it, expect, jest, afterEach } from "@jest/globals";
 import userEvent from "@testing-library/user-event";
 // import "@testing-library/jest-dom/extend-expect";
 import Game from "../Game";
@@ -8,6 +8,7 @@ import Game from "../Game";
 const mockHandleGameDetailsModalVisible = jest.fn();
 const mockUserFavoritesGame = jest.fn();
 const mockUserUnfavoritesGame = jest.fn();
+const mockHandleFavoriteClick = jest.fn();
 
 const initialProps = {
   game: {
@@ -30,8 +31,14 @@ const init = (props) => {
   };
 };
 
-describe("Game", () => {
-  afterEach(jest.resetAllMocks); // resets all including button mocks
+// describe("Game", () => {
+//   afterEach(jest.resetAllMocks); // resets all including button mocks
+
+    describe("Game", () => {
+        // Reset all mocks after each test
+        afterEach(() => {
+        jest.resetAllMocks(); // Call the function to reset mocks
+        });
 
   it("should render successfully", () => {
     init(initialProps);
@@ -59,7 +66,32 @@ describe("Game", () => {
   it("should display favorite button when user is logged in", async () => {
     const props = { ...initialProps, loggedInUser: true };
     init(props);
-    // test button is there
+    const favoritesButton = screen.getByLabelText(/favorite/i);
+    expect(favoritesButton).toBeDefined();
     // expect(butn).toHaveClass("")
   });
+
+  it("should call userFavoritesGame when favorite button is clicked and game is not favorited", async () => {
+    const { user } = init(initialProps);
+    const props = { ...initialProps, loggedInUser: true, isFavorited: false };
+    init(props);
+    
+    const favoritesButton = screen.getByLabelText(/favorite/i);
+    await user.click(favoritesButton);
+
+    expect(mockUserFavoritesGame).toBeCalledWith(initialProps.game.id);
+  });
+
+  it("should call userUnfavoritesGame when favorite button is clicked and game is already favorited", async () => {
+    const { user } = init(initialProps);
+    const props = { ...initialProps, loggedInUser: true, isFavorited: true };
+    init(props);
+    
+    const favoritesButton = screen.getByLabelText(/favorite/i);
+    await user.click(favoritesButton);
+
+    expect(mockUserUnfavoritesGame).toBeCalledWith(initialProps.game.id);
+  });
+
+  
 });
