@@ -5,6 +5,31 @@ import userEvent from "@testing-library/user-event";
 // import "@testing-library/jest-dom/extend-expect";
 import GameList from "../GameList";
 
+//to fix css parsing error
+const originalConsoleError = console.error;
+const jsDomCssError = "Error: Could not parse CSS stylesheet";
+console.error = (...params) => {
+  if (!params.find((p) => p.toString().includes(jsDomCssError))) {
+    originalConsoleError(...params);
+  }
+};
+
+// Mock the Game component
+jest.mock("../Game", () => ({ 
+    game, handleGameDetailsModalVisible, userFavoritesGame, loggedInUser, isFavorited, userUnfavoritesGame 
+  }) => (
+    <div data-testid="mock-game">
+      <h3>{game.name}</h3>
+      <button
+        aria-label="favorite"
+        onClick={() => isFavorited ? userUnfavoritesGame(game.id) : userFavoritesGame(game.id)}
+        style={{ backgroundColor: isFavorited ? "#f744c4" : "lightgray", color: isFavorited ? "white" : "black" }}
+      >
+        {isFavorited ? "Unfavorite" : "Favorite"}
+      </button>
+    </div>
+  ));
+
 const mockHandleGameDetailsModalVisible = jest.fn();
 const mockUserFavoritesGame = jest.fn();
 const mockUserUnfavoritesGame = jest.fn();
@@ -76,5 +101,22 @@ describe("GameList", () => {
         expect(screen.getByText("Game 1")).toBeTruthy();
         expect(screen.getByText("Game 2")).toBeTruthy();
     });
+    it("should call userFavoritesGame when the favorite button is clicked in the Game component", async () => {
+        const { user } = init(initialProps);
+    
+        const favoriteButton = screen.getAllByLabelText("favorite")[1]; // Click button for Game 2 (not favorited)
+        await user.click(favoriteButton);
+
+    expect(mockUserFavoritesGame).toBeCalledWith(2);
+  });
+
+  it("should call userUnfavoritesGame when the unfavorite button is clicked in the Game component", async () => {
+    const { user } = init(initialProps);
+
+    const unfavoriteButton = screen.getAllByLabelText("favorite")[0]; // Click button for Game 1 (favorited)
+    await user.click(unfavoriteButton);
+
+    expect(mockUserUnfavoritesGame).toBeCalledWith(1);
+  })
 
 });
