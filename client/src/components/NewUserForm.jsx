@@ -52,7 +52,7 @@ function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo
     };
 
     return (
-        <div className="new-user-modal">
+        <div className="new-user-modal" data-testid="new-user-form">
             <p>Please enter in your information to register</p>
             <input 
                 id="register-username"

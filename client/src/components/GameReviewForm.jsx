@@ -68,7 +68,7 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
 
 
     return (
-        <div className="game-review-form">
+        <div className="game-review-form" data-testid="game-review-form">
             <p>Write a Review for {gameDetails.name}</p>
             <form onSubmit={handleNewUserSubmit}>
                 <InputNumber

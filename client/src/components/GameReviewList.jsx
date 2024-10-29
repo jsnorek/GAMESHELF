@@ -6,7 +6,7 @@ import GameReview from "./GameReview";
 function GameReviewList({ reviews }) {
     console.log("these are the game reviews that should be listed:", reviews);
     return (
-        <>
+        <div data-testid="game-review-list">
             {reviews && reviews.length > 0 ? (
                 <ul>
                     {reviews.map((review, index) => (
@@ -16,7 +16,7 @@ function GameReviewList({ reviews }) {
             ) : (
                 <p>No reviews available</p>
             )}
-        </>
+        </div>
     );
 }
 

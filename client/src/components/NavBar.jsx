@@ -74,7 +74,7 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
         </div>
     );
     return(
-        <div className="nav-bar">
+        <div className="nav-bar" data-testid="navbar">
             <Menubar start={start} end={end} />
         </div>
     )
