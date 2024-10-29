@@ -82,7 +82,7 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
                 onChange={handleChange}
                 value={loginInfo.password}
             />
-            <Button label="Login" onClick={handleLoginSubmit}/>
+            <Button data-testid="login-button" label="Login" onClick={handleLoginSubmit}/>
             <Button label="Cancel" onClick={turnLoginModalOff}/>
             <p>New user?</p>
             <Button label="Register" onClick={handleNewUserModalVisible}/>
