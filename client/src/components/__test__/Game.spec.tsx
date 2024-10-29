@@ -43,11 +43,11 @@ const init = (props) => {
 // describe("Game", () => {
 //   afterEach(jest.resetAllMocks); // resets all including button mocks
 
-    describe("Game", () => {
-        // Reset all mocks after each test
-        afterEach(() => {
-        jest.resetAllMocks(); // Call the function to reset mocks
-        });
+describe("Game", () => {
+  // Reset all mocks after each test
+  afterEach(() => {
+    jest.resetAllMocks(); // Call the function to reset mocks
+  });
 
   it("should render successfully", () => {
     init(initialProps);
@@ -58,7 +58,9 @@ const init = (props) => {
     init(initialProps);
 
     // expect(screen.getByRole("heading")).toBe(initialProps.game.name);
-    expect(screen.getByRole("heading").textContent).toBe(initialProps.game.name);
+    expect(screen.getByRole("heading").textContent).toBe(
+      initialProps.game.name
+    );
     expect(screen.getByText("Metacritic Rating: 100")).toBeTruthy();
   });
 
@@ -83,9 +85,11 @@ const init = (props) => {
     const { user } = init(initialProps);
     const props = { ...initialProps, loggedInUser: true, isFavorited: false };
     init(props);
-    
+
     const favoritesButton = screen.getByLabelText(/favorite/i);
-    expect(favoritesButton.getAttribute("style")).toContain("background-color: lightgray; color: black;");
+    expect(favoritesButton.getAttribute("style")).toContain(
+      "background-color: lightgray; color: black;"
+    );
     await user.click(favoritesButton);
 
     expect(mockUserFavoritesGame).toBeCalledWith(initialProps.game.id);
@@ -95,12 +99,13 @@ const init = (props) => {
     const { user } = init(initialProps);
     const props = { ...initialProps, loggedInUser: true, isFavorited: true };
     init(props);
-    
+
     const favoritesButton = screen.getByLabelText(/favorite/i);
-    expect(favoritesButton.getAttribute("style")).toContain("background-color: rgb(247, 68, 196); color: white;");
+    expect(favoritesButton.getAttribute("style")).toContain(
+      "background-color: rgb(247, 68, 196); color: white;"
+    );
     await user.click(favoritesButton);
 
     expect(mockUserUnfavoritesGame).toBeCalledWith(initialProps.game.id);
   });
-  
 });

@@ -3,32 +3,19 @@
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 
+
 function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserProfile, loggedInUser, closeEditProfile }) {
-   
     // Checks if fullLoggedInUserData exists and has data. If so, extradct the first user data object.
     const userData = fullLoggedInUserData && fullLoggedInUserData.length > 0 ? fullLoggedInUserData[0] : null;
     
     // Initialize the local state updatedUserData to store the user's profile information (name, username, email, and city). 
     // If userData is available, populate the state with its values. This state is what the user will be able to edit.
     const [updatedUserData, setUpdatedUserData] = useState({
-        name: userData.name,
-        username: userData.username,
-        email: userData.email,
-        city: userData.city
+        name: userData?.name,
+        username: userData?.username,
+        email: userData?.email,
+        city: userData?.city
     });
-
-    // Updates updatedUserData variable upon any change in userData so the form reflects the latest data.
-    // If userData is available, it populates updatedUserData fields with either the user's info or an empty string.
-    useEffect(() => {
-        if (userData) {
-            setUpdatedUserData({
-                name: userData.name || "",
-                username: userData.username || "",
-                email: userData.email || "",
-                city: userData.city || ""
-            });
-        }
-    }, [userData]);
 
     // To handle input changes in the form.
     const handleInputChange = (e) => {
@@ -51,7 +38,6 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
         setEditProfileVisible(false)
     };
 
-
     return (
         <div>
             <p>Edit Profile</p>
@@ -59,6 +45,7 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                 <div>
                     <label>Name:</label>
                     <input 
+                        data-testid="name-input"
                         type="text"
                         name="name"
                         value={updatedUserData.name}
@@ -67,6 +54,7 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                     <br />
                     <label>Username:</label>
                     <input
+                        data-testid="username-input"
                         type="text"
                         name="username"
                         value={updatedUserData.username}

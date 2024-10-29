@@ -10,7 +10,7 @@ function Game({
   userFavoritesGame,
   loggedInUser,
   isFavorited,
-  userUnfavoritesGame
+  userUnfavoritesGame,
 }) {
   const handleFavoriteClick = async () => {
     if (isFavorited) {
