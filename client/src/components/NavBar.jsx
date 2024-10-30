@@ -58,7 +58,8 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
     // Sets search bar and buttons to end of the navbar
     const end = (
         <div className="search">
-            <InputText 
+            <InputText
+                className="search-bar" 
                 placeholder="Search games" 
                 type="text" 
                 value={searchInput}
@@ -70,7 +71,7 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
                 <Button label="MyShelf" onClick={handleMyShelfClick}/>
                 <Button label="Log Out" onClick={clearLogin}/>
             </div> : 
-            <Button label="login" onClick={handleLoginModalVisible}/>}
+            <Button label="login" className="login-button" onClick={handleLoginModalVisible}/>}
         </div>
     );
     return(

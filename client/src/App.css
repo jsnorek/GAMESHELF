@@ -6,7 +6,7 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: #0c1d57;
+  background-color: #261327;
   color: whitesmoke;
 }
 
@@ -24,6 +24,9 @@
 }
 
 .nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures the navbar stays on top of other content */
   background-color: #14121d;
   width: 100%;
   height: 100px;
@@ -34,6 +37,14 @@
   border-bottom: 2px solid #f744c4;
 }
 
+.game-image {
+  border: 2px solid #f744c4;
+  box-shadow: 
+    0 4px 10px #f744c4,  /* Initial glow */
+    0 4px 20px #62e3e9,  /* Secondary glow color */
+    0 4px 30px #00ff00;
+}
+
 .logo-headers {
   display: flex;
   align-items: center;
@@ -42,14 +53,59 @@
 
 .logo-text {
   margin-right: 10px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #f744c4, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  font-weight: bold;
+  background: linear-gradient( #c3ff00, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .search {
   width: 50px;
 }
 
-.game-title {
+.search-bar {
+  border: 2px solid #f744c4;
+}
+
+.login-button {
+  border: 2px solid #5bf9fe;
+  background-color: #5bf9fe;
+  color: black;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(142, 68, 173, 0.6), 0 0 20px rgba(142, 68, 173, 0.4);
+}
+
+.individual-game {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: 2px solid #f744c4;
+}
+
+.individual-game button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.details-button {
+  background-color: #5bf9fe;
+  font-weight: bold;
 }
 
 .login-modal {
@@ -79,19 +135,36 @@
 }
 
 .game-details-modal {
-  border: 1px solid black;
+  border: 1px solid rgb(0, 238, 255);
   border-radius: 10px;
-  background-color: rgb(95, 160, 105);
-  color: black;
+  background-color: #14121d;
+  color: whitesmoke;
   z-index: 9;
   position:fixed;
   top:calc(50% - 200px);
-  left:calc(79% - 250px);
+  left:calc(73.5% - 250px);
   width: 75%;
   height: 300px;
   max-height: 80vh;
   overflow-y: auto;
   padding: 20px;
+}
+
+.back-button {
+  /* margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border-color: #00ff00;
+  cursor: pointer; */
+  position: sticky !important;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #00ff00;
+  background-color: #14121d;
+  color: #00ff00;
+  cursor: pointer;
 }
 
 .user-reviews-list {

@@ -39,7 +39,7 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                     {gameDetails ? (
                         <>
                         <p>{gameDetails.name}</p>
-                        <img src={gameDetails.background_image} alt={gameDetails.name} style={{ width: '200px' }}/>
+                        <img className="game-image" src={gameDetails.background_image} alt={gameDetails.name} style={{ width: '200px' }}/>
                         <p>{gameDetails.description_raw}</p>
                         <p>Platform(s): {gameDetails.platforms.map((platform, index) => (
                             <li key={index}>{platform.platform.name}</li>
@@ -81,7 +81,7 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                     )}
                 </Card>
             </div>
-            <Button label="Back" onClick={turnGameDetailsModalOff}/>
+            <Button className="back-button" label="Back" onClick={turnGameDetailsModalOff}/>
         </div>
     )
 };

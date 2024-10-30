@@ -20,9 +20,10 @@ function Game({
     }
   };
   return (
-    <div data-testid="game">
+    <div data-testid="game" className="individual-game">
       <div key={game.id} className="game">
         <img
+          className="game-image"
           src={game.background_image}
           alt={game.name}
           style={{ width: "200px" }}
@@ -31,6 +32,7 @@ function Game({
         <p>Metacritic Rating: {game.metacritic}</p>
       </div>
       <Button
+        className="details-button"
         label="details"
         onClick={() => handleGameDetailsModalVisible(game.id)}
       />
