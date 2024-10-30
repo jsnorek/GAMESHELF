@@ -68,8 +68,8 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
 
 
     return (
-        <div className="game-review-form" data-testid="game-review-form">
-            <p>Write a Review for {gameDetails.name}</p>
+        <div className="game-review-form">
+            <h2>Write a Review for {gameDetails.name}</h2>
             <form onSubmit={handleNewUserSubmit}>
                 <InputNumber
                     id="rating"
@@ -89,8 +89,8 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
                     onChange={handleChange}
                     value={review.review_text}
                 />
-            <Button label="Submit"/>
-            <Button label="Cancel" onClick={turnOffGameReviewFormVisible}/>
+            <Button icon="pi pi-check" aria-label="Submit"/>
+            <Button icon="pi pi-times" aria-label="Cancel" onClick={turnOffGameReviewFormVisible}/>
             </form>
         </div>
     )

@@ -6,12 +6,12 @@ import logo from '../assets/logo.png';
 import { Button } from "primereact/button";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu } from "primereact/menu";
+// import { Menu } from "primereact/menu";
 
 function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, loginInfo, setLoginInfo }) {
     const [searchInput, setSearchInput] = useState('');
 
-    const menuRight = useRef(null);
+    // const menuRight = useRef(null);
     
     // To navigate to different pages
     const navigate = useNavigate();
@@ -77,12 +77,12 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
             />
             {isLoggedIn ? 
             <div className="loggedIn-buttons">
-                <Button label="Profile" onClick={handleProfileClick}/> 
-                <Button label="MyShelf" onClick={handleMyShelfClick}/>
-                <Button label="Log Out" onClick={clearLogin}/>
+                <Button className="pi pi-user" aria-label="User" onClick={handleProfileClick}/> 
+                <Button className="pi pi-book" aria-label="MyShelf" onClick={handleMyShelfClick}/>
+                <Button className="pi pi-sign-out" aria-label="Sign Out" onClick={clearLogin}/>
                 {/* <Button icon="pi pi-align-right" className="mr-2" onClick={(event) => menuRight.current.toggle(event)} aria-controls="popup_menu_right" aria-haspopup /> */}
             </div> : 
-            <Button label="login" className="login-button" onClick={handleLoginModalVisible}/>}
+            <Button className="pi pi-sign-in" aria-label="Sign-In" id="login-button" onClick={handleLoginModalVisible}/>}
         </div>
     );
     return(

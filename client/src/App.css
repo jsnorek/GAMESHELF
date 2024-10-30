@@ -10,47 +10,80 @@
   color: whitesmoke;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em rgba(253,58,227,255, .5));
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #62e3e9);
-}
-
 .nav-bar {
   position: sticky;
   top: 0;
-  z-index: 1000; /* Ensures the navbar stays on top of other content */
+  z-index: 1000;
   background-color: #14121d;
   width: 100%;
-  height: 100px;
-  /* box-sizing: border-box; */
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 1em;
   border-bottom: 2px solid #f744c4;
 }
 
-.nav-bar button {
+.logo-headers {
   display: flex;
-  justify-content: baseline;
   align-items: center;
+  cursor: pointer;
+}
+
+.logo {
+  height: 4em;
+  padding-right: 1em;
+}
+
+.logo-text {
+  font-weight: bold;
+  background: linear-gradient(90deg, #f744c4, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+  margin: 0 1em; 
+}
+
+.search-bar {
+  width: 140px;
+  max-width: 100%;
+  border: 2px solid #f744c4;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.loggedIn-buttons,
+#login-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.loggedIn-buttons .p-button, 
+#login-button .p-button {
   border: 2px solid #5bf9fe;
   background-color: #14121d;
-  width: 72px;
   color: #5bf9fe;
-  /* margin-top: 15px; */
-  margin: 10px;
-  padding: 10px 2px;
   border-radius: 5px;
-  cursor: pointer;
-  font-size: 80%;
+  font-size: 0.9rem;
+  padding: 0.4em 1em;
+}
+
+#login-button {
+  margin-left: auto;
+  border: 2px solid #5bf9fe;
+  background-color: #14121d;
+  color: #5bf9fe;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  padding: 0.4em .5em;
+  padding-right: 0px;
 }
 
 .game-image {
@@ -61,67 +94,11 @@
     0 4px 20px #00ff00;
 }
 
-.logo-headers {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.logo-text {
-  margin-right: 10px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #f744c4, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 h1, h2 {
   font-weight: bold;
   background: linear-gradient( #c3ff00, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.search {
-  width: 50px;
-}
-
-.search-bar {
-  border: 2px solid #f744c4;
-  top: 50%;
-  left: 50%;
-  transform: translate(-3%, 80%);
-}
-
-/* .login-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(142, 68, 173, 0.6), 0 0 20px rgba(142, 68, 173, 0.4);
-} */
-
-.loggedIn-buttons {
-  /* border: 2px solid #5bf9fe; */
-  width: 500%;
-  height: 40px;
-  display: flex;
-  justify-content: space-between;
-  top: 50%;
-  left: 50%;
-  transform: translate(-42%, 35%);
-  
-}
-
-.login-button {
-  border: 2px solid #5bf9fe;
-  background-color: #14121d;
-  color: #5bf9fe;
-  /* margin-top: 10px; */
-  /* padding: 5px 10px; */
-  border-radius: 5px;
-  cursor: pointer;
-  width: 50px !important;
-  height: 20px;
-  transform: translate(180%, 45%);
-  /* transition: background-color 0.3s ease; */
 }
 
 .individual-game {
@@ -224,6 +201,15 @@ h1, h2 {
   height: 60%;
 }
 
+.game-details-modal button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #00ff00;
+  background-color: #14121d;
+  color: #00ff00;
+  cursor: pointer;
+}
+
 .back-button {
   /* margin-top: 10px;
   padding: 5px 10px;
@@ -262,19 +248,31 @@ h1, h2 {
 }
 
 .game-review-form {
-  border: 1px solid black;
+  border: 1px solid rgb(0, 238, 255);
   border-radius: 10px;
-  background-color: rgb(160, 95, 154);
-  color: black;
-  z-index: 7;
+  background-color: #14121d;
+  color: whitesmoke;
+  z-index: 9;
   position:fixed;
   top:calc(50% - 200px);
-  left:calc(79% - 250px);
+  left:calc(73.5% - 250px);
   width: 75%;
   height: 300px;
   max-height: 80vh;
   overflow-y: auto;
   padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 60%;
+}
+
+.game-review-form button {
+  border-radius: 5px;
+  border: 1px solid #00ff00;
+  background-color: #14121d;
+  color: #00ff00;
+  cursor: pointer;
 }
 
 .game-review {
@@ -314,4 +312,98 @@ li {
   font-weight: lighter;
   color: whitesmoke;
   font-size: 90%;
+}
+
+
+@media (min-width: 660px) { /* Medium screens (tablets) */
+
+  .search {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+  }
+
+  .search-bar {
+    width: 300px;
+    margin-bottom: 0;
+  }
+
+  .loggedIn-buttons, #login-button {
+    justify-content: flex-end;
+    margin-left: 20%;
+  }
+
+  .logo {
+    height: 6em; /* Slightly smaller logo for medium screens */
+    padding: 1em;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .loggedIn-buttons {
+    width: 500%; /* Adjust width to better fit medium screens */
+  }
+
+  .login-modal, .new-user-modal, .game-details-modal, .user-reviews-list, .game-review-form {
+    width: 60%; /* Make modal windows slightly narrower */
+    height: 400px; /* Adjust height */
+  }
+
+  .search-bar {
+    width: 150px; /* Increase width of the search bar */
+  }
+
+  .individual-game img {
+    width: 250px !important;
+  }
+
+  #login-button {
+    margin-left: 15em;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    padding: 0.4em 1em;
+    padding-right: 0;
+    padding-left: 6px;
+  }
+}
+
+@media (min-width: 1024px) { /* Large screens (computers) */
+
+  .nav-bar {
+    padding: 1em 2em;
+  }
+
+  .logo {
+    height: 7em;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .search-bar {
+    width: 400px;
+  }
+
+  .loggedIn-buttons .p-button, #login-button .p-button {
+    font-size: 1rem;
+    padding: 0.5em 1.2em;
+    /* justify-content: flex-end; */
+  }
+
+  .loggedIn-buttons, #login-button {
+    justify-content: flex-end;
+    margin-left: 5em;
+  }
+
+  .individual-game img {
+    width: 300px !important;
+  }
+
+  .game-details-modal img {
+    width: 250px !important;
+  }
 }

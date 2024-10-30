@@ -15,7 +15,7 @@ function MyShelf({
 }) {
   return (
     <div data-testid="myshelf">
-      <p>Welcome to your MyShelf page</p>
+      <h2>Welcome to Your MyShelf Page</h2>
       {favoritedGames.length > 0 ? (
         <div className="user-favorites-list">
           {favoritedGames.map((favorite) => (

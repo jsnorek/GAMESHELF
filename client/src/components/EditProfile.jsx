@@ -77,8 +77,8 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                         onChange={handleInputChange}
                     />
                 </div>
-                <Button label="Submit"/>
-                <Button label="Cancel" onClick={closeEditProfile}/>
+                <Button icon="pi pi-check" aria-label="Submit"/>
+                <Button icon="pi pi-times" aria-label="Cancel" onClick={closeEditProfile}/>
             </form>
         </div>
     )

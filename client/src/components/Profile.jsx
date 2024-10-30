@@ -103,7 +103,7 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, 
             <p>Name: {userData.name}</p>
             <p>Email: {userData.email}</p>
             <p>City: {userData.city}</p>
-            <Button label="Edit" onClick={handleEditProfileVisible}/>
+            <Button icon="pi pi-user-edit" aria-label="Edit" onClick={handleEditProfileVisible}/>
             {editProfileVisible && 
             <EditProfile 
                 fullLoggedInUserData={fullLoggedInUserData} 
@@ -114,7 +114,7 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, 
             />}
             {/* {editProfileVisible && <EditProfile fullLoggedInUserData={fullLoggedInUserData} setEditProfileVisible={setEditProfileVisible}/>} */}
             <Button label="My Reviews" onClick={handleUserReviewsVisible}/>
-            <Button label="MyShelf" onClick={handleMyShelfClick}/>
+            <Button className="pi pi-book" aria-label="MyShelf" onClick={handleMyShelfClick}/>
              {/* CORRECT ONE */}
                 {/* {userReviewsListVisible && userData.reviews && userData.reviews.length > 0 && 
                 <div className="user-reviews-list">
@@ -128,7 +128,7 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, 
                     ) : (
                         <p>No reviews available</p>
                     )}
-                    <Button label="Back" onClick={closeUserReviewModal}/>
+                    <Button icon="pi pi-times" aria-label="Cancel" onClick={closeUserReviewModal}/>
                 </div>
             )}
             {/* {userReviewsListVisible && (userData.reviews && userData.reviews.length > 0 ? (
