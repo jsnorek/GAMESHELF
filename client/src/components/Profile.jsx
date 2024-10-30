@@ -96,7 +96,7 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, 
     }
 
     return (
-        <div data-testid="profile">
+        <div data-testid="profile" className="profile">
             <h1>Hello, {userData.name}</h1>
             <h3>Details</h3>
             <p>Username: {userData.username}</p>

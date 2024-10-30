@@ -37,6 +37,22 @@
   border-bottom: 2px solid #f744c4;
 }
 
+.nav-bar button {
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  border: 2px solid #5bf9fe;
+  background-color: #14121d;
+  width: 72px;
+  color: #5bf9fe;
+  /* margin-top: 15px; */
+  margin: 10px;
+  padding: 10px 2px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 80%;
+}
+
 .game-image {
   border: 2px solid #f744c4;
   box-shadow: 
@@ -59,7 +75,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-h2 {
+h1, h2 {
   font-weight: bold;
   background: linear-gradient( #c3ff00, #ffffff);
   -webkit-background-clip: text;
@@ -72,22 +88,40 @@ h2 {
 
 .search-bar {
   border: 2px solid #f744c4;
+  top: 50%;
+  left: 50%;
+  transform: translate(-3%, 80%);
+}
+
+/* .login-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(142, 68, 173, 0.6), 0 0 20px rgba(142, 68, 173, 0.4);
+} */
+
+.loggedIn-buttons {
+  /* border: 2px solid #5bf9fe; */
+  width: 500%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  top: 50%;
+  left: 50%;
+  transform: translate(-42%, 35%);
+  
 }
 
 .login-button {
   border: 2px solid #5bf9fe;
   background-color: #14121d;
   color: #5bf9fe;
-  margin-top: 10px;
-  padding: 5px 10px;
+  /* margin-top: 10px; */
+  /* padding: 5px 10px; */
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(142, 68, 173, 0.6), 0 0 20px rgba(142, 68, 173, 0.4);
+  width: 50px !important;
+  height: 20px;
+  transform: translate(180%, 45%);
+  /* transition: background-color 0.3s ease; */
 }
 
 .individual-game {
@@ -115,7 +149,7 @@ h2 {
 }
 
 .login-modal {
-  border: 1px solid rgb(0, 238, 255);
+  border: 1px solid #62e3e9;
   border-radius: 10px;
   background-color: #14121d;
   color: whitesmoke;
@@ -134,17 +168,40 @@ h2 {
   height: 60%;
 }
 
+.login-modal button {
+  border-radius: 5px;
+  border: 1px solid #00ff00;
+  background-color: #14121d;
+  color: #00ff00;
+  cursor: pointer;
+}
+
 .new-user-modal {
-  border: 1px solid black;
+  border: 1px solid #62e3e9;
   border-radius: 10px;
-  background-color: rgb(143, 95, 160);
-  color: black;
+  background-color: #14121d;
+  color: whitesmoke;
   z-index: 9;
   position:fixed;
   top:calc(50% - 200px);
-  left:calc(79% - 250px);
+  left:calc(73.5% - 250px);
   width: 75%;
   height: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 60%;
+}
+
+.new-user-modal button {
+  border-radius: 5px;
+  border: 1px solid #00ff00;
+  background-color: #14121d;
+  color: #00ff00;
+  cursor: pointer;
 }
 
 .game-details-modal {
@@ -185,19 +242,23 @@ h2 {
 }
 
 .user-reviews-list {
-  border: 1px solid black;
+  border: 1px solid rgb(0, 238, 255);
   border-radius: 10px;
-  background-color: rgb(160, 95, 154);
-  color: black;
-  z-index: 8;
+  background-color: #14121d;
+  color: whitesmoke;
+  z-index: 9;
   position:fixed;
   top:calc(50% - 200px);
-  left:calc(79% - 250px);
+  left:calc(73.5% - 250px);
   width: 75%;
   height: 300px;
   max-height: 80vh;
   overflow-y: auto;
   padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 60%;
 }
 
 .game-review-form {
@@ -229,6 +290,15 @@ h2 {
     0 2px 5px #f744c4,  /* Initial glow */
     0 1px 1px #62e3e9,  /* Secondary glow color */
     0 1px 1px #00ff00;
+  background: linear-gradient(45deg, rgba(247, 68, 196, 0.2), rgba(98, 227, 233, 0.2));
+}
+
+.profile button {
+  border-radius: 5px;
+  border: 1px solid #00ff00;
+  background-color: #14121d;
+  color: #00ff00;
+  cursor: pointer;
 }
 
 ul {

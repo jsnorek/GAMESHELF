@@ -8,11 +8,14 @@ function GameReviewList({ reviews }) {
     return (
         <div data-testid="game-review-list">
             {reviews && reviews.length > 0 ? (
+                <div>
+                <h2>My Reviews</h2>
                 <ul>
                     {reviews.map((review, index) => (
                         <GameReview key={index} review={review} />
                     ))}
                 </ul>
+                </div>
             ) : (
                 <p>No reviews available</p>
             )}

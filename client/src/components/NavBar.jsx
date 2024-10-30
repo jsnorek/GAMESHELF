@@ -4,11 +4,14 @@ import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
 import logo from '../assets/logo.png';
 import { Button } from "primereact/button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Menu } from "primereact/menu";
 
 function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, loginInfo, setLoginInfo }) {
     const [searchInput, setSearchInput] = useState('');
+
+    const menuRight = useRef(null);
     
     // To navigate to different pages
     const navigate = useNavigate();
@@ -55,6 +58,13 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
         </div>
     );
 
+    // const items = [
+    //     { label: 'Profile', icon: 'pi pi-user', command: handleProfileClick },
+    //     { label: 'MyShelf', icon: 'pi pi-book', command: handleMyShelfClick },
+    //     { label: 'Log Out', icon: 'pi pi-sign-out', command: clearLogin }
+    // ];
+    
+
     // Sets search bar and buttons to end of the navbar
     const end = (
         <div className="search">
@@ -67,9 +77,10 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
             />
             {isLoggedIn ? 
             <div className="loggedIn-buttons">
-                <Button label="Profile" onClick={handleProfileClick}/>
+                <Button label="Profile" onClick={handleProfileClick}/> 
                 <Button label="MyShelf" onClick={handleMyShelfClick}/>
                 <Button label="Log Out" onClick={clearLogin}/>
+                {/* <Button icon="pi pi-align-right" className="mr-2" onClick={(event) => menuRight.current.toggle(event)} aria-controls="popup_menu_right" aria-haspopup /> */}
             </div> : 
             <Button label="login" className="login-button" onClick={handleLoginModalVisible}/>}
         </div>
@@ -77,6 +88,8 @@ function NavBar({ onSearch, handleLoginModalVisible, isLoggedIn, setIsLoggedIn, 
     return(
         <div className="nav-bar" data-testid="navbar">
             <Menubar start={start} end={end} />
+            {/* <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" /> */}
+
         </div>
     )
 };
