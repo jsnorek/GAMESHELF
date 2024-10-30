@@ -5,15 +5,31 @@
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import NewUserForm from "./NewUserForm";
 
 function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible, setLoggedInUser, baseURL }) {
 
-    // const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
+    const [loginMessage, setLoginMessage] = useState("");
+
+    // Timer for error message
+    useEffect(() => {
+        setTimeout(() => {
+            setLoginMessage("");
+        }, 5000);
+    }, [loginMessage]);
+
+    // Clears login inputs
+    const clearForm = () => {
+        setLoginInfo({
+            username: "",
+            password: "",
+        });
+        setLoginMessage("");
+    };
 
     // Close the login modal by setting its visibility to false.
     const turnLoginModalOff = () => {
         setLoginModalVisible(false)
+        clearForm();
     }
 
     // Handles input changes for username and password input for login
@@ -22,18 +38,15 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
         setLoginInfo((prevLogin) => ({...prevLogin, [name]: value}));
     };
 
-    // const handleNewUserModalVisible = () => {
-    //     setNewUserModalVisible(true);
-    //     setLoginModalVisible(false);
-    //     console.log('New user modal is visible', newUserModalVisible);
-    // }
-
     // Handles submit button for login modal. On click, it compares user input to database and upon
     // Confirming the match, the rest of user information will be pulled from database
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
+        if (!loginInfo.username || !loginInfo.password) {
+            setLoginMessage("Username or password is incorrect");
+            return;
+        }
         try {
-            // const response = await axios.post(`http://localhost:8080/login/`, {
                 const response = await axios.post(`${baseURL}/login/`, {
                 username: loginInfo.username,
                 password: loginInfo.password
@@ -46,9 +59,12 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
                 setLoginModalVisible(false);
                 console.log("Login successful", user);
             } else {
+                setLoginMessage("username or password is incorrect");
                 console.error("Login failed", response.data.message);
             }
         } catch (error) {
+            setLoginMessage("Username or password is incorrect");
+            clearForm();
             console.error("error logging in:", error);
         }
     };
@@ -86,6 +102,7 @@ function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn,
             <Button label="Cancel" onClick={turnLoginModalOff}/>
             <p>New user?</p>
             <Button label="Register" onClick={handleNewUserModalVisible}/>
+            {loginMessage && <p className="login-message" style={{ color: 'red' }}>{loginMessage}</p>}
         </div>
     )
 }

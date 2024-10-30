@@ -2,6 +2,8 @@
 // It displays the game's rating, review, the creation data and username, if given.
 
 function GameReview({ review }) {
+
+    console.log("this is the review", review);
     return (
         <li data-testid="game-review" className="game-review">
             <h4 data-testid="review-rating">Rating: </h4> {review.rating} <br />
