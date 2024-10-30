@@ -76,15 +76,26 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
                                 <h3>{gameDetails.name}</h3>
                                 <img className="game-image" src={gameDetails.background_image} alt={gameDetails.name} style={{ width: '200px' }}/>
                                 <p>{gameDetails.description_raw}</p>
-                                <h4>Platform(s): {gameDetails.platforms.map((platform, index) => (
+                                <h4>Platform(s):</h4>
+                            <ul>
+                                {gameDetails.platforms.map((platform, index) => (
                                     <li key={index}>{platform.platform.name}</li>
-                                ))}</h4>
-                                <h4>Genre: {gameDetails.genres.map((genre, index) => (
+                                ))}
+                            </ul>
+
+                            <h4>Genre(s):</h4>
+                            <ul>
+                                {gameDetails.genres.map((genre, index) => (
                                     <li key={index}>{genre.name}</li>
-                                ))}</h4>
-                                <h4>Publisher(s): {gameDetails.publishers.map((publisher, index) => (
+                                ))}
+                            </ul>
+
+                            <h4>Publisher(s):</h4>
+                            <ul>
+                                {gameDetails.publishers.map((publisher, index) => (
                                     <li key={index}>{publisher.name}</li>
-                                ))}</h4>
+                                ))}
+                            </ul>
                                 {isLoggedIn && <Button label="Write a Review" onClick={handleGameReviewFormVisible} />}
                                 {gameReviews && gameReviews.length > 0 && <GameReviewList reviews={gameReviews} />}
                             </>

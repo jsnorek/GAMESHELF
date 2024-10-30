@@ -49,19 +49,6 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, 
 
     console.log('is user reviews list visible?', userReviewsListVisible);
 
-    // async function updateUserProfile(userId, updatedUserData) {
-    //     try {
-    //         const response = await axios.patch(`http://localhost:8080/users/${userId}`, updatedUserData);
-    //         console.log('User profile updated', response.data);
-    //         setFullLoggedInUserData((prevUserData) =>
-    //             prevUserData.map((user) =>
-    //             user.user_id === userId
-    //     ? {...user, ...updatedUserData } : user ))
-    //     } catch (error) {
-    //         console.error('Error updating profile', error);
-    //     }  
-    // };
-
     // Updates the user profile in the database and updates the state after successful PATCH request
     async function updateUserProfile(userId, updatedUserData) {
         try {
@@ -74,21 +61,6 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, 
             console.error('Error updating profile', error);
         }
     }
-
-    //   {gameReviews && gameReviews.length > 0 ? (
-    //     <ul>
-    //         {gameReviews.map((review, index) => (
-    //             <li key={index}>
-    //                 <strong>Rating: </strong> {review.rating} <br />
-    //                 <strong>Review: </strong> {review.review_text}
-    //                 <p>- {review.username}</p>
-    //                 <p>{new Date(review.created_at).toLocaleDateString()}</p>
-    //             </li>
-    //         ))}
-    //     </ul>
-    //     ) : (
-    //     <p>No reviews available</p>
-    // )}
 
     // Render only if userData exists
     if (!userData) {
@@ -128,31 +100,9 @@ function Profile({ fullLoggedInUserData, setFullLoggedInUserData, loggedInUser, 
                     ) : (
                         <p>No reviews available</p>
                     )}
-                    <Button icon="pi pi-times" aria-label="Cancel" onClick={closeUserReviewModal}/>
+                    <Button className="back-button" icon="pi pi-times" aria-label="Cancel" onClick={closeUserReviewModal}/>
                 </div>
             )}
-            {/* {userReviewsListVisible && (userData.reviews && userData.reviews.length > 0 ? (
-                <div className="user-reviews-list">
-                    <ul>
-                        {userData.reviews.map((review, index) => (
-                            <>
-                                <li key={index}>
-                                    <p>Rating: {review.rating}</p>
-                                    <p>Review: {review.review_text}</p>
-                                    <p>Date: {new Date(review.created_at).toLocaleDateString()}</p>
-                                </li>
-                                <Button label="Back" onClick={closeUserReviewModal}/>
-                            </>
-                        ))}
-                    </ul>
-                </div>
-            ) : (
-                <div className="user-reviews-list">
-                    <p>No reviews available</p>
-                    <Button label="Back" onClick={closeUserReviewModal}/>
-                </div>
-            )
-            )} */}
         </div>
     )
 }

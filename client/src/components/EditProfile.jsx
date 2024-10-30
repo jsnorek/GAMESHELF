@@ -43,8 +43,9 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
             <p>Edit Profile</p>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Name:</label>
+                <label htmlFor="name">Name:</label>
                     <input 
+                        id="name"
                         data-testid="name-input"
                         type="text"
                         name="name"
@@ -52,8 +53,9 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                         onChange={handleInputChange}
                     /> 
                     <br />
-                    <label>Username:</label>
+                    <label htmlFor="username">Username:</label>
                     <input
+                        id="username"
                         data-testid="username-input"
                         type="text"
                         name="username"
@@ -61,16 +63,18 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                         onChange={handleInputChange}
                     />
                     <br />
-                    <label>Email:</label>
+                    <label htmlFor="email">Email:</label>
                     <input 
+                        id="email"
                         type="email"
                         name="email"
                         value={updatedUserData.email}
                         onChange={handleInputChange}
                     />
                     <br />
-                    <label>City</label>
+                    <label htmlFor="city">City:</label>
                     <input 
+                        id="city"
                         type="text"
                         name="city"
                         value={updatedUserData.city}

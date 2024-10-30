@@ -78,6 +78,9 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
                     min={1}
                     max={5}
                     showButtons
+                    aria-label="rating numbers"
+                    aria-valuemin="1" 
+                    aria-valuemax="5"
                     onChange={(e) => setReview({ ...review, rating: e.value })}
                     value={review.rating}
                 />
@@ -89,7 +92,7 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
                     onChange={handleChange}
                     value={review.review_text}
                 />
-            <Button icon="pi pi-check" aria-label="Submit"/>
+            <Button icon="pi pi-check" aria-label="Submit" type="submit"/>
             <Button icon="pi pi-times" aria-label="Cancel" onClick={turnOffGameReviewFormVisible}/>
             </form>
         </div>
