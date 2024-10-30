@@ -33,23 +33,23 @@ function GameDetailsModal({ setGameDetailsModalVisible, gameDetails, gameReviews
 
     return (
         <div className="game-details-modal">
-            <p>Game Details</p>
+            <h2 className="modal-header">Game Details</h2>
             <div className="game-details">
                 <Card>
                     {gameDetails ? (
                         <>
-                        <p>{gameDetails.name}</p>
+                        <h3>{gameDetails.name}</h3>
                         <img className="game-image" src={gameDetails.background_image} alt={gameDetails.name} style={{ width: '200px' }}/>
                         <p>{gameDetails.description_raw}</p>
-                        <p>Platform(s): {gameDetails.platforms.map((platform, index) => (
+                        <h4>Platform(s): {gameDetails.platforms.map((platform, index) => (
                             <li key={index}>{platform.platform.name}</li>
-                        ))}</p>
-                        <p>Genre: {gameDetails.genres.map((genre, index) => (
+                        ))}</h4>
+                        <h4>Genre: {gameDetails.genres.map((genre, index) => (
                             <li key={index}>{genre.name}</li>
-                        ))}</p>
-                        <p>Publisher(s): {gameDetails.publishers.map((publisher, index) => (
+                        ))}</h4>
+                        <h4>Publisher(s): {gameDetails.publishers.map((publisher, index) => (
                             <li key={index}>{publisher.name}</li>
-                        ))}</p>
+                        ))}</h4>
                         {/* {gameReviews && gameReviews.length > 0 ? (
                                 <p>Reviews: {gameReviews.map((review, index) => (
                                     <li key={index}>{review.review_text}</li>

@@ -3,10 +3,10 @@
 
 function GameReview({ review }) {
     return (
-        <div data-testid="game-review">
+        <div data-testid="game-review" className="game-review">
             <li>
-                <strong data-testid="review-rating">Rating: </strong> {review.rating} <br />
-                <strong>Review: </strong> {review.review_text}
+                <h4 data-testid="review-rating">Rating: </h4> {review.rating} <br />
+                <h4>Review: </h4> {review.review_text}
                 {review.username && <p>{review.username}</p>}
                 {/* <p>- {review.username}</p> */}
                 <p>{new Date(review.created_at).toLocaleDateString()}</p>
