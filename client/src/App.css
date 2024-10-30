@@ -115,16 +115,23 @@ h2 {
 }
 
 .login-modal {
-  border: 1px solid black;
+  border: 1px solid rgb(0, 238, 255);
   border-radius: 10px;
-  background-color: cadetblue;
-  color: black;
-  z-index: 10;
+  background-color: #14121d;
+  color: whitesmoke;
+  z-index: 9;
   position:fixed;
   top:calc(50% - 200px);
-  left:calc(79% - 250px);
+  left:calc(73.5% - 250px);
   width: 75%;
   height: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 60%;
 }
 
 .new-user-modal {
