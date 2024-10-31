@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 
 function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserProfile, loggedInUser, closeEditProfile }) {
+    
     // Checks if fullLoggedInUserData exists and has data. If so, extradct the first user data object.
     const userData = fullLoggedInUserData && fullLoggedInUserData.length > 0 ? fullLoggedInUserData[0] : null;
     
