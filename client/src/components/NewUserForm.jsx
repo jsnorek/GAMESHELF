@@ -5,8 +5,30 @@
 
 import { Button } from "primereact/button";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo, setNewUserInfo, baseURL }) {
+
+    const [newUserSubmitMessage, setNewUserSubmitMessage] = useState("");
+
+     // Timer for error message
+     useEffect(() => {
+        setTimeout(() => {
+            setNewUserSubmitMessage("");
+        }, 5000);
+    }, [newUserSubmitMessage]);
+
+    // Clears login inputs
+    const clearForm = () => {
+        setNewUserInfo({
+            username: "",
+            password: "",
+            email: "",
+            name: "",
+            city: ""
+        });
+        setNewUserSubmitMessage("");
+    };
 
     // Switches the view to the login modal when the 'Sign In' button is clicked
     const handleLoginModalVisible = () => {
@@ -17,6 +39,7 @@ function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo
     // Closes the new user modal when the 'Cancel' button is clicked
     const handleNewUserModalVisible = () => {
         setNewUserModalVisible(false);
+        clearForm();
     };
 
     // Handles input change events and updates the newUserInfo state with the current input field value
@@ -28,6 +51,10 @@ function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo
     // Submits the new user data to the server to create an account
     const handleNewUserSubmit = async (e) => {
         e.preventDefault();
+        if(!newUserInfo.username || !newUserInfo.email || !newUserInfo.password || !newUserInfo.name) {
+            setNewUserSubmitMessage("Please fill out all of the required inputs.");
+            return;
+        }
         try {
             // const response = await axios.post(`http://localhost:8080/users`, {
                 const response = await axios.post(`${baseURL}/users`, {
@@ -48,6 +75,7 @@ function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo
             }
         } catch (error) {
             console.error("error creating new user:", error);
+            setNewUserSubmitMessage("Please fill out all of the required inputs.");
         }
     };
 
@@ -102,6 +130,7 @@ function NewUserForm({ setLoginModalVisible, setNewUserModalVisible, newUserInfo
             <Button label="Register" onClick={handleNewUserSubmit}/>
             <Button label="Sign In" onClick={handleLoginModalVisible}/>
             <Button label="Cancel" onClick={handleNewUserModalVisible}/>
+            {newUserSubmitMessage && <p className="new-user-message"style={{ color: 'red' }}>{newUserSubmitMessage}</p>}
         </div>
     )
 };
