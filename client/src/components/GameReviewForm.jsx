@@ -3,12 +3,21 @@
 
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Rating } from "primereact/rating";
 
 function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, setNewReviewSubmitted, baseURL }) {
     
+    const [reviewFormSubmitMessage, setReviewFormSubmitMessage] = useState("");
+    
+    // Timer for error message
+    useEffect(() => {
+        setTimeout(() => {
+            setReviewFormSubmitMessage("");
+        }, 5000);
+    }, [reviewFormSubmitMessage]);
+
     // Initialize the review state with user_id, game_id, rating, and review_text
     const [review, setReview] = useState({
         user_id: loggedInUser.user_id,
@@ -35,6 +44,10 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
     // After submitting, it hides the form by calling turnOffGameReviewFormVisible.
     const handleNewUserSubmit = async (e) => {
         e.preventDefault();
+        if(!review.rating || !review.review_text) {
+            setReviewFormSubmitMessage("Both a rating and review are required to submit.");
+            return;
+        }
         try {
             // const response = await axios.post(`http://localhost:8080/reviews`, {
                 const response = await axios.post(`${baseURL}/reviews`, {
@@ -53,6 +66,7 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
                 console.error("Review creation fail", response.data.message);
             }
         } catch (error) {
+            setReviewFormSubmitMessage("Both a rating and review are required to submit.");
             console.error("error creating new review:", error);
         }
     };
@@ -94,6 +108,7 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
             <Button icon="pi pi-check" aria-label="Submit" type="submit"/>
             <Button className="cancel-button" icon="pi pi-times" aria-label="Cancel" onClick={turnOffGameReviewFormVisible}/>
             </form>
+            {reviewFormSubmitMessage && <p className="review-form-message" style={{ color: 'red' }}>{reviewFormSubmitMessage}</p>}
         </div>
     )
 };
