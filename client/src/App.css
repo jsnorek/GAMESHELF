@@ -66,12 +66,12 @@
 }
 
 .loggedIn-buttons .p-button, 
-#login-button .p-button {
+#login-button, .p-button {
   border: 2px solid #5bf9fe;
   background-color: #14121d;
   color: #5bf9fe;
   border-radius: 5px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   padding: 0.4em 1em;
 }
 
@@ -266,9 +266,38 @@ h1, h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-review-form form {
+  display: flex;
+  flex-direction: column;
+  width: 100%; 
+  align-items: center; 
+}
+
+.review-rating {
+  display: flex;
+  justify-content: center;
+  transform: scale(1.5);
+  margin: 2rem 1rem;
+  color:#f744c4;
+  width: 100%;
+}
+
+.game-review-form textarea {
+  width: 100%; 
+  max-width: 100%;
+  border: 2px solid #f744c4; 
+  padding: 0.5em; 
+  margin-bottom: 1em; 
 }
 
 .game-review-form button {
+  width: 48%;
+  margin-top: 10px;
   border-radius: 5px;
   border: 1px solid #00ff00;
   background-color: #14121d;
@@ -313,6 +342,16 @@ li {
   font-weight: lighter;
   color: whitesmoke;
   font-size: 90%;
+}
+
+.cancel-button {
+  color: whitesmoke !important;
+  border-color: whitesmoke !important;
+}
+
+.favorites-button {
+  border-color: #14121d !important;
+  margin-left: 0.2rem;
 }
 
 
@@ -406,5 +445,13 @@ li {
 
   .game-details-modal img {
     width: 250px !important;
+  }
+
+  .game-review-form textarea {
+    width: 70%; 
+  }
+
+  .game-review-form button {
+    width: 30%; 
   }
 }

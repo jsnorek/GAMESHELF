@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { useState } from "react";
 import axios from "axios";
+import { Rating } from "primereact/rating";
 
 function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, setNewReviewSubmitted, baseURL }) {
     
@@ -15,16 +16,6 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
         rating: "",
         review_text: "",
     });
-
-    // Clears the form inputs
-    // const clearForm = () => {
-    //     setReview({
-    //         user_id: "",
-    //         game_id: "",
-    //         rating: "",
-    //         review_text: "" ,
-    //     });
-    // };
 
     // Close the review form modal by setting visibility state to false.
     const turnOffGameReviewFormVisible= () => {
@@ -71,7 +62,8 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
         <div className="game-review-form">
             <h2>Write a Review for {gameDetails.name}</h2>
             <form onSubmit={handleNewUserSubmit}>
-                <InputNumber
+                {/* <p>Rate on a scale of 1-5</p> */}
+                {/* <InputNumber
                     id="rating"
                     name="rating"
                     placeholder="Rating"
@@ -83,6 +75,13 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
                     aria-valuemax="5"
                     onChange={(e) => setReview({ ...review, rating: e.value })}
                     value={review.rating}
+                /> */}
+                <Rating 
+                    className="review-rating"
+                    value={review.rating}
+                    onChange={(e) => setReview({ ...review, rating: e.value })}
+                    stars={5}
+                    cancel={false}
                 />
                 <textarea
                     id="review_text"
@@ -93,7 +92,7 @@ function GameReviewForm({ setGameReviewFormVisible, gameDetails, loggedInUser, s
                     value={review.review_text}
                 />
             <Button icon="pi pi-check" aria-label="Submit" type="submit"/>
-            <Button icon="pi pi-times" aria-label="Cancel" onClick={turnOffGameReviewFormVisible}/>
+            <Button className="cancel-button" icon="pi pi-times" aria-label="Cancel" onClick={turnOffGameReviewFormVisible}/>
             </form>
         </div>
     )

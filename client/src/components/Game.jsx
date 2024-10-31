@@ -38,6 +38,7 @@ function Game({
       />
       {loggedInUser && (
         <Button
+          className="favorites-button"
           icon="pi pi-heart"
           rounded
           text
