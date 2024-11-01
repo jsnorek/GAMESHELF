@@ -15,14 +15,14 @@ function GameReviewForm({
   baseURL,
 }) {
     // Handles review form submission message display
-  const [reviewFormSubmitMessage, setReviewFormSubmitMessage] = useState("");
+  const [reviewFormSubmitErrorMessage, setReviewFormSubmitErrorMessage] = useState("");
 
   // Timer for error message
   useEffect(() => {
     setTimeout(() => {
-      setReviewFormSubmitMessage("");
+      setReviewFormSubmitErrorMessage("");
     }, 5000);
-  }, [reviewFormSubmitMessage]);
+  }, [reviewFormSubmitErrorMessage]);
 
   // Initialize the review state with user_id, game_id, rating, and review_text
   const [review, setReview] = useState({
@@ -51,7 +51,7 @@ function GameReviewForm({
   const handleNewUserSubmit = async (e) => {
     e.preventDefault();
     if (!review.rating || !review.review_text) {
-      setReviewFormSubmitMessage(
+      setReviewFormSubmitErrorMessage(
         "Both a rating and review are required to submit."
       );
       return;
@@ -73,7 +73,7 @@ function GameReviewForm({
         console.error("Review creation fail", response.data.message);
       }
     } catch (error) {
-      setReviewFormSubmitMessage(
+      setReviewFormSubmitErrorMessage(
         "Both a rating and review are required to submit."
       );
       console.error("error creating new review:", error);
@@ -107,9 +107,9 @@ function GameReviewForm({
           onClick={turnOffGameReviewFormVisible}
         />
       </form>
-      {reviewFormSubmitMessage && (
+      {reviewFormSubmitErrorMessage && (
         <p className="review-form-message" style={{ color: "red" }}>
-          {reviewFormSubmitMessage}
+          {reviewFormSubmitErrorMessage}
         </p>
       )}
     </div>

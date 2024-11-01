@@ -17,14 +17,14 @@ function LoginModal({
   baseURL,
 }) {
     // Handles message display when logging in
-  const [loginMessage, setLoginMessage] = useState("");
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
   // Timer for error message
   useEffect(() => {
     setTimeout(() => {
-      setLoginMessage("");
+      setLoginErrorMessage("");
     }, 5000);
-  }, [loginMessage]);
+  }, [loginErrorMessage]);
 
   // Clears login inputs
   const clearForm = () => {
@@ -32,7 +32,7 @@ function LoginModal({
       username: "",
       password: "",
     });
-    setLoginMessage("");
+    setLoginErrorMessage("");
   };
 
   // Close the login modal by setting its visibility to false.
@@ -52,7 +52,7 @@ function LoginModal({
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!loginInfo.username || !loginInfo.password) {
-      setLoginMessage("Username or password is incorrect");
+      setLoginErrorMessage("Username or password is incorrect");
       return;
     }
     try {
@@ -68,11 +68,11 @@ function LoginModal({
         setLoginModalVisible(false);
         console.log("Login successful", user);
       } else {
-        setLoginMessage("username or password is incorrect");
+        setLoginErrorMessage("username or password is incorrect");
         console.error("Login failed", response.data.message);
       }
     } catch (error) {
-      setLoginMessage("Username or password is incorrect");
+      setLoginErrorMessage("Username or password is incorrect");
       clearForm();
       console.error("error logging in:", error);
     }
@@ -114,9 +114,9 @@ function LoginModal({
       <Button label="Cancel" onClick={turnLoginModalOff} />
       <p>New user?</p>
       <Button label="Register" onClick={handleNewUserModalVisible} />
-      {loginMessage && (
+      {loginErrorMessage && (
         <p className="login-message" style={{ color: "red" }}>
-          {loginMessage}
+          {loginErrorMessage}
         </p>
       )}
     </div>

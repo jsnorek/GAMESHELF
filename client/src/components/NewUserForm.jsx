@@ -15,14 +15,14 @@ function NewUserForm({
   baseURL,
 }) {
     // Handles user registration message
-  const [newUserSubmitMessage, setNewUserSubmitMessage] = useState("");
+  const [newUserSubmitErrorMessage, setNewUserSubmitErrorMessage] = useState("");
 
   // Timer for error message
   useEffect(() => {
     setTimeout(() => {
-      setNewUserSubmitMessage("");
+      setNewUserSubmitErrorMessage("");
     }, 5000);
-  }, [newUserSubmitMessage]);
+  }, [newUserSubmitErrorMessage]);
 
   // Clears login inputs
   const clearForm = () => {
@@ -33,7 +33,7 @@ function NewUserForm({
       name: "",
       city: "",
     });
-    setNewUserSubmitMessage("");
+    setNewUserSubmitErrorMessage("");
   };
 
   // Switches the view to the login modal when the 'Sign In' button is clicked
@@ -63,7 +63,7 @@ function NewUserForm({
       !newUserInfo.password ||
       !newUserInfo.name
     ) {
-      setNewUserSubmitMessage("Please fill out all of the required inputs.");
+      setNewUserSubmitErrorMessage("Please fill out all of the required inputs.");
       return;
     }
     try {
@@ -84,7 +84,7 @@ function NewUserForm({
       }
     } catch (error) {
       console.error("error creating new user:", error);
-      setNewUserSubmitMessage("Please fill out all of the required inputs.");
+      setNewUserSubmitErrorMessage("Please fill out all of the required inputs.");
     }
   };
 
@@ -139,9 +139,9 @@ function NewUserForm({
       <Button label="Register" onClick={handleNewUserSubmit} />
       <Button label="Sign In" onClick={handleLoginModalVisible} />
       <Button label="Cancel" onClick={handleNewUserModalVisible} />
-      {newUserSubmitMessage && (
+      {newUserSubmitErrorMessage && (
         <p className="new-user-message" style={{ color: "red" }}>
-          {newUserSubmitMessage}
+          {newUserSubmitErrorMessage}
         </p>
       )}
     </div>
