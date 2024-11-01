@@ -1,16 +1,14 @@
 # GAMESHELF
-
-## One Sentence Pitch:
 Discover, track, and share your gaming journey with a community of passionate gamers.
 
 
 ## Core Functionality:
- A platform where users can browse games and catalog their game collections, rate and review games, and create custom lists (e.g., “Favorites,” “Wishlist,” “Currently Playing”).
+ A platform where users can browse games and catalog their game collections, rate and review games, and create a custom favorites list.
 
 
-This project will be built with the PERN stack.
+This project is built with the PERN stack.
 
-User will be able to browse games and upon login can search through games, adding them to their lists of favorites, write and view game reviews, view their “shelf” of games pulled from their lists, and change their basic profile information.
+User are able to browse/search games, see game details and user reviews, and, upon login, can add games to their lists of favorites, write game reviews, view their “shelf” of games pulled from their favorites list, and view/change their basic profile information.
 
 ## Technologies
 - **Frontend**: React Vite, PrimeReact
@@ -19,8 +17,7 @@ User will be able to browse games and upon login can search through games, addin
 - **Testing**: Vitest, React Testing Library (RTL), Jest
 
 #### Once you have successfully setup this template and initial database, the view will look like this:
-![Screenshot 2024-10-24 at 2 55 09 PM](https://github.com/user-attachments/assets/76f12c47-bb25-40b4-bf72-8b5bcfaf6e0b)
-
+![ezgif com-optimize (3)](https://github.com/user-attachments/assets/00a710fd-dd72-4519-bcfe-9943fcc1ee7e)
 
 ## API Usage
 GAMESHELF uses the RAWG to populate the video game data. You can sign up for free for an account to get an API key and view API documentation here: https://rawg.io/apidocs
