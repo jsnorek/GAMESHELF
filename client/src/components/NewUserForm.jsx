@@ -13,6 +13,9 @@ function NewUserForm({
   newUserInfo,
   setNewUserInfo,
   baseURL,
+  setLoginInfo,
+  setIsLoggedIn,
+  setLoggedInUser
 }) {
     // Handles user registration message
   const [newUserSubmitErrorMessage, setNewUserSubmitErrorMessage] = useState("");
@@ -85,22 +88,35 @@ function NewUserForm({
         name: newUserInfo.name,
         city: newUserInfo.city,
       });
-
       if (response.status === 200) {
-        const user = response.data;
-        handleNewUserModalVisible();
-        console.log("New user creation successful");
-        alert(`New user creation successful, welcome ${newUserInfo.name}`);
-      } } catch (error) {
-        if (error.response && error.response.status === 400) {
-            // Set the error message from the server response
-            setNewUserSubmitErrorMessage(error.response.data.message);
+        // Auto-login after successful registration
+        const loginResponse = await axios.post(`${baseURL}/login/`, {
+          username: newUserInfo.username,
+          password: newUserInfo.password,
+        });
+
+        if (loginResponse.status === 200) {
+          const user = loginResponse.data;
+          setIsLoggedIn(true);
+          setLoggedInUser(user);
+          console.log("New user creation successful and logged in");
+          alert(`New user creation successful, welcome ${newUserInfo.name}`);
         } else {
-            setNewUserSubmitErrorMessage("Error creating account. Please try again.");
+          console.error("Auto-login failed", loginResponse.data.message);
         }
-        console.error("Error creating new user:", error);
+
+        handleNewUserModalVisible();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Set the error message from the server response
+        setNewUserSubmitErrorMessage(error.response.data.message);
+      } else {
+        setNewUserSubmitErrorMessage("Error creating account. Please try again.");
+      }
+      console.error("Error creating new user:", error);
     }
-};
+  };
 
   return (
     <div className="new-user-modal" data-testid="new-user-form">
@@ -158,7 +174,7 @@ function NewUserForm({
       <Button label="Login" className="new-user-sign-in-button" onClick={handleLoginModalVisible} />
       </div>
       {newUserSubmitErrorMessage && (
-        <p className="new-user-message" style={{ color: "red" }}>
+        <p className="error-message" style={{ color: "red" }}>
           {newUserSubmitErrorMessage}
         </p>
       )}

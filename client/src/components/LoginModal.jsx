@@ -115,7 +115,7 @@ function LoginModal({
       <p>New user?</p>
       <Button label="Register" onClick={handleNewUserModalVisible} />
       {loginErrorMessage && (
-        <p className="login-message" style={{ color: "red" }}>
+        <p className="error-message" style={{ color: "red" }}>
           {loginErrorMessage}
         </p>
       )}

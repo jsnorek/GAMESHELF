@@ -380,6 +380,23 @@ li {
   margin-left: 0.2rem;
 }
 
+.error-message {
+  border: 1px solid #f744c4;
+  border-radius: 10px;
+  background-color: #14121d;
+  color: whitesmoke;
+  z-index: 100;
+  position:fixed;
+  top:calc(50% - 200px);
+  left:calc(73.5% - 250px);
+  width: 50%;
+  height: 10%;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 
 @media (min-width: 660px) { /* Medium screens (tablets) */
 

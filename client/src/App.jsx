@@ -321,6 +321,9 @@ function App() {
             newUserInfo={newUserInfo}
             setNewUserInfo={setNewUserInfo}
             baseURL={baseURL}
+            setLoginInfo={setLoginInfo}
+            setIsLoggedIn={setIsLoggedIn}
+            setLoggedInUser={setLoggedInUser}
           />
         )}
       </Router>

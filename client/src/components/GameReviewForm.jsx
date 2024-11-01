@@ -108,7 +108,7 @@ function GameReviewForm({
         />
       </form>
       {reviewFormSubmitErrorMessage && (
-        <p className="review-form-message" style={{ color: "red" }}>
+        <p className="error-message" style={{ color: "red" }}>
           {reviewFormSubmitErrorMessage}
         </p>
       )}
