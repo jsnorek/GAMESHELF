@@ -64,12 +64,6 @@ function App() {
     console.log("testing search data", searchResults);
   };
 
-  // useEffect to fetch game data on component mount
-  // useEffect(() => {
-  //   gameList();
-  //   console.log("testing game data 2", gameData )
-  // }, []);
-
   // Fetches searched game data from API based on user input in the search bar
   const handleSearch = async (searchInput) => {
     if (!searchInput) {

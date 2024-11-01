@@ -90,7 +90,8 @@ function NewUserForm({
 
   return (
     <div className="new-user-modal" data-testid="new-user-form">
-      <p>Please enter in your information to register</p>
+      <h2>Please Enter Your Information To Register</h2>
+      <div className="new-user-modal-inputs">
       <input
         id="register-username"
         type="text"
@@ -136,9 +137,12 @@ function NewUserForm({
         onChange={handleChange}
         value={newUserInfo.city}
       />
-      <Button label="Register" onClick={handleNewUserSubmit} />
-      <Button label="Sign In" onClick={handleLoginModalVisible} />
+      </div>
+      <div className="new-user-modal-buttons">
+      <Button className="register-button" label="Register" onClick={handleNewUserSubmit} />
       <Button label="Cancel" onClick={handleNewUserModalVisible} />
+      <Button label="Sign In" className="new-user-sign-in-button" onClick={handleLoginModalVisible} />
+      </div>
       {newUserSubmitErrorMessage && (
         <p className="new-user-message" style={{ color: "red" }}>
           {newUserSubmitErrorMessage}
