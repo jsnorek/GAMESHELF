@@ -75,7 +75,7 @@ function NavBar({
 
   // Sets search bar and buttons to end of the navbar
   const end = (
-    <div className="search">
+    <div className="search" role="menubar">
       <InputText
         className="search-bar"
         aria-label="search-bar"
@@ -95,11 +95,13 @@ function NavBar({
             className="pi pi-book"
             aria-label="MyShelf"
             onClick={handleMyShelfClick}
+            role="menuitem"
           />
           <Button
             className="pi pi-sign-out"
             aria-label="sign-out"
             onClick={clearLogin}
+            role="menuitem"
           />
         </div>
       ) : (
@@ -108,13 +110,14 @@ function NavBar({
           aria-label="sign-in"
           id="login-button"
           onClick={handleLoginModalVisible}
+          role="menuitem"
         />
       )}
     </div>
   );
   return (
     <div className="nav-bar" data-testid="navbar">
-      <Menubar start={start} end={end} aria-label="menubar"/>
+      <Menubar start={start} end={end}/>
     </div>
   );
 }
