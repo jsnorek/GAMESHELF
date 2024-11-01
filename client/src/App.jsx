@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
-import { DeferredContent } from "primereact/deferredcontent";
+// import { DeferredContent } from "primereact/deferredcontent";
 import NavBar from "./components/NavBar";
 import GameList from "./components/GameList";
 import LoginModal from "./components/LoginModal";
@@ -30,7 +30,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState();
   const [fullLoggedInUserData, setFullLoggedInUserData] = useState();
   const [newReviewSubmitted, setNewReviewSubmitted] = useState(false);
-
+ // State for managing favorited games
   const [favoritedGames, setFavoritedGames] = useState([]);
   const [newFavoriteAdded, setNewFavoriteAdded] = useState(false);
 
@@ -39,6 +39,7 @@ function App() {
     username: "",
     password: "",
   });
+  // State for handling new user registration information
   const [newUserInfo, setNewUserInfo] = useState({
     username: "",
     email: "",
@@ -47,39 +48,21 @@ function App() {
     city: "",
   });
 
-  //   const gameList = async () => {
-  //     // Determine the base URL
-  //     const baseUrl = process.env.NODE_ENV === "development"
-  //         ? "http://localhost:8080"
-  //         : "https://server-g79j.onrender.com";
-
-  //     // Fetch the data from the backend
-  //     const url = `${baseUrl}/api`;
-  //     const res = await fetch(url);
-  //     const data = await res.json();
-  //     console.log("game data list", data);
-  //     setGameData(data);
-  // };
-
+  // For setting up production environment
   const baseURL = import.meta.env.VITE_API_URL;
 
-  // on component mount to fetch initial game data from API
+  // On component mount to fetch initial game data from API
   const gameList = async () => {
-    setIsGameDataLoading(true)
-    // const url = `http://localhost:8080/api`;
-    // const url = `https://server-g79j.onrender.com/api`;
+    setIsGameDataLoading(true);
     const url = `${baseURL}/api`;
     const res = await fetch(url);
     const data = await res.json();
-    // console.log("game data list", data);
     setGameData(data);
     setIsGameDataLoading(false);
+    setSearchResults(null);
+    console.log("testing game data", data );
+    console.log("testing search data", searchResults);
   };
-
-  // useEffect to fetch game data on component mount
-  useEffect(() => {
-    gameList();
-  }, []);
 
   // Fetches searched game data from API based on user input in the search bar
   const handleSearch = async (searchInput) => {
@@ -90,7 +73,6 @@ function App() {
       return;
     }
     try {
-      // const res = await fetch(`http://localhost:8080/search?query=${searchInput}`);
       const res = await fetch(`${baseURL}/search?query=${searchInput}`);
       const data = await res.json();
       console.log("this is the search data", data);
@@ -119,10 +101,9 @@ function App() {
   // setSearchResults(filteredGames);
 
   // To check what the game data looks like when rendered
-  // console.log(gameData, "State");
-  if (gameData && gameData.results) {
+  // if (gameData && gameData.results) {
     // console.log("First game:", gameData.results[0]);
-  }
+  // }
 
   // Function to make the login modal visible
   const handleLoginModalVisible = () => {
@@ -141,8 +122,6 @@ function App() {
   const handleGameDetailsModalVisible = (gameId) => {
     setSelectedGameId(gameId);
     setGameDetailsModalVisible(true);
-    // console.log("Game details modal is visible", gameDetailsModalVisible);
-    // console.log("game details id:", selectedGameId);
   };
 
   // Fetch game details based on game_id
@@ -151,9 +130,7 @@ function App() {
       if (selectedGameId) {
         console.log("Fetching details for game id:", selectedGameId);
         try {
-          // const response = await axios.get(`http://localhost:8080/game/${selectedGameId}`);
           const response = await axios.get(`${baseURL}/game/${selectedGameId}`);
-          // console.log("Game details fetched for:", response.data);
           setGameDetails(response.data);
         } catch (error) {
           console.error("Error fetching game details:", error);
@@ -163,19 +140,14 @@ function App() {
     fetchGameDetails();
   }, [selectedGameId, newReviewSubmitted]);
 
-  // console.log("game details from the app", gameDetails);
-
   // Fetch game reviews based on selected game id
   useEffect(() => {
     const fetchGameReviews = async () => {
       if (selectedGameId) {
-        // console.log("Fetching game reviews for game id;", selectedGameId);
         try {
-          // const response = await axios.get(`http://localhost:8080/game-reviews/${selectedGameId}`);
           const response = await axios.get(
             `${baseURL}/game-reviews/${selectedGameId}`
           );
-          // console.log("Game reviews fetched for:", response.data);
           setGameReviews(response.data || "");
         } catch (error) {
           console.error("Error fetching game reviews:", error);
@@ -185,23 +157,14 @@ function App() {
     fetchGameReviews();
   }, [selectedGameId, newReviewSubmitted]);
 
-  // console.log("game reviews from the app", gameReviews);
-
-  useEffect(() => {
-    console.log("TESTER game reviews from the app:", gameReviews);
-  }, [gameReviews]);
-
   // Fetch all user data based on logged-in user id
   useEffect(() => {
     const fetchAllUserData = async () => {
       if (isLoggedIn && loggedInUser && favoritedGames.length === 0) {
-        // console.log("Fetching all logged in user data", loggedInUser.user_id);
         try {
-          // const response = await axios.get(`http://localhost:8080/user-info/${loggedInUser.user_id}`);
           const response = await axios.get(
             `${baseURL}/user-info/${loggedInUser.user_id}`
           );
-          // console.log("User data fetched for:", response.data);
           setFullLoggedInUserData(response.data);
           await getFavoritedGames(loggedInUser.user_id);
         } catch (error) {
@@ -210,7 +173,6 @@ function App() {
       }
     };
     fetchAllUserData();
-    // }, [isLoggedIn, loggedInUser.user_id]);
   }, [isLoggedIn, loggedInUser, baseURL, favoritedGames]);
 
   // console.log("THIS is the logged in user info", loggedInUser);
@@ -223,13 +185,10 @@ function App() {
         user_id: loggedInUser.user_id,
         game_id: game_id,
       });
-
       if (response.status === 200) {
-        // setFavoritedGames([...favoritedGames, game_id]); // Add game_id to favoritedGames
-        // setFavoritedGames(prev => [...prev, game_id]);
         setNewFavoriteAdded((prev) => !prev);
         await getFavoritedGames(loggedInUser.user_id);
-        // console.log("New favorited game successful", response.data);
+        console.log("New favorited game successful", response.data);
       } else {
         console.error("Favorited game fail", response.data.message);
       }
@@ -247,7 +206,7 @@ function App() {
       if (response.status === 200) {
         setNewFavoriteAdded((prev) => !prev);
         await getFavoritedGames(loggedInUser.user_id);
-        // console.log("New unfavorited game successful", response.data);
+        console.log("New unfavorited game successful", response.data);
       } else {
         console.error("Unfavoriting game fail", response.data.message);
       }
@@ -256,19 +215,18 @@ function App() {
     }
   };
 
+  // Fetches game data for individual game id from the API
   const fetchGameData = async (gameId) => {
     const response = await axios.get(`${baseURL}/game/${gameId}`);
     return response.data;
   };
 
+  // Fetches a specific user's list of favorited games from the database
   const getFavoritedGames = async (userId) => {
     try {
-      const response = await axios.get(
-        `${baseURL}/favorites/${userId}`
-      );
+      const response = await axios.get(`${baseURL}/favorites/${userId}`);
       const user = response.data;
       const favoriteIds = response.data.map((fav) => fav.game_id);
-
       const favorites = await Promise.all(
         favoriteIds.map(async (id) => await fetchGameData(id))
       );
@@ -288,22 +246,23 @@ function App() {
           setIsLoggedIn={setIsLoggedIn}
           loginInfo={loginInfo}
           setLoginInfo={setLoginInfo}
+          gameList={gameList}
         />
         <Routes>
           <Route
             path="/"
             element={
               <GameList
-                  gameData={searchResults || gameData?.results || []}
-                  isLoading={isGameDataLoading}
-                  handleGameDetailsModalVisible={handleGameDetailsModalVisible}
-                  baseURL={baseURL}
-                  loggedInUser={loggedInUser}
-                  favoritedGames={favoritedGames}
-                  newFavoriteAdded={newFavoriteAdded}
-                  userFavoritesGame={userFavoritesGame}
-                  userUnfavoritesGame={userUnfavoritesGame}
-                />
+                gameData={searchResults || gameData?.results || []}
+                isLoading={isGameDataLoading}
+                handleGameDetailsModalVisible={handleGameDetailsModalVisible}
+                baseURL={baseURL}
+                loggedInUser={loggedInUser}
+                favoritedGames={favoritedGames}
+                newFavoriteAdded={newFavoriteAdded}
+                userFavoritesGame={userFavoritesGame}
+                userUnfavoritesGame={userUnfavoritesGame}
+              />
             }
           />
           <Route
@@ -362,6 +321,9 @@ function App() {
             newUserInfo={newUserInfo}
             setNewUserInfo={setNewUserInfo}
             baseURL={baseURL}
+            setLoginInfo={setLoginInfo}
+            setIsLoggedIn={setIsLoggedIn}
+            setLoggedInUser={setLoggedInUser}
           />
         )}
       </Router>

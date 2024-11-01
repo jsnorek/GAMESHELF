@@ -12,6 +12,7 @@ function Game({
   isFavorited,
   userUnfavoritesGame,
 }) {
+  // Toggles favorite game on and off
   const handleFavoriteClick = async () => {
     if (isFavorited) {
       await userUnfavoritesGame(game.id); // Call unfavorite function
@@ -19,10 +20,12 @@ function Game({
       await userFavoritesGame(game.id); // Call favorite function
     }
   };
+
   return (
-    <div data-testid="game">
+    <div data-testid="game" className="individual-game">
       <div key={game.id} className="game">
         <img
+          className="game-image"
           src={game.background_image}
           alt={game.name}
           style={{ width: "200px" }}
@@ -31,18 +34,20 @@ function Game({
         <p>Metacritic Rating: {game.metacritic}</p>
       </div>
       <Button
+        className="details-button"
         label="details"
-        onClick={() => handleGameDetailsModalVisible(game.id)}
+        onClick={() => handleGameDetailsModalVisible(game.id)} // Sends clicked game_id back to function
       />
       {loggedInUser && (
         <Button
+          className="favorites-button"
           icon="pi pi-heart"
           rounded
           text
           aria-label="Favorite"
           onClick={handleFavoriteClick}
           style={{
-            backgroundColor: isFavorited ? "#f744c4" : "lightgray",
+            backgroundColor: isFavorited ? "#f744c4" : "lightgray", // Pink if favorited, gray if not
             color: isFavorited ? "white" : "black",
           }}
         />

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 
 function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserProfile, loggedInUser, closeEditProfile }) {
+    
     // Checks if fullLoggedInUserData exists and has data. If so, extradct the first user data object.
     const userData = fullLoggedInUserData && fullLoggedInUserData.length > 0 ? fullLoggedInUserData[0] : null;
     
@@ -43,8 +44,9 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
             <p>Edit Profile</p>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Name:</label>
+                <label htmlFor="name">Name:</label>
                     <input 
+                        id="name"
                         data-testid="name-input"
                         type="text"
                         name="name"
@@ -52,8 +54,9 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                         onChange={handleInputChange}
                     /> 
                     <br />
-                    <label>Username:</label>
+                    <label htmlFor="username">Username:</label>
                     <input
+                        id="username"
                         data-testid="username-input"
                         type="text"
                         name="username"
@@ -61,24 +64,26 @@ function EditProfile({ fullLoggedInUserData, setEditProfileVisible, updateUserPr
                         onChange={handleInputChange}
                     />
                     <br />
-                    <label>Email:</label>
+                    <label htmlFor="email">Email:</label>
                     <input 
+                        id="email"
                         type="email"
                         name="email"
                         value={updatedUserData.email}
                         onChange={handleInputChange}
                     />
                     <br />
-                    <label>City</label>
+                    <label htmlFor="city">City:</label>
                     <input 
+                        id="city"
                         type="text"
                         name="city"
                         value={updatedUserData.city}
                         onChange={handleInputChange}
                     />
                 </div>
-                <Button label="Submit"/>
-                <Button label="Cancel" onClick={closeEditProfile}/>
+                <Button icon="pi pi-check" aria-label="Submit"/>
+                <Button className="cancel-button" icon="pi pi-times" aria-label="Cancel" onClick={closeEditProfile}/>
             </form>
         </div>
     )

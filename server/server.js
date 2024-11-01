@@ -18,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//api key
+// api key
 const api_key = process.env.api_key
 
 // test route
@@ -124,17 +124,6 @@ app.get('/game/:gameId', async (req, res) => {
 app.get('/user-info/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
-        // const queryText = '
-        // SELECT u.username, u.email, u.name, u.city, 
-        // r.game_id AS review_game_id, r.rating, r.review_text, r.created_at, 
-        // f.game_id AS favorite_game_id 
-        // FROM users u 
-        // LEFT JOIN reviews r ON u.user_id = r.user_id 
-        // LEFT JOIN favorites f ON u.user_id = f.user_id 
-        // WHERE u.user_id = $1';
-
-        // json_agg() function aggregates (collects multiple rows of data and turns them into an array) the result set into the array - each row of the result set will be an element
-        // json_build_object() function builds a JSON object for each review and then for each favorite
         const queryText = `
             SELECT 
                 u.username, u.email, u.name, u.city,
@@ -182,8 +171,16 @@ app.post('/users', async (req, res) => {
         const emailCheck = await db.query(checkEmailQuery, [email]);
 
         if(emailCheck.rows.length > 0) {
-            return res.status(400).json({ message: 'Email already exists in db' });
+            return res.status(400).json({ message: 'Email already exists' });
         }
+
+         // Check to see if username already exists in the database
+         const checkUsernameQuery = 'SELECT * FROM users WHERE username = $1';
+         const usernameCheck = await db.query(checkUsernameQuery, [username]);
+ 
+         if(usernameCheck.rows.length > 0) {
+             return res.status(400).json({ message: 'Username already exists' });
+         }
 
         const queryText = 'INSERT INTO users (username, email, password, name, city) VALUES ($1, $2, $3, $4, $5) RETURNING *';
         const { rows } = await db.query(queryText, [username, email, password, name, city]);
@@ -193,19 +190,6 @@ app.post('/users', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-// request for user adding a game to their favorites
-// app.post('/favorites', async (req, res) => {
-//     const { user_id, game_id } = req.body;
-//     try {
-//         const queryText = 'INSERT INTO favorites (user_id, game_id) VALUES ($1, $2) RETURNING *';
-//         const { rows } = await db.query(queryText, [user_id, game_id]);
-//         res.status(200).json(rows[0])
-//     } catch (error) {
-//         console.error('Error adding favorite game', error);
-//         res.status(500).send('Server error');
-//     }
-// });
 
 app.post('/favorites', async (req, res) => {
     const { user_id, game_id } = req.body;
@@ -267,20 +251,6 @@ app.post('/login/', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-// request to update user information
-// app.post('/users/:user_id', async (req, res) => {
-//     const userId = req.params.user_id;
-//     const { username, email, password, name, city } = req.body;
-//     try {
-//         const queryText = 'UPDATE users SET username = $1, email = $2, password = $3, name = $4, city = $5 WHERE user_id = $6 RETURNING *';
-//         const { rows } = await db.query(queryText, [username, email, password, name, city, userId]);
-//         res.status(200).json(rows[0]);
-//     } catch (error) {
-//         console.error('Error updating user information', error);
-//         res.status(500).send('Server error');
-//     }
-// });
 
 // request to edit user information
 app.patch('/users/:user_id', async (req, res) => {

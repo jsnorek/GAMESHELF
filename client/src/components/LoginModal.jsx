@@ -5,88 +5,121 @@
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import NewUserForm from "./NewUserForm";
 
-function LoginModal({ setLoginModalVisible, loginInfo, setLoginInfo, isLoggedIn, setIsLoggedIn, handleNewUserModalVisible, setLoggedInUser, baseURL }) {
+function LoginModal({
+  setLoginModalVisible,
+  loginInfo,
+  setLoginInfo,
+  isLoggedIn,
+  setIsLoggedIn,
+  handleNewUserModalVisible,
+  setLoggedInUser,
+  baseURL,
+}) {
+    // Handles message display when logging in
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
-    // const [ newUserModalVisible,setNewUserModalVisible, ] = useState(false);
+  // Timer for error message
+  useEffect(() => {
+    setTimeout(() => {
+      setLoginErrorMessage("");
+    }, 5000);
+  }, [loginErrorMessage]);
 
-    // Close the login modal by setting its visibility to false.
-    const turnLoginModalOff = () => {
-        setLoginModalVisible(false)
+  // Clears login inputs
+  const clearForm = () => {
+    setLoginInfo({
+      username: "",
+      password: "",
+    });
+    setLoginErrorMessage("");
+  };
+
+  // Close the login modal by setting its visibility to false.
+  const turnLoginModalOff = () => {
+    setLoginModalVisible(false);
+    clearForm();
+  };
+
+  // Handles input changes for username and password input for login
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginInfo((prevLogin) => ({ ...prevLogin, [name]: value }));
+  };
+
+  // Handles submit button for login modal. On click, it compares user input to database and upon
+  // Confirming the match, the rest of user information will be pulled from database
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    if (!loginInfo.username || !loginInfo.password) {
+      setLoginErrorMessage("Username or password is incorrect");
+      return;
     }
+    try {
+      const response = await axios.post(`${baseURL}/login/`, {
+        username: loginInfo.username,
+        password: loginInfo.password,
+      });
 
-    // Handles input changes for username and password input for login
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setLoginInfo((prevLogin) => ({...prevLogin, [name]: value}));
-    };
+      if (response.status === 200) {
+        const user = response.data;
+        setIsLoggedIn(true);
+        setLoggedInUser(user);
+        setLoginModalVisible(false);
+        console.log("Login successful", user);
+      } else {
+        setLoginErrorMessage("username or password is incorrect");
+        console.error("Login failed", response.data.message);
+      }
+    } catch (error) {
+      setLoginErrorMessage("Username or password is incorrect");
+      clearForm();
+      console.error("error logging in:", error);
+    }
+  };
 
-    // const handleNewUserModalVisible = () => {
-    //     setNewUserModalVisible(true);
-    //     setLoginModalVisible(false);
-    //     console.log('New user modal is visible', newUserModalVisible);
-    // }
+  // To test/print a console log if user is logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log("User is now logged in", isLoggedIn);
+    }
+  }, [isLoggedIn]);
 
-    // Handles submit button for login modal. On click, it compares user input to database and upon
-    // Confirming the match, the rest of user information will be pulled from database
-    const handleLoginSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // const response = await axios.post(`http://localhost:8080/login/`, {
-                const response = await axios.post(`${baseURL}/login/`, {
-                username: loginInfo.username,
-                password: loginInfo.password
-            });
-            
-            if (response.status === 200) {
-                const user = response.data;
-                setIsLoggedIn(true);
-                setLoggedInUser(user);
-                setLoginModalVisible(false);
-                console.log("Login successful", user);
-            } else {
-                console.error("Login failed", response.data.message);
-            }
-        } catch (error) {
-            console.error("error logging in:", error);
-        }
-    };
-
-    // To test/print a console log if user is logged in
-    useEffect(() => {
-        if (isLoggedIn) {
-            console.log("User is now logged in", isLoggedIn);
-        }
-    }, [isLoggedIn]);
-
-
-    return(
-        <div className="login-modal">
-            <p>Login</p>
-            <input 
-                id="login-username"
-                type="text"
-                name="username"
-                placeholder="username"
-                maxLength={35}
-                onChange={handleChange}
-                value={loginInfo.username}
-            />
-            <input
-                id="login-password"
-                type="password"
-                name="password"
-                placeholder="password"
-                maxLength={35}
-                onChange={handleChange}
-                value={loginInfo.password}
-            />
-            <Button data-testid="login-button" label="Login" onClick={handleLoginSubmit}/>
-            <Button label="Cancel" onClick={turnLoginModalOff}/>
-            <p>New user?</p>
-            <Button label="Register" onClick={handleNewUserModalVisible}/>
-        </div>
-    )
+  return (
+    <div className="login-modal">
+      <p>Login</p>
+      <input
+        id="login-username"
+        type="text"
+        name="username"
+        placeholder="username"
+        maxLength={35}
+        onChange={handleChange}
+        value={loginInfo.username}
+      />
+      <input
+        id="login-password"
+        type="password"
+        name="password"
+        placeholder="password"
+        maxLength={35}
+        onChange={handleChange}
+        value={loginInfo.password}
+      />
+      <Button
+        data-testid="login-button"
+        label="Login"
+        onClick={handleLoginSubmit}
+      />
+      <Button label="Cancel" onClick={turnLoginModalOff} />
+      <p>New user?</p>
+      <Button label="Register" onClick={handleNewUserModalVisible} />
+      {loginErrorMessage && (
+        <p className="error-message" style={{ color: "red" }}>
+          {loginErrorMessage}
+        </p>
+      )}
+    </div>
+  );
 }
 export default LoginModal;

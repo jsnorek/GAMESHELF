@@ -21,7 +21,7 @@ function GameList({
   // Map through gameData and assign key value pair for each.
   return (
     <div className="game-list">
-      <h2>Highest Rated Games</h2>
+      <h2 className="header-text">Highest Rated Games</h2>
       {gameData.map((game) => {
         const isFavorited = favoritedGames.find((fav) => fav.id === game.id); // Find game ID in favorites list
         return (
