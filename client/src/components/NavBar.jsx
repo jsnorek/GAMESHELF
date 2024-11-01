@@ -24,11 +24,7 @@ function NavBar({
 
   // Navigates to Profile page for the Profile button
   const handleProfileClick = () => {
-    if(!isLoggedIn) {
-        navigate("/");
-    } else {
-    navigate("/profile");
-    }
+    navigate(isLoggedIn ? "/profile" : "/");
   };
 
   // Navigates to the Home page for the icon logo button
@@ -39,11 +35,7 @@ function NavBar({
 
   // Navigates to the MyShelf page for the MyShelf button
   const handleMyShelfClick = () => {
-    if(!isLoggedIn) {
-        navigate("/");
-    } else {
-    navigate("/myshelf");
-    }
+    navigate(isLoggedIn ? "/myshelf" : "/");
   };
 
   // Clears login info and sets isLoggedIn to false
@@ -75,7 +67,7 @@ function NavBar({
 
   // Sets search bar and buttons to end of the navbar
   const end = (
-    <div className="search" role="menubar">
+    <div className="search">
       <InputText
         className="search-bar"
         aria-label="search-bar"
@@ -95,13 +87,11 @@ function NavBar({
             className="pi pi-book"
             aria-label="MyShelf"
             onClick={handleMyShelfClick}
-            role="menuitem"
           />
           <Button
             className="pi pi-sign-out"
             aria-label="sign-out"
             onClick={clearLogin}
-            role="menuitem"
           />
         </div>
       ) : (
@@ -110,15 +100,14 @@ function NavBar({
           aria-label="sign-in"
           id="login-button"
           onClick={handleLoginModalVisible}
-          role="menuitem"
         />
       )}
     </div>
   );
   return (
-    <div className="nav-bar" data-testid="navbar">
+    <nav className="nav-bar" data-testid="navbar">
       <Menubar start={start} end={end}/>
-    </div>
+    </nav>
   );
 }
 
