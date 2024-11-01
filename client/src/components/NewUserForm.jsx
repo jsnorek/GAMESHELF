@@ -67,7 +67,6 @@ function NewUserForm({
       return;
     }
     try {
-      // const response = await axios.post(`http://localhost:8080/users`, {
       const response = await axios.post(`${baseURL}/users`, {
         username: newUserInfo.username,
         email: newUserInfo.email,

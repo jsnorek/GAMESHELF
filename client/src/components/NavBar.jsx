@@ -68,8 +68,8 @@ function NavBar({
   // Sets logo and text to one side of the navbar
   const start = (
     <div className="logo-headers" onClick={handleHomeClick}>
-      <img alt="logo" src={logo} height={"40"} className="logo"></img>
-      <p className="logo-text" onClick={handleHomeClick}>GAMESHELF</p>
+      <img alt="GAMESHELF logo, a neon-outlined game controller" src={logo} height={"40"} className="logo"></img>
+      <h1 className="logo-text" onClick={handleHomeClick}>GAMESHELF</h1>
     </div>
   );
 
@@ -78,6 +78,7 @@ function NavBar({
     <div className="search">
       <InputText
         className="search-bar"
+        aria-label="search-bar"
         placeholder="Search games"
         type="text"
         value={searchInput}
@@ -87,7 +88,7 @@ function NavBar({
         <div className="loggedIn-buttons">
           <Button
             className="pi pi-user"
-            aria-label="User"
+            aria-label="user"
             onClick={handleProfileClick}
           />
           <Button
@@ -97,14 +98,14 @@ function NavBar({
           />
           <Button
             className="pi pi-sign-out"
-            aria-label="Sign Out"
+            aria-label="sign-out"
             onClick={clearLogin}
           />
         </div>
       ) : (
         <Button
           className="pi pi-sign-in"
-          aria-label="Sign-In"
+          aria-label="sign-in"
           id="login-button"
           onClick={handleLoginModalVisible}
         />
@@ -113,7 +114,7 @@ function NavBar({
   );
   return (
     <div className="nav-bar" data-testid="navbar">
-      <Menubar start={start} end={end} />
+      <Menubar start={start} end={end} aria-label="menubar"/>
     </div>
   );
 }
