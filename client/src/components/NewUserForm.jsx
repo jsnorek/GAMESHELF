@@ -57,13 +57,24 @@ function NewUserForm({
   // Submits the new user data to the server to create an account
   const handleNewUserSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !newUserInfo.username ||
-      !newUserInfo.email ||
-      !newUserInfo.password ||
-      !newUserInfo.name
-    ) {
-      setNewUserSubmitErrorMessage("Please fill out all of the required inputs.");
+    // Username and password validation regex
+    const usernameRegex = /^[a-zA-Z0-9]{3,20}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!usernameRegex.test(newUserInfo.username)) {
+      setNewUserSubmitErrorMessage("Username must be 3-20 alphanumeric characters.");
+      return;
+    }
+
+    if (!passwordRegex.test(newUserInfo.password)) {
+      setNewUserSubmitErrorMessage(
+        "Password must be at least 8 characters, including 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character."
+      );
+      return;
+    }
+
+    if (!newUserInfo.email || !newUserInfo.name) {
+      setNewUserSubmitErrorMessage("Please fill out all required fields.");
       return;
     }
     try {
@@ -78,15 +89,18 @@ function NewUserForm({
       if (response.status === 200) {
         const user = response.data;
         handleNewUserModalVisible();
-        console.log("New user creation successful", user);
-      } else {
-        console.error("Login failed", response.data.message);
-      }
-    } catch (error) {
-      console.error("error creating new user:", error);
-      setNewUserSubmitErrorMessage("Please fill out all of the required inputs.");
+        console.log("New user creation successful");
+        alert(`New user creation successful, welcome ${newUserInfo.name}`);
+      } } catch (error) {
+        if (error.response && error.response.status === 400) {
+            // Set the error message from the server response
+            setNewUserSubmitErrorMessage(error.response.data.message);
+        } else {
+            setNewUserSubmitErrorMessage("Error creating account. Please try again.");
+        }
+        console.error("Error creating new user:", error);
     }
-  };
+};
 
   return (
     <div className="new-user-modal" data-testid="new-user-form">

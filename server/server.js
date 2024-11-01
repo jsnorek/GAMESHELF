@@ -182,8 +182,16 @@ app.post('/users', async (req, res) => {
         const emailCheck = await db.query(checkEmailQuery, [email]);
 
         if(emailCheck.rows.length > 0) {
-            return res.status(400).json({ message: 'Email already exists in db' });
+            return res.status(400).json({ message: 'Email already exists' });
         }
+
+         // Check to see if username already exists in the database
+         const checkUsernameQuery = 'SELECT * FROM users WHERE username = $1';
+         const usernameCheck = await db.query(checkUsernameQuery, [username]);
+ 
+         if(usernameCheck.rows.length > 0) {
+             return res.status(400).json({ message: 'Username already exists' });
+         }
 
         const queryText = 'INSERT INTO users (username, email, password, name, city) VALUES ($1, $2, $3, $4, $5) RETURNING *';
         const { rows } = await db.query(queryText, [username, email, password, name, city]);
