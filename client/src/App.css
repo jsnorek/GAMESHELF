@@ -499,28 +499,11 @@ li {
 @media (min-width: 1400px) { /* X-Large screens (computers) */
 
   .new-user-modal {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
     width: 40%;
-  }
-
-  .new-user-modal input {
-    width: 40%;
-    margin-bottom: 10px;
-  }
-
-  .new-user-modal-inputs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: auto;
   }
 
   .new-user-modal button {
     width: 15%;
-    display: flex;
-    align-items: center;
     margin-bottom: 10px;
   }
 
@@ -531,13 +514,6 @@ li {
 
   .new-user-sign-in-button {
     width: 12% !important;
-  }
-
-  .new-user-modal-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: auto;
   }
 
   h2 {

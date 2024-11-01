@@ -141,7 +141,7 @@ function NewUserForm({
       <div className="new-user-modal-buttons">
       <Button className="register-button" label="Register" onClick={handleNewUserSubmit} />
       <Button label="Cancel" onClick={handleNewUserModalVisible} />
-      <Button label="Sign In" className="new-user-sign-in-button" onClick={handleLoginModalVisible} />
+      <Button label="Login" className="new-user-sign-in-button" onClick={handleLoginModalVisible} />
       </div>
       {newUserSubmitErrorMessage && (
         <p className="new-user-message" style={{ color: "red" }}>
