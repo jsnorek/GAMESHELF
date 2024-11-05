@@ -16,6 +16,7 @@ function GameDetailsModal({
   loggedInUser,
   setNewReviewSubmitted,
   baseURL,
+  fetchAllUserData,
 }) {
   // State to control the visibility of the GameReviewForm component.
   const [gameReviewFormVisible, setGameReviewFormVisible] = useState(false);
@@ -102,6 +103,7 @@ function GameDetailsModal({
             loggedInUser={loggedInUser}
             setNewReviewSubmitted={setNewReviewSubmitted}
             baseURL={baseURL}
+            fetchAllUserData={fetchAllUserData}
           />
         </div>
       )}

@@ -13,6 +13,7 @@ function GameReviewForm({
   loggedInUser,
   setNewReviewSubmitted,
   baseURL,
+  fetchAllUserData,
 }) {
     // Handles review form submission message display
   const [reviewFormSubmitErrorMessage, setReviewFormSubmitErrorMessage] = useState("");
@@ -68,6 +69,7 @@ function GameReviewForm({
         const user = response.data;
         setNewReviewSubmitted(true);
         turnOffGameReviewFormVisible();
+        fetchAllUserData();
         console.log("New review creation successful", user);
       } else {
         console.error("Review creation fail", response.data.message);

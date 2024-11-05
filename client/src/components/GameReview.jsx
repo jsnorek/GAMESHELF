@@ -11,8 +11,6 @@ function GameReview({ review, deleteUserReview, reviewDeleteButtonVisible = fals
     console.log("delete review id", review.review_id);
   };
 
-  console.log("REVIEW info", review)
-
   return (
     <li data-testid="game-review" className="game-review">
         {review.gameTitle && <h3>{review.gameTitle}</h3>}

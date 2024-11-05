@@ -14,13 +14,16 @@ function Profile({
   setFullLoggedInUserData,
   loggedInUser,
   baseURL,
+  deleteUserReview,
+  reviewsWithGameTitles,
+  setReviewsWithGameTitles
 }) {
   // State to control the visibility of the user's review list and the edit profile modal
   const [userReviewsListVisible, setUserReviewsListVisible] = useState(false);
   // Handles if profile is visible
   const [editProfileVisible, setEditProfileVisible] = useState(false);
   // State to capture reviewed game titles from API 
-  const [reviewsWithGameTitles, setReviewsWithGameTitles] = useState([]);
+//   const [reviewsWithGameTitles, setReviewsWithGameTitles] = useState([]);
 
   // Get the first user from the fullLoggedInUserData array (if available)
   const userData =
@@ -95,26 +98,29 @@ function Profile({
     fetchReviewsWithTitles();
   }, [userData, baseURL]);
 
-  // Delete a user's review
-  const deleteUserReview = async (reviewId) => {
-    try {
-        if (!loggedInUser?.user_id || !reviewId) {
-            console.log("Missing user_id or review_id", loggedInUser.user_id, reviewId);
-            return;
-        }
+  console.log("USER DATA", userData)
+  console.log("but this is the basic user data", loggedInUser)
 
-        const response = await axios.delete(`${baseURL}/reviews/${loggedInUser.user_id}/${reviewId}`
-        );
-        if (response.status === 200) {
-            setReviewsWithGameTitles((prevReviews) =>
-            prevReviews.filter((review) => review.review_id !== reviewId)
-        );
-        console.log("Review deleted successfully");
-        }
-    } catch (error) {
-        console.error("Error deleting review", error);
-    }
-  };
+  // Delete a user's review
+//   const deleteUserReview = async (reviewId) => {
+//     try {
+//         if (!loggedInUser?.user_id || !reviewId) {
+//             console.log("Missing user_id or review_id", loggedInUser.user_id, reviewId);
+//             return;
+//         }
+
+//         const response = await axios.delete(`${baseURL}/reviews/${loggedInUser.user_id}/${reviewId}`
+//         );
+//         if (response.status === 200) {
+//             setReviewsWithGameTitles((prevReviews) =>
+//             prevReviews.filter((review) => review.review_id !== reviewId)
+//         );
+//         console.log("Review deleted successfully");
+//         }
+//     } catch (error) {
+//         console.error("Error deleting review", error);
+//     }
+//   };
 
   // Render only if userData exists
   if (!userData) {

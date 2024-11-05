@@ -34,6 +34,9 @@ function App() {
   const [favoritedGames, setFavoritedGames] = useState([]);
   const [newFavoriteAdded, setNewFavoriteAdded] = useState(false);
 
+  // State to capture reviewed game titles from API 
+  const [reviewsWithGameTitles, setReviewsWithGameTitles] = useState([]);
+
   // State for handling login and new user forms
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -149,6 +152,8 @@ function App() {
             `${baseURL}/game-reviews/${selectedGameId}`
           );
           setGameReviews(response.data || "");
+          setNewReviewSubmitted(false);
+          console.log("these are the database game reviews", response.data);
         } catch (error) {
           console.error("Error fetching game reviews:", error);
         }
@@ -157,23 +162,69 @@ function App() {
     fetchGameReviews();
   }, [selectedGameId, newReviewSubmitted]);
 
-  // Fetch all user data based on logged-in user id
-  useEffect(() => {
-    const fetchAllUserData = async () => {
-      if (isLoggedIn && loggedInUser && favoritedGames.length === 0) {
-        try {
-          const response = await axios.get(
-            `${baseURL}/user-info/${loggedInUser.user_id}`
-          );
-          setFullLoggedInUserData(response.data);
-          await getFavoritedGames(loggedInUser.user_id);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      }
-    };
+  // Extract fetchAllUserData into its own function
+const fetchAllUserData = async () => {
+  if (isLoggedIn && loggedInUser) {
+    try {
+      const response = await axios.get(
+        `${baseURL}/user-info/${loggedInUser.user_id}`
+      );
+      setFullLoggedInUserData(response.data);
+      await getFavoritedGames(loggedInUser.user_id);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+};
+
+// Call fetchAllUserData initially in useEffect to load data when necessary
+useEffect(() => {
+  if (isLoggedIn && loggedInUser && favoritedGames.length === 0) {
     fetchAllUserData();
-  }, [isLoggedIn, loggedInUser, baseURL, favoritedGames]);
+  }
+}, [isLoggedIn, loggedInUser]);
+
+   // Delete a user's review
+   const deleteUserReview = async (reviewId) => {
+    try {
+        if (!loggedInUser?.user_id || !reviewId) {
+            console.log("Missing user_id or review_id", loggedInUser.user_id, reviewId);
+            return;
+        }
+
+        const response = await axios.delete(`${baseURL}/reviews/${loggedInUser.user_id}/${reviewId}`
+        );
+        if (response.status === 200) {
+          // Update reviewsWithGameTitles by filtering out the deleted review
+            setReviewsWithGameTitles((prevReviews) =>
+            prevReviews.filter((review) => review.review_id !== reviewId)
+        );
+        console.log("Review deleted successfully");
+         // Fetch the updated user data
+      await fetchAllUserData();
+        }
+    } catch (error) {
+        console.error("Error deleting review", error);
+    }
+  };
+
+  // Fetch all user data based on logged-in user id
+  // useEffect(() => {
+  //   const fetchAllUserData = async () => {
+  //     if (isLoggedIn && loggedInUser && favoritedGames.length === 0) {
+  //       try {
+  //         const response = await axios.get(
+  //           `${baseURL}/user-info/${loggedInUser.user_id}`
+  //         );
+  //         setFullLoggedInUserData(response.data);
+  //         await getFavoritedGames(loggedInUser.user_id);
+  //       } catch (error) {
+  //         console.error("Error fetching user data:", error);
+  //       }
+  //     }
+  //   };
+  //   fetchAllUserData();
+  // }, [isLoggedIn, loggedInUser, baseURL, favoritedGames, deleteUserReview]);
 
   // console.log("THIS is the logged in user info", loggedInUser);
   // console.log("This is the FULL logged in user data", fullLoggedInUserData);
@@ -273,6 +324,9 @@ function App() {
                 setFullLoggedInUserData={setFullLoggedInUserData}
                 loggedInUser={loggedInUser}
                 baseURL={baseURL}
+                deleteUserReview={deleteUserReview}
+                reviewsWithGameTitles={reviewsWithGameTitles}
+                setReviewsWithGameTitles={setReviewsWithGameTitles}
               />
             }
           />
@@ -300,6 +354,7 @@ function App() {
             loggedInUser={loggedInUser}
             setNewReviewSubmitted={setNewReviewSubmitted}
             baseURL={baseURL}
+            fetchAllUserData={fetchAllUserData}
           />
         )}
         {loginModalVisible && (
