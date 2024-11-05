@@ -31,7 +31,6 @@ function GameReview({ review, deleteUserReview, reviewDeleteButtonVisible = fals
       {reviewDeleteButtonVisible && (
         <Button
           icon="pi pi-trash"
-          label="Delete"
           className="delete-review-button"
           onClick={() => handleDeleteClick(review.review_id)}
         />

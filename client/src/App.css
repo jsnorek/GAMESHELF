@@ -397,6 +397,11 @@ li {
   transform: translate(-50%, -50%);
 }
 
+.delete-review-button {
+  width: 8%;
+  margin-left: 46%;
+}
+
 
 @media (min-width: 660px) { /* Medium screens (tablets) */
 

@@ -28,9 +28,6 @@ function Profile({
       ? fullLoggedInUserData[0]
       : null;
 
-      console.log("USER DATA", userData);
-      
-
   // Toggles the visibility of the user's review list
   const handleUserReviewsVisible = () => {
     setUserReviewsListVisible(true);
