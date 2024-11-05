@@ -28,6 +28,9 @@ function Profile({
       ? fullLoggedInUserData[0]
       : null;
 
+      console.log("USER DATA", userData);
+      
+
   // Toggles the visibility of the user's review list
   const handleUserReviewsVisible = () => {
     setUserReviewsListVisible(true);
@@ -95,6 +98,27 @@ function Profile({
     fetchReviewsWithTitles();
   }, [userData, baseURL]);
 
+  // Delete a user's review
+  const deleteUserReview = async (reviewId) => {
+    try {
+        if (!loggedInUser?.user_id || !reviewId) {
+            console.log("Missing user_id or review_id", loggedInUser.user_id, reviewId);
+            return;
+        }
+
+        const response = await axios.delete(`${baseURL}/reviews/${loggedInUser.user_id}/${reviewId}`
+        );
+        if (response.status === 200) {
+            setReviewsWithGameTitles((prevReviews) =>
+            prevReviews.filter((review) => review.review_id !== reviewId)
+        );
+        console.log("Review deleted successfully");
+        }
+    } catch (error) {
+        console.error("Error deleting review", error);
+    }
+  };
+
   // Render only if userData exists
   if (!userData) {
     return <div>Loading user data...</div>;
@@ -131,7 +155,7 @@ function Profile({
       {userReviewsListVisible && (
         <div className="user-reviews-list">
           {userData.reviews && userData.reviews.length > 0 ? (
-            <GameReviewList reviews={reviewsWithGameTitles} />
+            <GameReviewList reviews={reviewsWithGameTitles} deleteUserReview={deleteUserReview} reviewDeleteButtonVisible={true}/>
           ) : (
             <p>No reviews available</p>
           )}

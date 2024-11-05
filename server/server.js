@@ -130,6 +130,7 @@ app.get('/user-info/:userId', async (req, res) => {
                 (
                     SELECT json_agg( 
                         json_build_object(
+                            'review_id', r.review_id,
                             'game_id', r.game_id,
                             'rating', r.rating,
                             'review_text', r.review_text,
@@ -298,11 +299,25 @@ app.delete('/favorites/:user_id/:game_id', async (req, res) => {
 });
 
 // request to delete a user review
-app.delete('/reviews/:user_id/:game_id', async (req, res) => {
-    const { user_id, game_id } = req.params;
+// app.delete('/reviews/:user_id/:game_id', async (req, res) => {
+//     const { user_id, game_id } = req.params;
+//     try {
+//         const queryText = 'DELETE FROM reviews WHERE user_id = $1 AND game_id = $2 RETURNING *';
+//         const { rows } = await db.query(queryText, [user_id, game_id]);
+//         if (rows.length === 0) {
+//             return res.status(404).json({ message: 'Review not found' });
+//         }
+//         res.status(200).json({ message: 'Review deleted' });
+//     } catch (error) {
+//         console.error('Error deleting review', error);
+//         res.status(500).send('Server error');
+//     }
+// });
+app.delete('/reviews/:user_id/:review_id', async (req, res) => {
+    const { user_id, review_id } = req.params;
     try {
-        const queryText = 'DELETE FROM reviews WHERE user_id = $1 AND game_id = $2 RETURNING *';
-        const { rows } = await db.query(queryText, [user_id, game_id]);
+        const queryText = 'DELETE FROM reviews WHERE user_id = $1 AND review_id = $2 RETURNING *';
+        const { rows } = await db.query(queryText, [user_id, review_id]);
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Review not found' });
         }
@@ -312,6 +327,7 @@ app.delete('/reviews/:user_id/:game_id', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
 
 //FOR RENDER
 const __filename = fileURLToPath(import.meta.url);

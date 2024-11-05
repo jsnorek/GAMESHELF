@@ -61,11 +61,11 @@ function NewUserForm({
   const handleNewUserSubmit = async (e) => {
     e.preventDefault();
     // Username and password validation regex
-    const usernameRegex = /^[a-zA-Z0-9]{3,20}$/;
+    const usernameRegex = /^[a-zA-Z0-9]{3,25}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (!usernameRegex.test(newUserInfo.username)) {
-      setNewUserSubmitErrorMessage("Username must be 3-20 alphanumeric characters.");
+      setNewUserSubmitErrorMessage("Username must be 3-25 alphanumeric characters.");
       return;
     }
 
@@ -127,7 +127,7 @@ function NewUserForm({
         type="text"
         name="username"
         placeholder="username"
-        maxLength={35}
+        maxLength={25}
         onChange={handleChange}
         value={newUserInfo.username}
       />
