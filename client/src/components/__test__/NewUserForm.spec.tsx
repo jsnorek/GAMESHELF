@@ -42,10 +42,10 @@ describe("NewUserForm", () => {
         expect(screen.getByTestId("new-user-form")).toBeTruthy();
     });
 
-    it("calls setLoginModalVisible and closes new user modal when 'Sign In' is clicked", async () => {
+    it("calls setLoginModalVisible and closes new user modal when 'Login' is clicked", async () => {
         const { user } = init(initialProps);
 
-        const signInButton = screen.getByText("Sign In");
+        const signInButton = screen.getByText("Login");
         await user.click(signInButton);
 
         expect(mockSetLoginModalVisible).toHaveBeenCalledWith(true);
