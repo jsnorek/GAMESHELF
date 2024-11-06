@@ -83,10 +83,11 @@ function GameReviewForm({
   };
 
   return (
-    <div className="game-review-form">
+    <div className="game-review-form" data-testid="game-review-form">
       <h2>Write a Review for {gameDetails.name}</h2>
       <form onSubmit={handleNewUserSubmit}>
         <Rating
+          data-testid="review-rating"
           className="review-rating"
           value={review.rating}
           onChange={(e) => setReview({ ...review, rating: e.value })}
@@ -103,6 +104,7 @@ function GameReviewForm({
         />
         <Button icon="pi pi-check" aria-label="Submit" type="submit" />
         <Button
+          data-testid="cancel-button"
           className="cancel-button"
           icon="pi pi-times"
           aria-label="Cancel"
