@@ -1,16 +1,36 @@
 # GAMESHELF
 Discover, track, and share your gaming journey with a community of passionate gamers.
 
+## Contents
+- [Deployed Site](#deployed-site)
+- [Core Functionality](#core-functionality)
+- [Technologies](#technologies)
+- [API Usage](#api-usage)
+- [Prerequisites](#prerequisites)
+    -  [Installation](#installation)
+    - [Running the App](#running-the-app)
+- [Drawing Board](#drawing-board)
+- [Contributing](#contributing)
+- [Stretch Goals](#stretch-goals)
+
+## Deployed Site
+[Back to Contents](#contents)
+
+[Render](https://server-g79j.onrender.com/)
 
 ## Core Functionality:
+[Back to Contents](#contents)
+
  A platform where users can browse games and catalog their game collections, rate and review games, and create a custom favorites list.
 
 
 This project is built with the PERN stack.
 
-User are able to browse/search games, see game details and user reviews, and, upon login, can add games to their lists of favorites, write game reviews, view their “shelf” of games pulled from their favorites list, and view/change their basic profile information.
+User are able to browse/search games, see game details and user reviews, and, upon login, can add games to their lists of favorites, write and delete their game reviews, view their “shelf” of games pulled from their favorites list, and view/change their basic profile information.
 
 ## Technologies
+[Back to Contents](#contents)
+
 - **Frontend**: React Vite, PrimeReact
 - **Backend**: Node.js, Express
 - **Database**: PostgresSQL
@@ -20,16 +40,22 @@ User are able to browse/search games, see game details and user reviews, and, up
 ![ezgif com-optimize (3)](https://github.com/user-attachments/assets/00a710fd-dd72-4519-bcfe-9943fcc1ee7e)
 
 ## API Usage
+[Back to Contents](#contents)
+
 GAMESHELF uses the RAWG to populate the video game data. You can sign up for free for an account to get an API key and view API documentation here: https://rawg.io/apidocs
 
 An account is necessary to get an API key and run this app.
 
 ## Prerequisites
+[Back to Contents](#contents)
+
 Before you begin, ensure you have the following installed on your local machine:
 - **Node.js** [Download and install Node.js](https://nodejs.org/)
 - **PostgreSQL**: Ensure you have PostgreSQL installed and running.
 
 ## Installation
+[Back to Contents](#contents)
+
 Follow these steps to run the app locally:
 1. **Clone the repository**:
     ```bash
@@ -53,21 +79,28 @@ Follow these steps to run the app locally:
 * Inside your server directory create a `.env` file and copy there the values that are in `.envexample` making sure to change them to your own information. Be sure to update the OPENAI_API_KEY in this file to your API key.
 
 ## Running the App
+[Back to Contents](#contents)
+
 To run the program in your localhost browser, navigate to your server folder (`cd server`) and run the command `node server.js` to run your server. 
 The client should now be running on `http://localhost:5173`.
 Then navigate to your client folder (`cd client`) and run the command `npm run dev` and click on the link to view the application in browser.
 The server should now be running on `http://localhost:8080`.
 
-## Timeline
+## Drawing Board
+[Back to Contents](#contents)
 
 [Trello Board](https://trello.com/b/f2VPN0c5/final-project)
 
 [Final Pitch](https://docs.google.com/document/d/1xMmtRzRhjoH2pkkFkWiGTJZL1-cVEZhOD7-FdGdTioU/edit?tab=t.0)
 
 ## Contributing
+[Back to Contents](#contents)
+
 If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcomed.
 
 ## Stretch Goals
+[Back to Contents](#contents)
+
 - AI-based game recommendations
 - Multiple lists to add games to (“Favorites,” “Wishlist,” “Currently Playing”)
 - Can add other users as “friends” and view their profiles
