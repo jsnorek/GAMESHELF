@@ -20,6 +20,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const mockSetFullLoggedInUserData = jest.fn();
+const mockSetReviewsWithGameTitles = jest.fn();
 
 const initialProps = {
     fullLoggedInUserData: [{
@@ -32,6 +33,7 @@ const initialProps = {
     }],
     setFullLoggedInUserData: mockSetFullLoggedInUserData,
     loggedInUser: { username: "testUser" },
+    setReviewsWithGameTitles: mockSetReviewsWithGameTitles,
 };
 
 const init = (props) => {
@@ -54,30 +56,31 @@ describe("Profile", () => {
 
     it("navigates to MyShelf page on MyShelf button click", async () => {
         const { user } = init(initialProps);
-        const myShelfButton = screen.getByText("MyShelf");
+        const myShelfButton = screen.getByTestId("MyShelf");
         await user.click(myShelfButton);
         expect(mockNavigate).toHaveBeenCalledWith("/myshelf");
       });
 
       it("opens the edit profile modal on Edit button click", async () => {
         const { user } = init(initialProps);
-        const editButton = screen.getByText("Edit");
+        const editButton = screen.getByTestId("edit");
         await user.click(editButton);
         expect(screen.getByText("Edit Profile")).toBeTruthy();
       });
 
       it("opens the user's reviews list on My Reviews button click", async () => {
         const { user } = init(initialProps);
-        const myReviewsButton = screen.getByText("My Reviews");
+        const myReviewsButton = screen.getByTestId("reviews");
         await user.click(myReviewsButton);
-        expect(screen.getByText(/Great game!/i)).toBeTruthy();
+        expect(screen.findByText(/Great game!/i)).toBeTruthy();
       });
 
       it("closes the review list when Back button is clicked", async () => {
         const { user } = init(initialProps);
         const myReviewsButton = screen.getByText("My Reviews");
         await user.click(myReviewsButton);
-        const backButton = screen.getByText("Back");
+        // const backButton = screen.getByText("Back");
+        const backButton = screen.getByTestId("back-button");
         await user.click(backButton);
         expect(screen.queryByText("Great game!")).not.toBeTruthy();
       });

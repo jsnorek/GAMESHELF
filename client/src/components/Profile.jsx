@@ -113,6 +113,7 @@ function Profile({
       <p>Email: {userData.email}</p>
       <p>City: {userData.city}</p>
       <Button
+        data-testid="edit"
         icon="pi pi-user-edit"
         aria-label="Edit"
         onClick={handleEditProfileVisible}
@@ -126,8 +127,13 @@ function Profile({
           closeEditProfile={closeEditProfile}
         />
       )}
-      <Button label="My Reviews" onClick={handleUserReviewsVisible} />
       <Button
+        data-testid="reviews" 
+        label="My Reviews" 
+        onClick={handleUserReviewsVisible} 
+      />
+      <Button
+        data-testid="MyShelf"
         className="pi pi-book"
         aria-label="MyShelf"
         onClick={handleMyShelfClick}
@@ -140,6 +146,7 @@ function Profile({
             <p>No reviews available</p>
           )}
           <Button
+            data-testid="back-button"
             className="back-button"
             icon="pi pi-times"
             aria-label="Cancel"
