@@ -89,8 +89,13 @@ function EditProfile({
             onChange={handleInputChange}
           />
         </div>
-        <Button icon="pi pi-check" aria-label="Submit" />
         <Button
+          data-testid="submit-button" 
+          icon="pi pi-check" 
+          aria-label="Submit" 
+        />
+        <Button
+          data-testid="cancel-button"
           className="cancel-button"
           icon="pi pi-times"
           aria-label="Cancel"
