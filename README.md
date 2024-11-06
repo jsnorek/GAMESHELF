@@ -1,4 +1,6 @@
 # GAMESHELF
+![Screenshot 2024-11-05 at 4 34 07 PM](https://github.com/user-attachments/assets/57ee4750-187f-4d98-ba19-6dcaf44d2cee)
+
 Discover, track, and share your gaming journey with a community of passionate gamers.
 
 ## Contents
@@ -14,7 +16,6 @@ Discover, track, and share your gaming journey with a community of passionate ga
 - [Stretch Goals](#stretch-goals)
 
 ## Deployed Site
-[Back to Contents](#contents)
 
 [Render](https://server-g79j.onrender.com/)
 
@@ -28,6 +29,8 @@ This project is built with the PERN stack.
 
 User are able to browse/search games, see game details and user reviews, and, upon login, can add games to their lists of favorites, write and delete their game reviews, view their “shelf” of games pulled from their favorites list, and view/change their basic profile information.
 
+![ezgif com-optimize (3)](https://github.com/user-attachments/assets/00a710fd-dd72-4519-bcfe-9943fcc1ee7e)
+
 ## Technologies
 [Back to Contents](#contents)
 
@@ -37,7 +40,7 @@ User are able to browse/search games, see game details and user reviews, and, up
 - **Testing**: Vitest, React Testing Library (RTL), Jest
 
 #### Once you have successfully setup this template and initial database, the view will look like this:
-![ezgif com-optimize (3)](https://github.com/user-attachments/assets/00a710fd-dd72-4519-bcfe-9943fcc1ee7e)
+![Screenshot 2024-11-05 at 4 36 53 PM](https://github.com/user-attachments/assets/dc795788-8857-4dc1-af90-0ac85680e533)
 
 ## API Usage
 [Back to Contents](#contents)
@@ -90,6 +93,7 @@ The server should now be running on `http://localhost:8080`.
 [Back to Contents](#contents)
 
 [Trello Board](https://trello.com/b/f2VPN0c5/final-project)
+<img width="1150" alt="Screenshot 2024-11-05 at 4 42 17 PM" src="https://github.com/user-attachments/assets/a4f5cdf0-e34a-47fb-bb62-104f14292882">
 
 [Final Pitch](https://docs.google.com/document/d/1xMmtRzRhjoH2pkkFkWiGTJZL1-cVEZhOD7-FdGdTioU/edit?tab=t.0)
 
