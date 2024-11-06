@@ -89,6 +89,7 @@ function GameDetailsModal({
           </Card>
         </div>
         <Button
+          data-testid="back-button"
           className="back-button"
           icon="pi pi-times"
           aria-label="Cancel"
