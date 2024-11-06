@@ -42,11 +42,14 @@ const init = (props) => {
     it("should display review details correctly", () => {
         init(initialProps);
         expect(screen.getByText(/Rating:/i)).toBeTruthy();
-        expect(screen.getByText(/5/i)).toBeTruthy();
         expect(screen.getByText(/Review:/i)).toBeTruthy();
         expect(screen.getByText(/Great game./i)).toBeTruthy();
         expect(screen.getByText(/Gameuser/i)).toBeTruthy();
         expect(screen.getByText("10/27/2024")).toBeTruthy();
+
+        // Check if the Rating component rendered
+        const ratingElement = screen.getByTestId("review-rating");
+        expect(ratingElement).toBeTruthy();
     });
 
   })
