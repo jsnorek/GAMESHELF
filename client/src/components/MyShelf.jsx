@@ -5,13 +5,10 @@
 import Game from "./Game";
 
 function MyShelf({
-  fullLoggedInUserData,
-  baseURL,
   handleGameDetailsModalVisible,
   loggedInUser,
   favoritedGames,
   userUnfavoritesGame,
-  newFavoriteAdded,
 }) {
   return (
     <div data-testid="myshelf">

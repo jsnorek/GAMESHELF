@@ -13,7 +13,6 @@ function NewUserForm({
   newUserInfo,
   setNewUserInfo,
   baseURL,
-  setLoginInfo,
   setIsLoggedIn,
   setLoggedInUser,
 }) {

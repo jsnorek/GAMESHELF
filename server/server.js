@@ -26,7 +26,7 @@ const api_key = process.env.api_key
 //     res.json("Hello to your gameshelf server!");
 // });
 
-//request for top games to list on homepage
+// Request for top games to list on homepage
 app.get("/api", async (req, res) => {
     console.log('root path triggered');
     const defaultGames = '&metacritic=80,100';
@@ -39,7 +39,7 @@ app.get("/api", async (req, res) => {
     }
 });
 
-//request for searching games
+// Request for searching games
 app.get('/search', async (req, res) => {
     const { query } = req.query;
     const url = `https://api.rawg.io/api/games?key=${api_key}&search=${query}`;
@@ -54,7 +54,7 @@ app.get('/search', async (req, res) => {
     }
 });
 
-//request for user favorites game list
+// Request for user favorites game list
 app.get('/favorites/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
@@ -70,7 +70,7 @@ app.get('/favorites/:userId', async (req, res) => {
     }
 });
 
-//request for user's game reviews 
+// Request for user's game reviews 
 app.get('/reviews/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
@@ -86,7 +86,7 @@ app.get('/reviews/:userId', async (req, res) => {
     }
 });
 
-//request for database reviews for game details page
+// Request for database reviews for game details page
 app.get('/game-reviews/:gameId', async (req, res) => {
     const gameId = req.params.gameId;
     try {
@@ -103,7 +103,7 @@ app.get('/game-reviews/:gameId', async (req, res) => {
     }
 });
 
-// request for fetching game details
+// Request for fetching game details
 app.get('/game/:gameId', async (req, res) => {
     const gameId = req.params.gameId;
     try {
@@ -120,7 +120,7 @@ app.get('/game/:gameId', async (req, res) => {
     }
 });
 
-// request for fetching all user information including reviews and favorite games
+// Request for fetching all user information including reviews and favorite games
 app.get('/user-info/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
@@ -163,7 +163,7 @@ app.get('/user-info/:userId', async (req, res) => {
     }
 });
 
-// request to create a new user
+// Request to create a new user
 app.post('/users', async (req, res) => {
     const { username, email, password, name, city } = req.body;
     try {
@@ -192,6 +192,7 @@ app.post('/users', async (req, res) => {
     }
 });
 
+// Request to fetch user's favorites and check if the game_id is already present and adds the game_id if it isn't
 app.post('/favorites', async (req, res) => {
     const { user_id, game_id } = req.body;
     try {
@@ -214,7 +215,7 @@ app.post('/favorites', async (req, res) => {
     }
 });
 
-// request for user adding a game review
+// Request for user adding a game review
 app.post('/reviews', async (req, res) => {
     const { user_id, game_id, rating, review_text } = req.body;
     try {
@@ -227,7 +228,7 @@ app.post('/reviews', async (req, res) => {
     }
 });
 
-// request for user logging in
+// Request for user logging in
 app.post('/login/', async (req, res) => {
     const { username, password } = req.body; // User sends username and password
     try {
@@ -238,7 +239,7 @@ app.post('/login/', async (req, res) => {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
         const user = rows[0];
-        // to return user's data except for password for added security
+        // To return user's data except for password for added security
         res.status(200).json({
             user_id: user.user_id,
             username: user.username,
@@ -253,7 +254,7 @@ app.post('/login/', async (req, res) => {
     }
 });
 
-// request to edit user information
+// Request to edit user information
 app.patch('/users/:user_id', async (req, res) => {
     const userId = req.params.user_id;
     const { username, email, password, name, city } = req.body;
@@ -281,7 +282,7 @@ app.patch('/users/:user_id', async (req, res) => {
     }
 });
 
-// request to remove/delete a favorited game
+// Request to remove/delete a favorited game
 app.delete('/favorites/:user_id/:game_id', async (req, res) => {
     const userId = req.params.user_id;
     const gameId = req.params.game_id;
@@ -298,21 +299,7 @@ app.delete('/favorites/:user_id/:game_id', async (req, res) => {
     }
 });
 
-// request to delete a user review
-// app.delete('/reviews/:user_id/:game_id', async (req, res) => {
-//     const { user_id, game_id } = req.params;
-//     try {
-//         const queryText = 'DELETE FROM reviews WHERE user_id = $1 AND game_id = $2 RETURNING *';
-//         const { rows } = await db.query(queryText, [user_id, game_id]);
-//         if (rows.length === 0) {
-//             return res.status(404).json({ message: 'Review not found' });
-//         }
-//         res.status(200).json({ message: 'Review deleted' });
-//     } catch (error) {
-//         console.error('Error deleting review', error);
-//         res.status(500).send('Server error');
-//     }
-// });
+// Request to delete a user review based on user_id and review_id
 app.delete('/reviews/:user_id/:review_id', async (req, res) => {
     const { user_id, review_id } = req.params;
     try {
@@ -329,7 +316,7 @@ app.delete('/reviews/:user_id/:review_id', async (req, res) => {
 });
 
 
-//FOR RENDER
+// FOR RENDER
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 

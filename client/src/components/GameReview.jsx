@@ -4,8 +4,12 @@
 import { Button } from "primereact/button";
 import { Rating } from "primereact/rating";
 
-function GameReview({ review, deleteUserReview, reviewDeleteButtonVisible = false }) {
-
+function GameReview({
+  review,
+  deleteUserReview,
+  reviewDeleteButtonVisible = false,
+}) {
+  // Handles delete button. Deletes user review based on the review_id 
   const handleDeleteClick = () => {
     deleteUserReview(review.review_id);
     console.log("delete review id", review.review_id);
@@ -13,7 +17,7 @@ function GameReview({ review, deleteUserReview, reviewDeleteButtonVisible = fals
 
   return (
     <li data-testid="game-review" className="game-review">
-        {review.gameTitle && <h3>{review.gameTitle}</h3>}
+      {review.gameTitle && <h3>{review.gameTitle}</h3>}
       <h4 data-testid="review-rating">Rating: </h4>
       <Rating
         className="review-rating"
@@ -30,7 +34,7 @@ function GameReview({ review, deleteUserReview, reviewDeleteButtonVisible = fals
         <Button
           icon="pi pi-trash"
           className="delete-review-button"
-          onClick={() => handleDeleteClick(review.review_id)}
+          onClick={() => handleDeleteClick(review.review_id)} // Passes review_id to handleDeleteClick
         />
       )}
     </li>

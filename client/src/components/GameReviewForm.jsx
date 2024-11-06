@@ -2,7 +2,6 @@
 // It includes inputs for rating and review text, and submits the data to the server when submitted.
 
 import { Button } from "primereact/button";
-import { InputNumber } from "primereact/inputnumber";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Rating } from "primereact/rating";
@@ -49,6 +48,7 @@ function GameReviewForm({
   // The review data is passed in the request body.
   // On submit, it notifies the parent component about the submission.
   // After submitting, it hides the form by calling turnOffGameReviewFormVisible.
+  // Re-fetches user data
   const handleNewUserSubmit = async (e) => {
     e.preventDefault();
     if (!review.rating || !review.review_text) {

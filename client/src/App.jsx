@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
-// import { DeferredContent } from "primereact/deferredcontent";
+import { PrimeReactProvider } from "primereact/api";
 import NavBar from "./components/NavBar";
 import GameList from "./components/GameList";
 import LoginModal from "./components/LoginModal";
@@ -32,11 +31,8 @@ function App() {
   const [newReviewSubmitted, setNewReviewSubmitted] = useState(false);
  // State for managing favorited games
   const [favoritedGames, setFavoritedGames] = useState([]);
-  const [newFavoriteAdded, setNewFavoriteAdded] = useState(false);
-
   // State to capture reviewed game titles from API 
   const [reviewsWithGameTitles, setReviewsWithGameTitles] = useState([]);
-
   // State for handling login and new user forms
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -87,7 +83,7 @@ function App() {
     }
   };
 
-  //resets gameList back to initial rendering if search bar is cleared
+  // Resets gameList back to initial rendering if search bar is cleared
   useEffect(() => {
     if (searchResults === null) {
       // setSearchResults(null);
@@ -208,27 +204,6 @@ useEffect(() => {
     }
   };
 
-  // Fetch all user data based on logged-in user id
-  // useEffect(() => {
-  //   const fetchAllUserData = async () => {
-  //     if (isLoggedIn && loggedInUser && favoritedGames.length === 0) {
-  //       try {
-  //         const response = await axios.get(
-  //           `${baseURL}/user-info/${loggedInUser.user_id}`
-  //         );
-  //         setFullLoggedInUserData(response.data);
-  //         await getFavoritedGames(loggedInUser.user_id);
-  //       } catch (error) {
-  //         console.error("Error fetching user data:", error);
-  //       }
-  //     }
-  //   };
-  //   fetchAllUserData();
-  // }, [isLoggedIn, loggedInUser, baseURL, favoritedGames, deleteUserReview]);
-
-  // console.log("THIS is the logged in user info", loggedInUser);
-  // console.log("This is the FULL logged in user data", fullLoggedInUserData);
-
   // Post user's newly favorited game
   const userFavoritesGame = async (game_id) => {
     try {
@@ -237,7 +212,6 @@ useEffect(() => {
         game_id: game_id,
       });
       if (response.status === 200) {
-        setNewFavoriteAdded((prev) => !prev);
         await getFavoritedGames(loggedInUser.user_id);
         console.log("New favorited game successful", response.data);
       } else {
@@ -255,7 +229,6 @@ useEffect(() => {
         `${baseURL}/favorites/${loggedInUser.user_id}/${game_id}`
       );
       if (response.status === 200) {
-        setNewFavoriteAdded((prev) => !prev);
         await getFavoritedGames(loggedInUser.user_id);
         console.log("New unfavorited game successful", response.data);
       } else {
@@ -307,10 +280,8 @@ useEffect(() => {
                 gameData={searchResults || gameData?.results || []}
                 isLoading={isGameDataLoading}
                 handleGameDetailsModalVisible={handleGameDetailsModalVisible}
-                baseURL={baseURL}
                 loggedInUser={loggedInUser}
                 favoritedGames={favoritedGames}
-                newFavoriteAdded={newFavoriteAdded}
                 userFavoritesGame={userFavoritesGame}
                 userUnfavoritesGame={userUnfavoritesGame}
               />
@@ -334,13 +305,10 @@ useEffect(() => {
             path="/myshelf"
             element={
               <MyShelf
-                fullLoggedInUserData={fullLoggedInUserData}
-                baseURL={baseURL}
                 handleGameDetailsModalVisible={handleGameDetailsModalVisible}
                 loggedInUser={loggedInUser}
                 favoritedGames={favoritedGames}
                 userUnfavoritesGame={userUnfavoritesGame}
-                newFavoriteAdded={newFavoriteAdded}
               />
             }
           />
@@ -376,7 +344,6 @@ useEffect(() => {
             newUserInfo={newUserInfo}
             setNewUserInfo={setNewUserInfo}
             baseURL={baseURL}
-            setLoginInfo={setLoginInfo}
             setIsLoggedIn={setIsLoggedIn}
             setLoggedInUser={setLoggedInUser}
           />
