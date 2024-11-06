@@ -26,6 +26,7 @@ const mockOnSearch = jest.fn();
 const mockHandleLoginModalVisible = jest.fn();
 const mockSetIsLoggedIn = jest.fn();
 const mockSetLoginInfo = jest.fn();
+const mockGameList = jest.fn();
 
 const initialProps = {
     onSearch: mockOnSearch,
@@ -33,7 +34,8 @@ const initialProps = {
     isLoggedIn: false,
     setIsLoggedIn: mockSetIsLoggedIn,
     loginInfo: { username: "", password: "" },
-    setLoginInfo: mockSetLoginInfo
+    setLoginInfo: mockSetLoginInfo,
+    gameList: mockGameList
 };
 
 const init = (props) => {
@@ -66,7 +68,7 @@ describe("NavBar", () => {
   it("navigates to home on logo click", async () => {
     const { user } = init(initialProps);
 
-    const logoElement = screen.getByAltText("logo");
+    const logoElement = screen.getByAltText("GAMESHELF logo, a neon-outlined game controller");
     await user.click(logoElement);
 
     expect(mockNavigate).toHaveBeenCalledWith("/");
