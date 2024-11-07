@@ -62,7 +62,7 @@ describe("EditProfile", () => {
   it("calls updateUserProfile on form submit", async () => {
     const { user } = init(initialProps);
     const nameInput = screen.getByTestId("name-input");
-    const submitButton = screen.getByText(/submit/i);
+    const submitButton = screen.getByTestId("submit-button");
 
     await user.clear(nameInput);
     await user.type(nameInput, "New Name");
@@ -79,7 +79,7 @@ describe("EditProfile", () => {
 
     it("calls closeEditProfile on cancel button click", async () => {
         const { user } = init(initialProps);
-        const cancelButton = screen.getByText(/cancel/i);
+        const cancelButton = screen.getByTestId("cancel-button");
     
         await user.click(cancelButton);
     

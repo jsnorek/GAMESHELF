@@ -3,7 +3,11 @@
 // If no reviews are available, it displays a message.
 import GameReview from "./GameReview";
 
-function GameReviewList({ reviews, deleteUserReview,reviewDeleteButtonVisible }) {
+function GameReviewList({
+  reviews,
+  deleteUserReview,
+  reviewDeleteButtonVisible,
+}) {
   return (
     <div data-testid="game-review-list">
       {reviews && reviews.length > 0 ? (
@@ -11,7 +15,12 @@ function GameReviewList({ reviews, deleteUserReview,reviewDeleteButtonVisible })
           <h2>Reviews</h2>
           <ul>
             {reviews.map((review, index) => (
-              <GameReview key={index} review={review} deleteUserReview={deleteUserReview} reviewDeleteButtonVisible={reviewDeleteButtonVisible}/>
+              <GameReview
+                key={index}
+                review={review}
+                deleteUserReview={deleteUserReview}
+                reviewDeleteButtonVisible={reviewDeleteButtonVisible}
+              />
             ))}
           </ul>
         </div>

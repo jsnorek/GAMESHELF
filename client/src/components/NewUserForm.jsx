@@ -13,9 +13,8 @@ function NewUserForm({
   newUserInfo,
   setNewUserInfo,
   baseURL,
-  setLoginInfo,
   setIsLoggedIn,
-  setLoggedInUser
+  setLoggedInUser,
 }) {
     // Handles user registration message
   const [newUserSubmitErrorMessage, setNewUserSubmitErrorMessage] = useState("");

@@ -2,7 +2,6 @@
 // It includes inputs for rating and review text, and submits the data to the server when submitted.
 
 import { Button } from "primereact/button";
-import { InputNumber } from "primereact/inputnumber";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Rating } from "primereact/rating";
@@ -13,6 +12,7 @@ function GameReviewForm({
   loggedInUser,
   setNewReviewSubmitted,
   baseURL,
+  fetchAllUserData,
 }) {
     // Handles review form submission message display
   const [reviewFormSubmitErrorMessage, setReviewFormSubmitErrorMessage] = useState("");
@@ -48,6 +48,7 @@ function GameReviewForm({
   // The review data is passed in the request body.
   // On submit, it notifies the parent component about the submission.
   // After submitting, it hides the form by calling turnOffGameReviewFormVisible.
+  // Re-fetches user data
   const handleNewUserSubmit = async (e) => {
     e.preventDefault();
     if (!review.rating || !review.review_text) {
@@ -68,6 +69,7 @@ function GameReviewForm({
         const user = response.data;
         setNewReviewSubmitted(true);
         turnOffGameReviewFormVisible();
+        fetchAllUserData();
         console.log("New review creation successful", user);
       } else {
         console.error("Review creation fail", response.data.message);
@@ -81,10 +83,11 @@ function GameReviewForm({
   };
 
   return (
-    <div className="game-review-form">
+    <div className="game-review-form" data-testid="game-review-form">
       <h2>Write a Review for {gameDetails.name}</h2>
       <form onSubmit={handleNewUserSubmit}>
         <Rating
+          data-testid="review-rating"
           className="review-rating"
           value={review.rating}
           onChange={(e) => setReview({ ...review, rating: e.value })}
@@ -101,6 +104,7 @@ function GameReviewForm({
         />
         <Button icon="pi pi-check" aria-label="Submit" type="submit" />
         <Button
+          data-testid="cancel-button"
           className="cancel-button"
           icon="pi pi-times"
           aria-label="Cancel"

@@ -438,6 +438,7 @@ li {
   .login-modal, .new-user-modal, .game-details-modal, .user-reviews-list, .game-review-form {
     width: 50%; 
     height: 400px; 
+    transform: translate(-50%, -40%);
   }
 
   .login-modal {

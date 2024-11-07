@@ -14,13 +14,14 @@ function Profile({
   setFullLoggedInUserData,
   loggedInUser,
   baseURL,
+  deleteUserReview,
+  reviewsWithGameTitles,
+  setReviewsWithGameTitles
 }) {
   // State to control the visibility of the user's review list and the edit profile modal
   const [userReviewsListVisible, setUserReviewsListVisible] = useState(false);
   // Handles if profile is visible
   const [editProfileVisible, setEditProfileVisible] = useState(false);
-  // State to capture reviewed game titles from API 
-  const [reviewsWithGameTitles, setReviewsWithGameTitles] = useState([]);
 
   // Get the first user from the fullLoggedInUserData array (if available)
   const userData =
@@ -95,27 +96,6 @@ function Profile({
     fetchReviewsWithTitles();
   }, [userData, baseURL]);
 
-  // Delete a user's review
-  const deleteUserReview = async (reviewId) => {
-    try {
-        if (!loggedInUser?.user_id || !reviewId) {
-            console.log("Missing user_id or review_id", loggedInUser.user_id, reviewId);
-            return;
-        }
-
-        const response = await axios.delete(`${baseURL}/reviews/${loggedInUser.user_id}/${reviewId}`
-        );
-        if (response.status === 200) {
-            setReviewsWithGameTitles((prevReviews) =>
-            prevReviews.filter((review) => review.review_id !== reviewId)
-        );
-        console.log("Review deleted successfully");
-        }
-    } catch (error) {
-        console.error("Error deleting review", error);
-    }
-  };
-
   // Render only if userData exists
   if (!userData) {
     return <div>Loading user data...</div>;
@@ -130,6 +110,7 @@ function Profile({
       <p>Email: {userData.email}</p>
       <p>City: {userData.city}</p>
       <Button
+        data-testid="edit"
         icon="pi pi-user-edit"
         aria-label="Edit"
         onClick={handleEditProfileVisible}
@@ -143,8 +124,13 @@ function Profile({
           closeEditProfile={closeEditProfile}
         />
       )}
-      <Button label="My Reviews" onClick={handleUserReviewsVisible} />
       <Button
+        data-testid="reviews" 
+        label="My Reviews" 
+        onClick={handleUserReviewsVisible} 
+      />
+      <Button
+        data-testid="MyShelf"
         className="pi pi-book"
         aria-label="MyShelf"
         onClick={handleMyShelfClick}
@@ -157,6 +143,7 @@ function Profile({
             <p>No reviews available</p>
           )}
           <Button
+            data-testid="back-button"
             className="back-button"
             icon="pi pi-times"
             aria-label="Cancel"

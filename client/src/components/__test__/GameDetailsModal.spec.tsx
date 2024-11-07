@@ -60,7 +60,7 @@ describe("GameDetailsModal", () => {
         expect(screen.getByText(/game description./i)).toBeTruthy();
         expect(screen.getByText(/Platform\(s\):/i)).toBeTruthy();
         expect(screen.getByText(/PC/i)).toBeTruthy();
-        expect(screen.getByText(/Genre:/i)).toBeTruthy();
+        expect(screen.getByText(/Genre/i)).toBeTruthy();
         expect(screen.getByText(/Action/i)).toBeTruthy();
         expect(screen.getByText(/Publisher\(s\):/i)).toBeTruthy();
         expect(screen.getByText(/Game Publisher/i)).toBeTruthy();
@@ -79,7 +79,8 @@ describe("GameDetailsModal", () => {
 
     it("closes the modal when the back button is clicked", async () => {
         const { user } = init(initialProps);
-        await user.click(screen.getByRole("button", { name: /Back/i }));
+        const backButton = screen.getByTestId("back-button");
+        await user.click(backButton);
         expect(mockSetGameDetailsModalVisible).toHaveBeenCalledWith(false);
     });
 });

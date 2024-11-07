@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
-// import { DeferredContent } from "primereact/deferredcontent";
+import { PrimeReactProvider } from "primereact/api";
 import NavBar from "./components/NavBar";
 import GameList from "./components/GameList";
 import LoginModal from "./components/LoginModal";
@@ -32,8 +31,8 @@ function App() {
   const [newReviewSubmitted, setNewReviewSubmitted] = useState(false);
  // State for managing favorited games
   const [favoritedGames, setFavoritedGames] = useState([]);
-  const [newFavoriteAdded, setNewFavoriteAdded] = useState(false);
-
+  // State to capture reviewed game titles from API 
+  const [reviewsWithGameTitles, setReviewsWithGameTitles] = useState([]);
   // State for handling login and new user forms
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -60,22 +59,20 @@ function App() {
     setGameData(data);
     setIsGameDataLoading(false);
     setSearchResults(null);
-    console.log("testing game data", data );
-    console.log("testing search data", searchResults);
   };
 
   // Fetches searched game data from API based on user input in the search bar
   const handleSearch = async (searchInput) => {
     if (!searchInput) {
       setSearchResults(null); // Resets search results if search bar is empty
-      console.log("search input was reset", searchResults);
+      // console.log("search input was reset", searchResults);
       gameList();
       return;
     }
     try {
       const res = await fetch(`${baseURL}/search?query=${searchInput}`);
       const data = await res.json();
-      console.log("this is the search data", data);
+      // console.log("this is the search data", data);
       data.results === undefined || null
         ? alert("no games found")
         : setSearchResults(data.results);
@@ -84,7 +81,7 @@ function App() {
     }
   };
 
-  //resets gameList back to initial rendering if search bar is cleared
+  // Resets gameList back to initial rendering if search bar is cleared
   useEffect(() => {
     if (searchResults === null) {
       // setSearchResults(null);
@@ -149,6 +146,8 @@ function App() {
             `${baseURL}/game-reviews/${selectedGameId}`
           );
           setGameReviews(response.data || "");
+          setNewReviewSubmitted(false);
+          console.log("these are the database game reviews", response.data);
         } catch (error) {
           console.error("Error fetching game reviews:", error);
         }
@@ -157,26 +156,51 @@ function App() {
     fetchGameReviews();
   }, [selectedGameId, newReviewSubmitted]);
 
-  // Fetch all user data based on logged-in user id
-  useEffect(() => {
-    const fetchAllUserData = async () => {
-      if (isLoggedIn && loggedInUser && favoritedGames.length === 0) {
-        try {
-          const response = await axios.get(
-            `${baseURL}/user-info/${loggedInUser.user_id}`
-          );
-          setFullLoggedInUserData(response.data);
-          await getFavoritedGames(loggedInUser.user_id);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      }
-    };
-    fetchAllUserData();
-  }, [isLoggedIn, loggedInUser, baseURL, favoritedGames]);
+  // Extract fetchAllUserData into its own function
+const fetchAllUserData = async () => {
+  if (isLoggedIn && loggedInUser) {
+    try {
+      const response = await axios.get(
+        `${baseURL}/user-info/${loggedInUser.user_id}`
+      );
+      setFullLoggedInUserData(response.data);
+      await getFavoritedGames(loggedInUser.user_id);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+};
 
-  // console.log("THIS is the logged in user info", loggedInUser);
-  // console.log("This is the FULL logged in user data", fullLoggedInUserData);
+// Call fetchAllUserData initially in useEffect to load data when necessary
+useEffect(() => {
+  if (isLoggedIn && loggedInUser && favoritedGames.length === 0) {
+    fetchAllUserData();
+  }
+}, [isLoggedIn, loggedInUser]);
+
+   // Delete a user's review
+   const deleteUserReview = async (reviewId) => {
+    try {
+        if (!loggedInUser?.user_id || !reviewId) {
+            console.log("Missing user_id or review_id", loggedInUser.user_id, reviewId);
+            return;
+        }
+
+        const response = await axios.delete(`${baseURL}/reviews/${loggedInUser.user_id}/${reviewId}`
+        );
+        if (response.status === 200) {
+          // Update reviewsWithGameTitles by filtering out the deleted review
+            setReviewsWithGameTitles((prevReviews) =>
+            prevReviews.filter((review) => review.review_id !== reviewId)
+        );
+        console.log("Review deleted successfully");
+         // Fetch the updated user data
+      await fetchAllUserData();
+        }
+    } catch (error) {
+        console.error("Error deleting review", error);
+    }
+  };
 
   // Post user's newly favorited game
   const userFavoritesGame = async (game_id) => {
@@ -186,7 +210,6 @@ function App() {
         game_id: game_id,
       });
       if (response.status === 200) {
-        setNewFavoriteAdded((prev) => !prev);
         await getFavoritedGames(loggedInUser.user_id);
         console.log("New favorited game successful", response.data);
       } else {
@@ -204,7 +227,6 @@ function App() {
         `${baseURL}/favorites/${loggedInUser.user_id}/${game_id}`
       );
       if (response.status === 200) {
-        setNewFavoriteAdded((prev) => !prev);
         await getFavoritedGames(loggedInUser.user_id);
         console.log("New unfavorited game successful", response.data);
       } else {
@@ -256,10 +278,8 @@ function App() {
                 gameData={searchResults || gameData?.results || []}
                 isLoading={isGameDataLoading}
                 handleGameDetailsModalVisible={handleGameDetailsModalVisible}
-                baseURL={baseURL}
                 loggedInUser={loggedInUser}
                 favoritedGames={favoritedGames}
-                newFavoriteAdded={newFavoriteAdded}
                 userFavoritesGame={userFavoritesGame}
                 userUnfavoritesGame={userUnfavoritesGame}
               />
@@ -273,6 +293,9 @@ function App() {
                 setFullLoggedInUserData={setFullLoggedInUserData}
                 loggedInUser={loggedInUser}
                 baseURL={baseURL}
+                deleteUserReview={deleteUserReview}
+                reviewsWithGameTitles={reviewsWithGameTitles}
+                setReviewsWithGameTitles={setReviewsWithGameTitles}
               />
             }
           />
@@ -280,13 +303,10 @@ function App() {
             path="/myshelf"
             element={
               <MyShelf
-                fullLoggedInUserData={fullLoggedInUserData}
-                baseURL={baseURL}
                 handleGameDetailsModalVisible={handleGameDetailsModalVisible}
                 loggedInUser={loggedInUser}
                 favoritedGames={favoritedGames}
                 userUnfavoritesGame={userUnfavoritesGame}
-                newFavoriteAdded={newFavoriteAdded}
               />
             }
           />
@@ -300,6 +320,7 @@ function App() {
             loggedInUser={loggedInUser}
             setNewReviewSubmitted={setNewReviewSubmitted}
             baseURL={baseURL}
+            fetchAllUserData={fetchAllUserData}
           />
         )}
         {loginModalVisible && (
@@ -321,7 +342,6 @@ function App() {
             newUserInfo={newUserInfo}
             setNewUserInfo={setNewUserInfo}
             baseURL={baseURL}
-            setLoginInfo={setLoginInfo}
             setIsLoggedIn={setIsLoggedIn}
             setLoggedInUser={setLoggedInUser}
           />
