@@ -96,9 +96,6 @@ function Profile({
     fetchReviewsWithTitles();
   }, [userData, baseURL]);
 
-  console.log("USER DATA", userData)
-  console.log("but this is the basic user data", loggedInUser)
-
   // Render only if userData exists
   if (!userData) {
     return <div>Loading user data...</div>;

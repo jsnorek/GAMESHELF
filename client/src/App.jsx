@@ -59,22 +59,20 @@ function App() {
     setGameData(data);
     setIsGameDataLoading(false);
     setSearchResults(null);
-    console.log("testing game data", data );
-    console.log("testing search data", searchResults);
   };
 
   // Fetches searched game data from API based on user input in the search bar
   const handleSearch = async (searchInput) => {
     if (!searchInput) {
       setSearchResults(null); // Resets search results if search bar is empty
-      console.log("search input was reset", searchResults);
+      // console.log("search input was reset", searchResults);
       gameList();
       return;
     }
     try {
       const res = await fetch(`${baseURL}/search?query=${searchInput}`);
       const data = await res.json();
-      console.log("this is the search data", data);
+      // console.log("this is the search data", data);
       data.results === undefined || null
         ? alert("no games found")
         : setSearchResults(data.results);
